@@ -1,0 +1,29 @@
+@mixin max-width($threshold: $small-screen) {
+    @media screen and (max-width: $threshold) {
+        @content;
+    }
+}
+
+@mixin min-width($threshold: $small-screen) {
+    @media screen and (min-width: $threshold) {
+        @content;
+    }
+}
+
+@mixin hover() {
+    &:is(:hover, :focus-visible) {
+        @content;
+    }
+}
+
+@mixin m1() {
+    @media screen and (min-width: $breakpoint1) {
+        @content;
+    }
+}
+
+@mixin m2() {
+    @media screen and (min-width: $breakpoint2) {
+        @content;
+    }
+}
