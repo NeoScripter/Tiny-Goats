@@ -7,3 +7,37 @@
 @function round_to_decimal($value) {
     @return calc(ceil($value * 100) / 100);
 }
+
+@function color($category, $variant: "neutral") {
+    @return map-get(map-get($colors, $category), $variant);
+}
+
+
+// Преобразует заданное значение в пикселях в единицы vw на основе текущей ширины экрана.
+@function px-to-vw($current-screen-width, $size) {
+    $result: calc($size / $current-screen-width * 100); // Вычисляем процентное соотношение размера к ширине экрана.
+    $rounded: calc(ceil($result * 100) / 100); // Округляем результат до двух знаков после запятой.
+    @return $rounded * 1vw; // Возвращаем итоговое значение в vw.
+}
+
+// Вычисляем значения ограничения размера элемента на основе начальной ширины экрана, начального размера элемента и целевой ширины экрана.
+@function define-limits($initial-screen-width, $initial-size, $target-screen-width) {
+    $result: calc($initial-size / $initial-screen-width * $target-screen-width); // Вычисляем масштабированный размер для целевой ширины экрана.
+    $rounded: calc(ceil($result * 100) / 100);
+     // Округляем результат до двух знаков после запятой.
+    @return $rounded; // Возвращаем округленное значение.
+}
+
+// Определяет значение clamp для адаптивного размера элемента на странице.
+@function vw(
+    $initial-size,
+    $initial-screen-width: $screen-width,
+    $small-screen-size: $small-screen,
+    $large-screen-size: $wrapper-width
+) {
+    @return clamp(
+        define-limits($initial-screen-width, $initial-size, $small-screen-size), // Минимальное значение размера.
+        px-to-vw($initial-screen-width, $initial-size), // Адаптивное значение размера в vw.
+        define-limits($initial-screen-width, $initial-size, $large-screen-size) // Максимальное значение размера.
+    );
+}

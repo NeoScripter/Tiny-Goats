@@ -1,7 +1,19 @@
 
 @import "base/reset";
-@import "abstracts/functions";
 @import "abstracts/variables";
+@import "abstracts/functions";
 @import "abstracts/mixins";
 @import 'base/typography';
+@import "base/global";
+@import "base/utilities";
 
+@import "components/buttons";
+
+// Layouts
+
+@import "layout/header";
+@import "layout/footer";
+
+// Pages
+
+@import "pages/user/index";

@@ -22,8 +22,9 @@
     }
 }
 
-@mixin m2() {
-    @media screen and (min-width: $breakpoint2) {
-        @content;
-    }
+@mixin image($fit: cover) {
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: $fit;
 }

@@ -1,0 +1,6 @@
+
+@mixin bg-img($pos: center) {
+    background-position: $pos;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

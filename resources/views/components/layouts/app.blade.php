@@ -13,7 +13,9 @@
 
 <body>
 
-    {{ $slot }}
+    <div class="wrapper">
+        {{ $slot }}
+    </div>
 
     @vite('resources/ts/app.ts')
 </body>

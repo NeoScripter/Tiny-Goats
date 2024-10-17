@@ -24,7 +24,10 @@ button,
 input,
 select,
 textarea {
-    font: inherit;
+    color: inherit;
+    display: block;
+    border: none;
+    background-color: transparent;
 }
 h1,
 h2,

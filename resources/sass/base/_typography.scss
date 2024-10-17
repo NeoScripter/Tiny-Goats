@@ -1,54 +1,124 @@
 
 @font-face {
-    font-family: 'Mulish';
-    src: url('Mulish-Bold.woff2') format('woff2'),
-        url('Mulish-Bold.woff') format('woff');
+    font-family: 'Bold';
+    src: url('/resources/fonts/Mulish-Bold.woff2') format('woff2'),
+        url('/resources/fonts/Mulish-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mulish';
-    src: url('Mulish-ExtraBold.woff2') format('woff2'),
-        url('Mulish-ExtraBold.woff') format('woff');
+    font-family: 'ExtraBold';
+    src: url('/resources/fonts/Mulish-ExtraBold.woff2') format('woff2'),
+        url('/resources/fonts/Mulish-ExtraBold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mulish';
-    src: url('Mulish-Light.woff2') format('woff2'),
-        url('Mulish-Light.woff') format('woff');
+    font-family: 'Light';
+    src: url('/resources/fonts/Mulish-Light.woff2') format('woff2'),
+        url('/resources/fonts/Mulish-Light.woff') format('woff');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mulish';
-    src: url('Mulish-Regular.woff2') format('woff2'),
-        url('Mulish-Regular.woff') format('woff');
+    font-family: 'Regular';
+    src: url('/resources/fonts/Mulish-Regular.woff2') format('woff2'),
+        url('/resources/fonts/Mulish-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mulish';
-    src: url('Mulish-Medium.woff2') format('woff2'),
-        url('Mulish-Medium.woff') format('woff');
+    font-family: 'Medium';
+    src: url('/resources/fonts/Mulish-Medium.woff2') format('woff2'),
+        url('/resources/fonts/Mulish-Medium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mulish';
-    src: url('Mulish-SemiBold.woff2') format('woff2'),
-        url('Mulish-SemiBold.woff') format('woff');
+    font-family: 'SemiBold';
+    src: url('/resources/fonts/Mulish-SemiBold.woff2') format('woff2'),
+        url('/resources/fonts/Mulish-SemiBold.woff') format('woff');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
+}
+
+@font-face {
+    font-family: 'Italic';
+    src: url('/resources/fonts/Mulish-Italic.woff2') format('woff2'),
+        url('/resources/fonts/Mulish-Italic.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+// Font Sizes
+
+@mixin fs12() {
+    font-size: vw(12px);
+    font-style: normal;
+    font-weight: 600;
+    font-family: 'Medium';
+    line-height: 110%;
+    letter-spacing: vw(0.096px);
+}
+
+
+@mixin fs15() {
+    font-size: vw(15px);
+    font-style: normal;
+    font-family: 'Regular';
+    font-weight: 400;
+    line-height: 93%;
+}
+
+@mixin fs16($font-weight: bold) {
+    font-size: vw(16px);
+    font-style: normal;
+    font-weight: $font-weight;
+    line-height: 150%;
+
+    @if ($font-weight == bold) {
+        font-family: 'Bold';
+    } @else {
+        font-family: 'Regular';
+    }
+}
+
+@mixin fs20($font-family: 'SemiBold') {
+    font-size: vw(20px);
+    font-style: normal;
+    font-family: $font-family;
+    font-weight: 600;
+    line-height: 100%;
+}
+
+@mixin fs24() {
+    font-size: vw(24px);
+    font-style: normal;
+    font-family: 'Bold';
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: vw(0.12px);
+}
+
+@mixin fs36() {
+    font-size: vw(36px);
+    font-style: normal;
+    font-family: 'ExtraBold';
+    font-weight: 800;
+    line-height: 120%;
+    letter-spacing: vw(0.18px);
 }
