@@ -1,4 +1,5 @@
 .user-home {
+    // Goals Section
     .goals {
         padding: vw(73px) vw(122px) vw(97px);
     }
@@ -52,8 +53,9 @@
         position: absolute;
         left: 0;
         right: 0;
-        height: vw(21px);
+        height: vw(43px);
         top: 50%;
+        transform: translateY(-50%);
         padding-inline: vw(21px);
 
         display: flex;
@@ -61,6 +63,12 @@
     }
 
     .goals__btn {
+        width: vw(21px);
+        height: vw(43px);
+        svg {
+            width: 100%;
+            height: 100%;
+        }
         cursor: pointer;
     }
 
@@ -71,5 +79,299 @@
 
     .goals__image {
         flex: 1 0 100%;
+    }
+
+    // Animals Section
+
+    .animals {
+        padding: vw(73px) vw(122px) vw(97px);
+        background-color: color("green", "extra-light");
+    }
+
+    .animals__headline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: vw(61px);
+    }
+
+    .animals__title {
+        color: color("black");
+        @include fs36();
+    }
+
+    .animals__btn {
+        @include btn-large();
+    }
+
+    .animals__wrapper {
+        position: relative;
+    }
+
+    .animals__controller {
+        cursor: pointer;
+        position: absolute;
+        width: vw(21px);
+        height: vw(43px);
+        z-index: 2;
+        top: 40%;
+        transform: translateY(-50%);
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .animals__btn--prev {
+        left: -3%;
+    }
+    .animals__btn--next {
+        right: -3%;
+    }
+
+    .animals__carousel {
+        overflow: hidden;
+    }
+
+    .animals__viewport {
+        display: flex;
+        gap: vw(20px);
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .animals__item {
+        flex: 1 0 23.5%;
+    }
+
+    .animals__image {
+        overflow: hidden;
+        margin-bottom: vw(16px);
+        img {
+            @include image();
+        }
+    }
+
+    .animals__name {
+        text-decoration: underline;
+        text-align: center;
+        @include fs16(400);
+    }
+
+    .animals__breed {
+        text-transform: lowercase;
+        text-align: center;
+        @include fs16(400);
+    }
+
+    // Farm Section
+
+    .farm {
+        padding: vw(73px) vw(122px) vw(97px);
+    }
+
+    .farm__headline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: vw(61px);
+    }
+
+    .farm__title {
+        color: color("black");
+        @include fs36();
+    }
+
+    .farm__btn {
+        @include btn-large();
+    }
+
+    .farm__wrapper {
+        position: relative;
+    }
+
+    .farm__controller {
+        cursor: pointer;
+        position: absolute;
+        width: vw(21px);
+        height: vw(43px);
+        z-index: 2;
+        top: 40%;
+        transform: translateY(-50%);
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .farm__btn--prev {
+        left: -3%;
+    }
+    .farm__btn--next {
+        right: -3%;
+    }
+
+    .farm__carousel {
+        overflow: hidden;
+    }
+
+    .farm__viewport {
+        display: flex;
+        gap: vw(20px);
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .farm__item {
+        flex: 1 0 32%;
+    }
+
+    .farm__image {
+        overflow: hidden;
+        margin-bottom: vw(16px);
+        img {
+            @include image();
+        }
+    }
+
+    .farm__name {
+        text-decoration: underline;
+        text-align: center;
+        @include fs16(400);
+    }
+
+    .farm__place {
+        text-transform: lowercase;
+        text-align: center;
+        @include fs16(400);
+    }
+
+    .farm__description {
+        text-transform: lowercase;
+        text-align: center;
+        @include fs16(400);
+    }
+
+    // News Section
+
+    .news {
+        padding: vw(73px) vw(122px) vw(97px);
+        background-color: color("green", "extra-light");
+    }
+
+    .news__headline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: vw(61px);
+    }
+
+    .news__title {
+        color: color("black");
+        @include fs36();
+    }
+
+    .news__btn {
+        @include btn-large();
+    }
+
+    .news__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: vw(20px);
+    }
+
+    .news__item {
+        flex: 1 0 32%;
+        border: vw(1px) solid color("gray", "extra-light");
+        background-color: color("white");
+    }
+
+    .news__content {
+        padding: 0 vw(16px);
+    }
+
+    .news__image {
+        position: relative;
+        margin-bottom: vw(16px);
+        img {
+            @include image();
+        }
+    }
+
+    .news__heading {
+        margin-bottom: vw(25px);
+        @include fs24();
+    }
+
+    .news__description {
+        margin-bottom: vw(25px);
+        @include fs16(400);
+    }
+
+    .news__label {
+        position: absolute;
+        display: block;
+        left: 0;
+        bottom: 0;
+        padding: vw(7px) vw(15px);
+        width: min-content;
+        background-color: color("green");
+        color: color("white");
+        @include fs12();
+    }
+
+    // FAQ Section
+
+    .faq {
+        padding: vw(73px) vw(122px) vw(97px);
+    }
+
+    .faq__title {
+        margin-inline: auto;
+        text-align: center;
+        width: vw(900px);
+        margin-bottom: vw(17px);
+        @include fs36();
+    }
+
+    .faq__subtitle {
+        margin-inline: auto;
+        text-align: center;
+        display: block;
+        width: vw(552px);
+        margin-bottom: vw(48px);
+        @include fs16(400);
+    }
+
+    .faq__link {
+        color: color("black", "dark");
+        text-decoration: underline;
+    }
+
+    .faq__list {
+        column-count: 2;
+        column-gap: vw(60px);
+    }
+
+    .faq__li {
+        display: block;
+        break-inside: avoid;
+        margin-bottom: vw(36px);
+    }
+
+    .faq__heading {
+        margin-bottom: vw(16px);
+        @include fs20("BoldItalic");
+    }
+
+    .faq__content {
+        @include fs16(400);
+    }
+
+    .faq__btn {
+        margin-inline: auto;
+        margin-top: vw(52px);
+        @include btn-large();
     }
 }
