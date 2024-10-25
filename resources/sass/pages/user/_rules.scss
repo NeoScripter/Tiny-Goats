@@ -1,0 +1,160 @@
+.user-rules {
+    // Rules Section
+
+    .rules {
+        padding: vw(73px) vw(122px) vw(144px);
+    }
+
+    .rules__title {
+        margin-inline: auto;
+        text-align: center;
+        width: vw(900px);
+        margin-bottom: vw(17px);
+        @include fs36();
+    }
+
+    .rules__subtitle {
+        margin-inline: auto;
+        text-align: center;
+        display: block;
+        width: vw(740px);
+        max-width: 100%;
+        margin-bottom: vw(48px);
+        @include fs16(400);
+    }
+
+    .rules__link {
+        color: color("black", "dark");
+        text-decoration: underline;
+    }
+
+    .rules__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: vw(60px);
+        margin-bottom: vw(36px);
+    }
+
+    .rules__item {
+        p,
+        li {
+            margin-block: 0.75em;
+            @include fs16(400);
+        }
+
+        li p {
+            margin-block: 0.75em;
+            display: inline;
+        }
+
+        br {
+            margin-block: 0.75em;
+        }
+
+        ul {
+            list-style: disc;
+            list-style-position: inside;
+        }
+
+        ol {
+            li {
+                list-style: decimal;
+                list-style-position: inside;
+
+                ol {
+                    margin-block: 0.75em;
+                    > li {
+                        list-style: lower-alpha;
+                        list-style-position: inside;
+                    }
+                }
+
+                ol.ol-numbers {
+                    margin-block: 0.75em;
+                    > li {
+                        counter-increment: list-counter; /* Increment counter */
+                        margin-bottom: 0.5em;
+                        list-style: none;
+                        list-style-position: inside;
+                    }
+
+                    li::marker {
+                        content: counter(list-counter) ") "; /* Add number with parenthesis */
+                    }
+                }
+            }
+        }
+    }
+
+    .rules__heading {
+        margin-bottom: vw(26px);
+        color: color("green");
+        @include fs20("ExtraBold");
+    }
+
+    .rules__flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: vw(52px);
+        gap: vw(20px);
+    }
+
+    .rules__btn {
+        flex-basis: vw(156px);
+        @include btn-large();
+    }
+
+    .rules__images {
+        position: relative;
+        margin-top: vw(127px);
+        height: vw(470px);
+    }
+
+    .rules__small-flower {
+        position: absolute;
+        width: vw(109px);
+        height: vw(109px);
+        right: vw(10px);
+        top: 0;
+        img {
+            @include image();
+        }
+    }
+
+    .rules__large-flower {
+        position: absolute;
+        width: vw(236px);
+        height: vw(236px);
+        bottom: 0;
+        left: 0;
+
+        img {
+            @include image();
+        }
+    }
+
+    .rules__goat {
+        position: absolute;
+        width: vw(573px);
+        height: vw(560px);
+        left: vw(170px);
+        top: vw(20px);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-position: right;
+            object-fit: contain;
+        }
+    }
+
+    .rules__circle {
+        width: vw(470px);
+        height: vw(470px);
+        border-radius: 50%;
+        margin-left: auto;
+        background-color: color("green", "extra-light");
+        flex-shrink: 0;
+    }
+}

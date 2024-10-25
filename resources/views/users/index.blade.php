@@ -12,7 +12,8 @@
                 <div class="goals__content">
 
                     <p class="goals__intro">
-                        <strong>Цель сайта  «Реестр карликовых коз России»</strong> -  популяризация карликовых коз и статистические
+                        <strong>Цель сайта  «Реестр карликовых коз России»</strong> -  популяризация карликовых коз и
+                        статистические
                         наблюдения за популяцией карликовых коз в России и странах ближнего зарубежья.
                     </p>
 
@@ -29,20 +30,22 @@
                             производителей или производительниц.</li>
                     </ol>
 
-                    <a href="" class="goals__link">Продолжить чтение</a>
+                    <a href="/agenda" class="goals__link">Продолжить чтение</a>
                 </div>
 
                 <div class="goals__carousel" x-data="{ currentSlide: 0, totalSlides: 5 }">
                     <div class="goals__viewport" :style="{ transform: `translateX(${currentSlide * -100}%)` }">
                         @for ($i = 1; $i < 6; $i++)
                             <div class="goals__image">
-                                <img src="{{ asset("images/pages/user/home/goals/index-slide-$i.webp") }}" alt="image">
+                                <img src="{{ asset("images/pages/user/home/goals/index-slide-$i.webp") }}"
+                                    alt="image">
                             </div>
                         @endfor
                     </div>
 
                     <div class="goals__controls">
-                        <button class="goals__btn" @click="currentSlide = (currentSlide - 1 + totalSlides) % totalSlides">
+                        <button class="goals__btn"
+                            @click="currentSlide = (currentSlide - 1 + totalSlides) % totalSlides">
                             {!! file_get_contents(public_path('images/svgs/prev-btn-light.svg')) !!}
                         </button>
                         <button class="goals__btn" @click="currentSlide = (currentSlide + 1) % totalSlides">
@@ -64,7 +67,8 @@
             </div>
 
             <div class="animals__wrapper" x-data="{ currentSlide: 0, totalSlides: 8 }">
-                <button class="animals__controller animals__btn--prev" x-show="currentSlide !== 0" @click="currentSlide = currentSlide - 1">
+                <button class="animals__controller animals__btn--prev" x-show="currentSlide !== 0"
+                    @click="currentSlide = currentSlide - 1">
                     {!! file_get_contents(public_path('images/svgs/prev-btn-dark.svg')) !!}
                 </button>
                 <div class="animals__carousel">
@@ -72,7 +76,8 @@
                         @for ($i = 1; $i < 9; $i++)
                             <div class="animals__item">
                                 <div class="animals__image">
-                                    <img src="{{ asset("images/pages/user/home/animals/animal-$i.webp") }}" alt="image">
+                                    <img src="{{ asset("images/pages/user/home/animals/animal-$i.webp") }}"
+                                        alt="image">
                                 </div>
                                 <h4 class="animals__name">Кличка</h4>
                                 <p class="animals__breed">Порода</p>
@@ -80,7 +85,8 @@
                         @endfor
                     </div>
                 </div>
-                <button class="animals__controller animals__btn--next"  x-show="currentSlide !== (totalSlides - 4)" @click="currentSlide = currentSlide + 1">
+                <button class="animals__controller animals__btn--next" x-show="currentSlide !== (totalSlides - 4)"
+                    @click="currentSlide = currentSlide + 1">
                     {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
                 </button>
             </div>
@@ -96,7 +102,8 @@
             </div>
 
             <div class="farm__wrapper" x-data="{ currentSlide: 0, totalSlides: 6 }">
-                <button class="farm__controller farm__btn--prev" x-show="currentSlide !== 0" @click="currentSlide = currentSlide - 1">
+                <button class="farm__controller farm__btn--prev" x-show="currentSlide !== 0"
+                    @click="currentSlide = currentSlide - 1">
                     {!! file_get_contents(public_path('images/svgs/prev-btn-dark.svg')) !!}
                 </button>
                 <div class="farm__carousel">
@@ -113,7 +120,8 @@
                         @endfor
                     </div>
                 </div>
-                <button class="farm__controller farm__btn--next"  x-show="currentSlide !== (totalSlides - 3)" @click="currentSlide = currentSlide + 1">
+                <button class="farm__controller farm__btn--next" x-show="currentSlide !== (totalSlides - 3)"
+                    @click="currentSlide = currentSlide + 1">
                     {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
                 </button>
             </div>
@@ -129,20 +137,20 @@
             </div>
 
 
-                <div class="news__grid">
-                    @for ($i = 1; $i < 5; $i++)
-                        <div class="news__item">
-                            <div class="news__image">
-                                <img src="{{ asset("images/pages/user/home/news/news-$i.webp") }}" alt="image">
-                                <span class="news__label">Раздел новости</span>
-                            </div>
-                            <div class="news__content">
-                                <h4 class="news__heading">Заголовок последней новости в несколько строк</h4>
-                                <p class="news__description">Описание в 1-2 строчки</p>
-                            </div>
+            <div class="news__grid">
+                @for ($i = 1; $i < 5; $i++)
+                    <div class="news__item">
+                        <div class="news__image">
+                            <img src="{{ asset("images/pages/user/home/news/news-$i.webp") }}" alt="image">
+                            <span class="news__label">Раздел новости</span>
                         </div>
-                    @endfor
-                </div>
+                        <div class="news__content">
+                            <h4 class="news__heading">Заголовок последней новости в несколько строк</h4>
+                            <p class="news__description">Описание в 1-2 строчки</p>
+                        </div>
+                    </div>
+                @endfor
+            </div>
 
         </section>
 
@@ -150,44 +158,65 @@
 
             <h2 class="faq__title">Ответы на популярные вопросы</h2>
 
-            <p class="faq__subtitle">Предлагаем ознакомиться с ответами на самые популярные вопросы, а так же <a href="" class="faq__link">правилами</a> нашего сайта “Реестр карликовых коз России”</p>
+            <p class="faq__subtitle">Предлагаем ознакомиться с ответами на самые популярные вопросы, а так же <a
+                    href="" class="faq__link">правилами</a> нашего сайта “Реестр карликовых коз России”</p>
+
+            @php
+                $faqs = [
+                    [
+                        'heading' =>
+                            'Как я могу зарегистрировать/перерегистрировать, обновить карточку животного, или сменить владельца?',
+                        'content' =>
+                            'Для регистрации/перерегистрации, смены владельца и обновления карточки животного вам нужно отправить запрос Администратору по указанным на сайте контактам.',
+                    ],
+                    [
+                        'heading' => 'Какая цена регистрации животных в Реестре?',
+                        'content' =>
+                            'Животные регистрируются бесплатно. Возможно добровольное пожертвование в виде доната.',
+                    ],
+                    [
+                        'heading' => 'На каком языке осуществляется регистрация животных?',
+                        'content' =>
+                            'Регистрация животных, рождённых в России, осуществляется на русском языке (кириллицей). Регистрация импортных животных осуществляется на английском языке (латинницей).',
+                    ],
+                    [
+                        'heading' => 'На какой срок можно зарегистрировать животное в каталоге?',
+                        'content' =>
+                            'Животное в Реестре регистрируется единожды и остаётся в нём на постоянной основе.',
+                    ],
+                    [
+                        'heading' => 'Как зарегистрировать хозяйство?',
+                        'content' =>
+                            'Для регистрации или обновления карточки хозяйства нужно отправить запрос Администратору по указанным на сайте контактам.',
+                    ],
+                    [
+                        'heading' => 'Какая цена регистрации хозяйства в Реестре?',
+                        'content' =>
+                            'Регистрация хозяйств осуществляется бесплатно. Возможно добровольное пожертвование в виде доната.',
+                    ],
+                    [
+                        'heading' => 'На каком языке регистрируются хозяйства в Реестре?',
+                        'content' => 'Регистрация хозяйств осуществляется на русском языке.',
+                    ],
+                    [
+                        'heading' => 'Какие дополнительные сведения о владельце можно внести в карточку хозяйства?',
+                        'content' =>
+                            'Любые, которые могут дать больше информации о владельце. Например, наличие профильного образования или с какого года ведётся работа с козами в хозяйстве и т.п.',
+                    ],
+                ];
+            @endphp
 
             <ul class="faq__list">
-                <li class="faq__li">
-                    <h3 class="faq__heading">Как я могу зарегистрировать/перерегистрировать, обновить карточку животного, или сменить владельца?</h3>
-                    <p class="faq__content">Для регистрации/перерегистрации, смены владельца и обновления карточки животного вам нужно отправить запрос Администратору по указанным на сайте контактам.</p>
-                </li>
-                <li class="faq__li">
-                    <h3 class="faq__heading">Какая цена регистрации  животных в Реестре?</h3>
-                    <p class="faq__content">Животные регистрируются бесплатно.  Возможно добровольное пожертвование в виде доната.</p>
-                </li>
-                <li class="faq__li">
-                    <h3 class="faq__heading">На каком языке осуществляется регистрация животных?</h3>
-                    <p class="faq__content">Регистрация животных, рождённых в России, осуществляется на русском языке (кириллицей). Регистрация импортных животных осуществляется на  английском языке (латинницей).</p>
-                </li>
-                <li class="faq__li">
-                    <h3 class="faq__heading">На какой срок можно зарегистрировать животное в каталоге?</h3>
-                    <p class="faq__content">Животное в Реестре регистрируется единожды и остаётся в нём на постоянной основе.</p>
-                </li>
-                <li class="faq__li">
-                    <h3 class="faq__heading">Как зарегистрировать хозяйство?</h3>
-                    <p class="faq__content">Для регистрации или обновления карточки хозяйства нужно отправить запрос Администратору по указанным на сайте контактам.</p>
-                </li>
-                <li class="faq__li">
-                    <h3 class="faq__heading">Какая цена регистрации хозяйства в Реестре?</h3>
-                    <p class="faq__content">Регистрация хозяйств осуществляется бесплатно. Возможно добровольное пожертвование в виде доната.</p>
-                </li>
-                <li class="faq__li">
-                    <h3 class="faq__heading">На каком языке регистрируются хозяйства в Реестре?</h3>
-                    <p class="faq__content">Регистрация хозяйств осуществляется на русском языке.</p>
-                </li>
-                <li class="faq__li">
-                    <h3 class="faq__heading">Какие дополнительные сведения о владельце можно внести в карточку хозяйства?</h3>
-                    <p class="faq__content">Любые, которые могут дать больше информации о владельце. Например, наличие профильного образования или с какого года ведётся работа с козами в хозяйстве и т.п.</p>
-                </li>
+                @foreach ($faqs as $faq)
+                    <li class="faq__li">
+                        <h3 class="faq__heading">{{ $faq['heading'] }}</h3>
+                        <p class="faq__content">{{ $faq['content'] }}</p>
+                    </li>
+                @endforeach
             </ul>
 
-            <a href="" class="faq__btn">Читать полностью</a>
+
+            <a href="/faq" class="faq__btn">Читать полностью</a>
 
         </section>
 

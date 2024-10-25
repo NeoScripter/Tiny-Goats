@@ -1,0 +1,126 @@
+.user-agenda {
+    // Preview Section
+
+    .preview {
+        padding: vw(53px) vw(122px) vw(87px);
+    }
+
+    .preview__wrapper {
+        display: flex;
+        gap: vw(115px);
+        align-items: flex-start;
+    }
+
+    .preview__content {
+        flex-basis: vw(532px);
+    }
+
+    .preview__title {
+        margin-bottom: vw(27px);
+        @include fs36();
+    }
+
+    .preview__prg {
+
+        margin-bottom: 1em;
+        @include fs16(400);
+    }
+
+    .preview__ol {
+        margin-bottom: vw(28px);
+        li {
+            list-style: decimal;
+            list-style-position: inside;
+
+            margin-bottom: 1em;
+            @include fs16(400);
+        }
+    }
+
+    .preview__btn {
+
+        @include btn-large();
+    }
+
+    .preview__images {
+        display: flex;
+        flex-direction: column;
+        gap: vw(48px);
+        justify-content: space-between;
+        flex-basis: vw(550px);
+    }
+
+    .preivew__image {
+
+        img {
+            @include image();
+        }
+    }
+    // News Section
+
+    .news {
+        padding: vw(73px) vw(122px) vw(97px);
+    }
+
+    .news__headline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: vw(61px);
+    }
+
+    .news__title {
+        color: color("black");
+        @include fs36();
+    }
+
+    .news__btn {
+        @include btn-large();
+    }
+
+    .news__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: vw(20px);
+    }
+
+    .news__item {
+        flex: 1 0 32%;
+        border: vw(1px) solid color("gray", "extra-light");
+        background-color: color("white");
+    }
+
+    .news__content {
+        padding: 0 vw(16px);
+    }
+
+    .news__image {
+        position: relative;
+        margin-bottom: vw(16px);
+        img {
+            @include image();
+        }
+    }
+
+    .news__heading {
+        margin-bottom: vw(25px);
+        @include fs24();
+    }
+
+    .news__description {
+        margin-bottom: vw(25px);
+        @include fs16(400);
+    }
+
+    .news__label {
+        position: absolute;
+        display: block;
+        left: 0;
+        bottom: 0;
+        padding: vw(7px) vw(15px);
+        width: min-content;
+        background-color: color("green");
+        color: color("white");
+        @include fs12();
+    }
+}

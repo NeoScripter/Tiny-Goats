@@ -27,12 +27,12 @@
     <nav class="footer__nav">
         <ul class="footer__ul">
             <li><a href="">О реестре</a></li>
-            <li><a href="">Новости</a></li>
+            <li><a href="/news" class="{{ Request::is('news') ? 'footer__link--active' : '' }}">Новости</a></li>
             <li><a href="">На продажу</a></li>
-            <li><a href="">Вопросы</a></li>
+            <li><a href="faq" class="{{ Request::is('faq') ? 'footer__link--active' : '' }}">Вопросы</a></li>
             <li><a href="">Животные</a></li>
             <li><a href="">Специалисты</a></li>
-            <li><a href="">Правила</a></li>
+            <li><a href="/rules" class="{{ Request::is('rules') ? 'footer__link--active' : '' }}">Правила</a></li>
             <li><a href="">Хозяйства</a></li>
             <li><a href="">Партнеры</a></li>
         </ul>

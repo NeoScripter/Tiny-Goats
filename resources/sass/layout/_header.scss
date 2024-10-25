@@ -120,3 +120,135 @@
         color: color('green');
     }
 }
+
+// Small Header
+
+
+.header {
+    background-color: color('green', 'extra-light');
+    padding-block: vw(25px) 0;
+}
+
+.header__headline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: vw(125px);
+}
+
+.header__search {
+    background-color: color('white');
+    border-radius: 0.5em;
+    display: flex;
+    align-items: center;
+    padding: vw(1px);
+    width: vw(376px);
+
+    input {
+        flex: 1;
+        color: color('black');
+        caret-color: color('green');
+        margin-left: vw(10px);
+        @include fs16(400);
+
+        &::placeholder {
+            color: color('gray');
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+.header__search-btn {
+
+    @include btn-primary();
+}
+
+.header__signup {
+    display: flex;
+    align-items: center;
+    gap: vw(10px);
+}
+
+.header__signup-link {
+    border: vw(1px) solid color('white', 'dark');
+    @include btn-primary();
+}
+
+.header__user-icon {
+    border-radius: vw(8px);
+    background-color: color('white', 'dark');
+    width: vw(38px);
+    padding: vw(7px);
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: vw(2px) solid color('gray', 'dark');
+}
+
+.header__logo {
+    display: block;
+    width: vw(201px);
+    height: vw(76px);
+}
+
+.header__nav {
+    background-color: color('white', 'dark');
+    padding: vw(30px) vw(120px);
+}
+.header__ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__nav-btn {
+    position: relative;
+}
+.header__nav-dropdown {
+    position: absolute;
+    top: vw(28px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: color('white', 'dark');
+    border-radius: vw(8px);
+    display: grid;
+    place-content: center;
+    gap: vw(12px);
+    width: vw(123px);
+    padding-block: vw(22px);
+
+}
+
+.header__nav-link,
+.header__nav-btn {
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+
+    @include fs20();
+
+    a {
+        text-transform:initial;
+
+        @include fs15();
+
+        @include hover() {
+            color: color('green');
+        }
+    }
+
+}
+
+.header__nav-link--active {
+    color: color('green');
+}
+
+
+.header__nav-link {
+    @include hover() {
+        color: color('green');
+    }
+}

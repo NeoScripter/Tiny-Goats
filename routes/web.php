@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('users.index');
 });
+
+Route::get('/agenda', function () {
+    return view('users.agenda');
+});
+
+Route::get('/faq', function () {
+    return view('users.faq');
+});
+
+Route::get('/rules', function () {
+    return view('users.rules');
+});

@@ -53,4 +53,8 @@
         color: color("gray", "light");
         @include fs15();
     }
+
+    .footer__link--active {
+        color: color("green", "light");
+    }
 }

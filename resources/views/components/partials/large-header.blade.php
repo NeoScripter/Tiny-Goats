@@ -23,8 +23,8 @@
 
     <nav class="lg-header__nav">
         <ul class="lg-header__ul">
-            <li><a href="" class="lg-header__nav-link">Правила</a></li>
-            <li><a href="" class="lg-header__nav-link">Новости</a></li>
+            <li><a href="/rules" class="lg-header__nav-link">Правила</a></li>
+            <li><a href="/news" class="lg-header__nav-link">Новости</a></li>
             <li>
                 <button class="lg-header__nav-btn" x-data="{ showDropdown: false, timer: null }"
                     @mouseenter="clearTimeout(timer); showDropdown = true"
