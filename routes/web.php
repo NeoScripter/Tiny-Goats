@@ -28,3 +28,11 @@ Route::get('/faq', function () {
 Route::get('/rules', function () {
     return view('users.rules');
 });
+
+Route::get('/news', function () {
+    return view('users.news');
+});
+
+Route::get('/news/1', function () {
+    return view('users.news-show');
+});
