@@ -36,3 +36,7 @@ Route::get('/news', function () {
 Route::get('/news/1', function () {
     return view('users.news-show');
 });
+
+Route::get('/search-animals', function () {
+    return view('users.search-animals');
+});

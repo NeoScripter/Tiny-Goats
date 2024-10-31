@@ -32,7 +32,7 @@
                     Животные
                     <ul class="header__nav-dropdown" x-cloak x-show="showDropdown"
                         @mouseleave="showDropdown = false">
-                        <li><a href="" class="header__dropdown-link">Поиск</a></li>
+                        <li><a href="/search-animals" class="header__dropdown-link">Поиск</a></li>
                         <li><a href="" class="header__dropdown-link">Добавить</a></li>
                         <li><a href="" class="header__dropdown-link">Список</a></li>
                         <li><a href="" class="header__dropdown-link">Подбор пар</a></li>

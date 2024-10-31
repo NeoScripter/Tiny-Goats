@@ -1,67 +1,65 @@
 .user-faq {
-    // Preview Section
+    // FAQ Section
 
-        // FAQ Section
+    .faq {
+        padding: vw(73px) vw(122px) vw(97px);
+    }
 
-        .faq {
-            padding: vw(73px) vw(122px) vw(97px);
+    .faq__title {
+        margin-inline: auto;
+        text-align: center;
+        width: vw(900px);
+        margin-bottom: vw(17px);
+        @include fs36();
+    }
+
+    .faq__subtitle {
+        margin-inline: auto;
+        text-align: center;
+        display: block;
+        width: vw(552px);
+        margin-bottom: vw(48px);
+        @include fs16(400);
+    }
+
+    .faq__link {
+        color: color("black", "dark");
+        text-decoration: underline;
+    }
+
+    .faq__list {
+        column-count: 2;
+        column-gap: vw(60px);
+    }
+
+    .faq__li {
+        display: block;
+        break-inside: avoid;
+        margin-bottom: vw(36px);
+    }
+
+    .faq__heading {
+        margin-bottom: vw(16px);
+        @include fs20("BoldItalic");
+    }
+
+    .faq__content {
+        @include fs16(400);
+
+        br {
+            margin-bottom: 0.75em;
         }
+    }
 
-        .faq__title {
-            margin-inline: auto;
-            text-align: center;
-            width: vw(900px);
-            margin-bottom: vw(17px);
-            @include fs36();
-        }
+    .faq__flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: vw(52px);
+        gap: vw(90px);
+    }
 
-        .faq__subtitle {
-            margin-inline: auto;
-            text-align: center;
-            display: block;
-            width: vw(552px);
-            margin-bottom: vw(48px);
-            @include fs16(400);
-        }
-
-        .faq__link {
-            color: color("black", "dark");
-            text-decoration: underline;
-        }
-
-        .faq__list {
-            column-count: 2;
-            column-gap: vw(60px);
-        }
-
-        .faq__li {
-            display: block;
-            break-inside: avoid;
-            margin-bottom: vw(36px);
-        }
-
-        .faq__heading {
-            margin-bottom: vw(16px);
-            @include fs20("BoldItalic");
-        }
-
-        .faq__content {
-            @include fs16(400);
-
-            br {
-                margin-bottom: 0.75em;
-            }
-        }
-
-        .faq__flex {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: vw(52px);
-            gap: vw(90px);
-        }
-
-        .faq__btn {
-            @include btn-large();
-        }
+    .faq__btn {
+        @include btn-large();
+    }
 }
