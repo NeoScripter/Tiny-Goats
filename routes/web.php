@@ -48,3 +48,7 @@ Route::get('/register', function () {
 Route::get('/animal/1', function () {
     return view('users.animal-card');
 });
+
+Route::get('/coupling', function () {
+    return view('users.coupling');
+});

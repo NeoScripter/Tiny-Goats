@@ -70,18 +70,23 @@
                 </div>
             </div>
 
+            <button class="gens__button">Сгенерировать</button>
+
             <div class="gens__table">
 
                 @php
-                    $cols = 8;
+                    $cols = 4;
                 @endphp
 
                 @for ($i = 0; $i < $cols; $i++)
 
                     <div class="gens__column">
 
-                        @for ($j = 0; $j <= $i; $j++)
+                        @php
+                            $powerOfTwo = pow(2, $i);
+                        @endphp
 
+                        @for ($j = 0; $j < $powerOfTwo; $j++)
                             <div class="gens__item">
                                 <div class="gens__image">
                                     <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
@@ -90,7 +95,6 @@
                                 <h3 class="gens__name">Кличка</h3>
                                 <p class="gens__breed">Порода</p>
                             </div>
-
                         @endfor
 
                     </div>

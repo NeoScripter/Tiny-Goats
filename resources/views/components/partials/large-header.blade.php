@@ -35,7 +35,7 @@
                         <li><a href="/search-animals" class="lg-header__dropdown-link">Поиск</a></li>
                         <li><a href="" class="lg-header__dropdown-link">Добавить</a></li>
                         <li><a href="" class="lg-header__dropdown-link">Список</a></li>
-                        <li><a href="" class="lg-header__dropdown-link">Подбор пар</a></li>
+                        <li><a href="/coupling" class="lg-header__dropdown-link">Подбор пар</a></li>
                     </ul>
                 </button>
             </li>
