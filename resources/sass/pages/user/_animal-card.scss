@@ -1,0 +1,179 @@
+.animal-card {
+    padding: vw(58px) vw(92px) vw(163px);
+
+    .info {
+        display: flex;
+        align-items: flex-start;
+        gap: vw(122px);
+        margin-bottom: vw(60px);
+    }
+
+    .info__visual {
+        flex-basis: vw(467px);
+    }
+
+    .info__snapshot {
+        aspect-ratio: 1/1;
+        margin-bottom: vw(19px);
+        img {
+            @include image();
+        }
+    }
+
+    .info__gallery {
+        display: grid;
+        margin-bottom: vw(51px);
+        grid-template-columns: repeat(4, 1fr);
+        gap: vw(18px);
+    }
+
+    .info__image {
+        aspect-ratio: 1/1;
+        img {
+            @include image();
+        }
+    }
+
+    .info__children {
+        display: flex;
+        align-items: flex-start;
+        gap: vw(26px);
+    }
+
+    .info__label {
+        flex-basis: min-content;
+        text-transform: uppercase;
+        @include fs16();
+    }
+
+    .info__ul {
+        flex-basis: vw(320px);
+        @include fs16(400);
+    }
+
+    .info__li {
+        display: inline;
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    .info__data {
+        flex-basis: vw(639px);
+        display: grid;
+        gap: vw(10px);
+    }
+
+    .info__item {
+        display: flex;
+        align-items: flex-start;
+        gap: vw(49px);
+
+        & > * {
+            flex: 1;
+        }
+    }
+
+    .info__property {
+        text-transform: uppercase;
+        @include fs16();
+    }
+
+    .info__value {
+        @include fs16(400);
+    }
+
+    .gens {}
+
+    .gens__title {
+        text-align: center;
+        margin-bottom: vw(42px);
+        @include fs36();
+    }
+
+    .gens__params {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(68px);
+        margin-inline: auto;
+        margin-bottom: vw(53px);
+
+    }
+
+    .gens__param {
+        width: max-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        gap: vw(10px);
+
+        @include fs16(400);
+    }
+
+    .gens__param-label {}
+
+    .gens__select {
+        border: vw(1px) solid color('gray');
+        border-radius: 0.3em;
+        background-color: color('green', 'extra-light');
+        cursor: pointer;
+        padding: 0.3em 0.75em;
+        text-transform: uppercase;
+        @include fs16(400);
+
+    }
+
+    .gens__table {
+        display: flex;
+
+        & > * {
+            flex: 1;
+        }
+    }
+
+    .gens__column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        & > * {
+            flex: 1;
+        }
+    }
+
+    .gens__item {
+        height: max-content;
+        display: grid;
+        place-content: center;
+        padding: 10%;
+        border: vw(1px) solid color('gray');
+        background-color: color('green', 'extra-light');
+
+        & > * {
+            margin-inline: auto;
+        }
+    }
+
+    .gens__image {
+        aspect-ratio: 1/1;
+        max-width: 80%;
+        img {
+            @include image();
+        }
+    }
+
+    .gens__name {
+        margin-top: 0.3em;
+        text-transform: uppercase;
+        @include fs16();
+    }
+
+    .gens__breed {
+
+        @include fs16(400);
+    }
+
+
+}
