@@ -34,7 +34,7 @@
                         @mouseleave="showDropdown = false">
                         <li><a href="/search-animals" class="lg-header__dropdown-link">Поиск</a></li>
                         <li><a href="" class="lg-header__dropdown-link">Добавить</a></li>
-                        <li><a href="" class="lg-header__dropdown-link">Список</a></li>
+                        <li><a href="/animals" class="lg-header__dropdown-link">Список</a></li>
                         <li><a href="/coupling" class="lg-header__dropdown-link">Подбор пар</a></li>
                     </ul>
                 </button>
@@ -48,7 +48,7 @@
                         @mouseleave="showDropdown = false">
                         <li><a href="" class="lg-header__dropdown-link">Поиск</a></li>
                         <li><a href="" class="lg-header__dropdown-link">Добавить</a></li>
-                        <li><a href="" class="lg-header__dropdown-link">Список</a></li>
+                        <li><a href="/households" class="lg-header__dropdown-link">Список</a></li>
                     </ul>
                 </button>
             </li>
@@ -61,7 +61,7 @@
                         @mouseleave="showDropdown = false">
                         <li><a href="" class="lg-header__dropdown-link">Поиск</a></li>
                         <li><a href="" class="lg-header__dropdown-link">Добавить</a></li>
-                        <li><a href="" class="lg-header__dropdown-link">Список</a></li>
+                        <li><a href="/specialists" class="lg-header__dropdown-link">Список</a></li>
                     </ul>
                 </button>
             </li>

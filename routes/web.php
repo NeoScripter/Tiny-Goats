@@ -37,18 +37,34 @@ Route::get('/news/1', function () {
     return view('users.news-show');
 });
 
-Route::get('/search-animals', function () {
-    return view('users.search-animals');
+Route::get('/animals', function () {
+    return view('users.animals');
 });
 
 Route::get('/register', function () {
     return view('users.register');
 });
 
-Route::get('/animal/1', function () {
+Route::get('/animals/1', function () {
     return view('users.animal-card');
 });
 
 Route::get('/coupling', function () {
     return view('users.coupling');
+});
+
+Route::get('/households', function () {
+    return view('users.households');
+});
+
+Route::get('/households/1', function () {
+    return view('users.household-card');
+});
+
+Route::get('/specialists', function () {
+    return view('users.specialists');
+});
+
+Route::get('/specialists/1', function () {
+    return view('users.specialists-card');
 });

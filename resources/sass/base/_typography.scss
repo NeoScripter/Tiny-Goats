@@ -135,6 +135,18 @@
     }
 }
 
+@mixin fs32($font-weight: bold) {
+    font-size: vw(32px);
+    font-style: normal;
+    line-height: normal;
+
+    @if ($font-weight == bold) {
+        font-family: 'Bold';
+    } @else {
+        font-family: 'Regular';
+    }
+}
+
 @mixin fs36() {
     font-size: vw(36px);
     font-style: normal;

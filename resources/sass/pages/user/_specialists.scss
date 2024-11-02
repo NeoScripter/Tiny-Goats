@@ -1,11 +1,11 @@
-.user-seach-animal {
+.user-specialists {
     .list {
         padding: vw(61px) vw(121px) vw(115px);
     }
 
     .list__title {
         text-align: center;
-        margin-bottom: vw(44px);
+        margin-bottom: vw(29px);
         @include fs36();
     }
 
@@ -46,27 +46,6 @@
         @include hover() {
             background-color: color('green', 'extra-light');
         }
-    }
-
-    .list__categories {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: vw(29px);
-        gap: vw(50px);
-    }
-
-    .list__category {
-        transition: color 0.3s ease;
-        text-transform: uppercase;
-
-        @include hover() {
-            color:color('green');
-        }
-    }
-
-    .list__category--active {
-        color:color('green');
     }
 
     .list__keys {
