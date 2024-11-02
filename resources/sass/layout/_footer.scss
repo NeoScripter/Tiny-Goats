@@ -59,7 +59,12 @@
     row-gap: vw(13px);
     a {
         color: color("gray", "light");
+        transition: color 0.3s ease;
         @include fs15();
+
+        @include hover() {
+            color: color("green");
+        }
     }
 
     .footer__link--active {

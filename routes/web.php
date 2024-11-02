@@ -40,3 +40,7 @@ Route::get('/news/1', function () {
 Route::get('/search-animals', function () {
     return view('users.search-animals');
 });
+
+Route::get('/register', function () {
+    return view('users.register');
+});

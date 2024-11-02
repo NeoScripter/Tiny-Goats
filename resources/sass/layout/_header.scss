@@ -82,6 +82,7 @@
 }
 .lg-header__nav-dropdown {
     position: absolute;
+    z-index: 10;
     top: vw(28px);
     left: 50%;
     transform: translateX(-50%);
@@ -208,6 +209,7 @@
     position: relative;
 }
 .header__nav-dropdown {
+    z-index: 10;
     position: absolute;
     top: vw(28px);
     left: 50%;

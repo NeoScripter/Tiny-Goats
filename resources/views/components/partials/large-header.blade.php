@@ -3,7 +3,7 @@
     <div class="lg-header__headline">
 
         <div class="lg-header__signup">
-            <a href="" class="lg-header__signup-link">Регистрация</a>
+            <a href="/register" class="lg-header__signup-link">Регистрация</a>
 
             <div class="lg-header__user-icon">
                 <img src="{{ asset('images/svgs/user.svg') }}" alt="Иконка пользователя">

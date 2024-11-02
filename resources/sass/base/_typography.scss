@@ -12,7 +12,7 @@
     font-family: 'ExtraBold';
     src: url('/resources/fonts/Mulish-ExtraBold.woff2') format('woff2'),
         url('/resources/fonts/Mulish-ExtraBold.woff') format('woff');
-    font-weight: bold;
+    font-weight: 800;
     font-style: normal;
     font-display: swap;
 }
@@ -108,6 +108,8 @@
 
     @if ($font-weight == bold) {
         font-family: 'Bold';
+    } @else if ($font-weight == 900) {
+        font-family: 'ExtraBold';
     } @else {
         font-family: 'Regular';
     }
@@ -120,13 +122,17 @@
     line-height: 120%;
 }
 
-@mixin fs24() {
+@mixin fs24($font-weight: bold) {
     font-size: vw(24px);
     font-style: normal;
-    font-family: 'Bold';
-    font-weight: 700;
     line-height: 120%;
     letter-spacing: vw(0.12px);
+
+    @if ($font-weight == bold) {
+        font-family: 'Bold';
+    } @else {
+        font-family: 'Regular';
+    }
 }
 
 @mixin fs36() {

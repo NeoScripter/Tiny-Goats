@@ -3,7 +3,7 @@
     <div class="header__headline">
 
         <div class="header__signup">
-            <a href="" class="header__signup-link">Регистрация</a>
+            <a href="/register" class="header__signup-link">Регистрация</a>
 
             <div class="header__user-icon">
                 <img src="{{ asset('images/svgs/user.svg') }}" alt="Иконка пользователя">
