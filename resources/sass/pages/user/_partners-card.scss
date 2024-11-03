@@ -1,0 +1,48 @@
+.user-partners-card {
+    padding: vw(58px) vw(92px) vw(163px);
+
+    .info {
+        display: flex;
+        align-items: flex-start;
+        gap: vw(122px);
+        margin-bottom: vw(60px);
+    }
+
+    .info__visual {
+        flex-basis: vw(467px);
+    }
+
+    .info__snapshot {
+        aspect-ratio: 1/1;
+        margin-bottom: vw(19px);
+        img {
+            @include image();
+        }
+    }
+
+
+    .info__data {
+        flex-basis: vw(639px);
+        display: grid;
+        gap: vw(10px);
+    }
+
+    .info__item {
+        display: flex;
+        align-items: flex-start;
+        gap: vw(49px);
+
+        & > * {
+            flex: 1;
+        }
+    }
+
+    .info__property {
+        text-transform: uppercase;
+        @include fs16();
+    }
+
+    .info__value {
+        @include fs16(400);
+    }
+}

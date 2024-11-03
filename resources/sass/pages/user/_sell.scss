@@ -1,0 +1,76 @@
+.user-sell {
+    // News Section
+
+    .news {
+        padding: vw(51px) vw(122px) vw(97px);
+    }
+
+    .news__title {
+        margin-inline: auto;
+        text-align: center;
+        width: vw(900px);
+        margin-bottom: vw(66px);
+        @include fs36();
+    }
+
+    .news__subtitle {
+        margin-inline: auto;
+        text-align: center;
+        display: block;
+        width: vw(552px);
+        margin-bottom: vw(48px);
+        @include fs16(400);
+    }
+
+    .news__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: vw(20px);
+    }
+
+    .news__item {
+        flex: 1 0 32%;
+        border: vw(1px) solid color("gray", "extra-light");
+        background-color: color("white");
+    }
+
+    .news__content {
+        padding: 0 vw(16px);
+        text-align: center;
+
+    }
+
+    .news__image {
+        position: relative;
+        margin-bottom: vw(16px);
+        img {
+            @include image();
+        }
+    }
+
+    .news__heading {
+        margin-bottom: vw(10px);
+        @include fs24();
+    }
+
+    .news__description {
+        margin-bottom: vw(10px);
+        @include fs16(400);
+    }
+
+    .news__pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: vw(42px);
+        gap: vw(5px);
+    }
+
+    .news__page {
+        @include fs15();
+    }
+
+    .news__page--active {
+        color: color("green");
+    }
+}

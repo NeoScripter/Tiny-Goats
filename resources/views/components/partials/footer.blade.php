@@ -28,13 +28,13 @@
         <ul class="footer__ul">
             <li><a href="">О реестре</a></li>
             <li><a href="/news" class="{{ Request::is('news') ? 'footer__link--active' : '' }}">Новости</a></li>
-            <li><a href="">На продажу</a></li>
+            <li><a href="/sell" class="{{ Request::is('sell') ? 'footer__link--active' : '' }}">На продажу</a></li>
             <li><a href="faq" class="{{ Request::is('faq') ? 'footer__link--active' : '' }}">Вопросы</a></li>
             <li><a href="/animals" class="{{ Request::is('animals') ? 'footer__link--active' : '' }}">Животные</a></li>
             <li><a href="/specialists" class="{{ Request::is('specialists') ? 'footer__link--active' : '' }}">Специалисты</a></li>
             <li><a href="/rules" class="{{ Request::is('rules') ? 'footer__link--active' : '' }}">Правила</a></li>
             <li><a href="/households" class="{{ Request::is('households') ? 'footer__link--active' : '' }}">Хозяйства</a></li>
-            <li><a href="">Партнеры</a></li>
+            <li><a href="/partners" class="{{ Request::is('partners') ? 'footer__link--active' : '' }}">Партнеры</a></li>
         </ul>
     </nav>
 </footer>

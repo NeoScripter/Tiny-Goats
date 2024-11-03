@@ -68,3 +68,15 @@ Route::get('/specialists', function () {
 Route::get('/specialists/1', function () {
     return view('users.specialists-card');
 });
+
+Route::get('/sell', function () {
+    return view('users.sell');
+});
+
+Route::get('/partners', function () {
+    return view('users.partners');
+});
+
+Route::get('/partners/1', function () {
+    return view('users.partners-card');
+});

@@ -65,8 +65,8 @@
                     </ul>
                 </button>
             </li>
-            <li><a href="" class="lg-header__nav-link">На продажу</a></li>
-            <li><a href="" class="lg-header__nav-link">Партнеры</a></li>
+            <li><a href="/sell" class="lg-header__nav-link">На продажу</a></li>
+            <li><a href="/partners" class="lg-header__nav-link">Партнеры</a></li>
             <li><a href="" class="lg-header__nav-link">Контакты</a></li>
         </ul>
     </nav>
