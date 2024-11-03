@@ -1,0 +1,51 @@
+.user-contacts {
+    text-align: center;
+
+    .preview {
+        position: relative;
+        padding-block: vw(61px) vw(79px);
+        & > * {
+            margin-inline: auto;
+        }
+    }
+
+    .preview__title {
+        margin-bottom: vw(35px);
+        @include fs36();
+    }
+
+    .preview__uppercase {
+        margin-bottom: vw(42px);
+        margin-inline: auto;
+        width: vw(806px);
+        display: block;
+        color: color("green");
+        text-transform: uppercase;
+        @include fs16();
+    }
+
+    .preview__link {
+        margin-bottom: vw(12px);
+        display: block;
+        margin-inline: auto;
+        @include fs24(400);
+    }
+
+    .preview__socials {
+        margin-top: vw(42px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(14px);
+    }
+
+    .preview__social {
+        display: block;
+        width: vw(40px);
+        height: vw(40px);
+
+        img {
+            @include image(contain);
+        }
+    }
+}

@@ -1,0 +1,73 @@
+.user-search {
+    .results {
+        padding: vw(51px) vw(122px) vw(97px);
+
+        .results__search {
+            background-color: color("white");
+            border: vw(1px) solid color("green");
+            border-radius: 0.5em;
+            margin-bottom: vw(43px);
+            display: flex;
+            align-items: center;
+            width: vw(630px);
+
+            input {
+                flex: 1;
+                color: color("black");
+                caret-color: color("green");
+                margin-left: vw(10px);
+                @include fs16(400);
+
+                &::placeholder {
+                    color: color("gray");
+                }
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+        .results__search-btn {
+            @include btn-primary();
+        }
+
+        .results__ul {
+            display: grid;
+            gap: vw(35px);
+
+            h3 {
+                margin-bottom: vw(7px);
+                text-transform: uppercase;
+                color: color("green");
+                @include fs15();
+            }
+
+            a {
+                margin-bottom: vw(10px);
+                text-decoration: underline;
+                text-underline-offset: 0.1em;
+                @include fs20("Italic");
+            }
+
+            p {
+                @include fs16(400);
+            }
+        }
+
+        .news__pagination {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: vw(52px);
+            gap: vw(5px);
+        }
+
+        .news__page {
+            @include fs15();
+        }
+
+        .news__page--active {
+            color: color("green");
+        }
+    }
+}

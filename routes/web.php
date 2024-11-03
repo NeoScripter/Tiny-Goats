@@ -80,3 +80,11 @@ Route::get('/partners', function () {
 Route::get('/partners/1', function () {
     return view('users.partners-card');
 });
+
+Route::get('/contacts', function () {
+    return view('users.contacts');
+});
+
+Route::get('/search', function () {
+    return view('users.search');
+});

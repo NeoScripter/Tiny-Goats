@@ -67,7 +67,7 @@
             </li>
             <li><a href="/sell" class="header__nav-link">На продажу</a></li>
             <li><a href="/partners" class="header__nav-link">Партнеры</a></li>
-            <li><a href="" class="header__nav-link">Контакты</a></li>
+            <li><a href="/contacts" class="header__nav-link">Контакты</a></li>
         </ul>
     </nav>
 </header>

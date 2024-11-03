@@ -26,7 +26,7 @@
 
     <nav class="footer__nav">
         <ul class="footer__ul">
-            <li><a href="">О реестре</a></li>
+            <li><a href="/agenda" class="{{ Request::is('agenda') ? 'footer__link--active' : '' }}">О реестре</a></li>
             <li><a href="/news" class="{{ Request::is('news') ? 'footer__link--active' : '' }}">Новости</a></li>
             <li><a href="/sell" class="{{ Request::is('sell') ? 'footer__link--active' : '' }}">На продажу</a></li>
             <li><a href="faq" class="{{ Request::is('faq') ? 'footer__link--active' : '' }}">Вопросы</a></li>
