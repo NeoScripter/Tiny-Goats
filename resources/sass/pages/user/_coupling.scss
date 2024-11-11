@@ -1,7 +1,6 @@
 .coupling {
     padding: vw(58px) vw(92px) vw(163px);
 
-    .gens {}
 
     .gens__title {
         text-align: center;
@@ -36,7 +35,6 @@
         @include fs16(400);
     }
 
-    .gens__param-label {}
 
     .gens__select {
         border: vw(1px) solid color('gray');

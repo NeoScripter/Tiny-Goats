@@ -1,0 +1,124 @@
+.admin {
+    .admin__nav {
+        padding: vw(51px) vw(158px) vw(127px);
+    }
+    .admin__heading {
+        text-align: center;
+        margin-bottom: vw(100px);
+        @include fs36();
+    }
+
+    .admin__panel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: vw(70px);
+    }
+
+    .admin__changes {
+        padding: 0 vw(158px) vw(153px);
+    }
+
+    .admin__group {
+
+        h3 {
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: vw(40px);
+            @include fs36(bold);
+        }
+    }
+
+    .admin__links {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: vw(17px);
+
+        a {
+            text-transform: uppercase;
+        }
+
+        a:first-of-type {
+            @include btn-large();
+        }
+        a:last-of-type {
+            @include btn-large(color('green', 'light'), color('black'));
+            @include hover() {
+                background-color: color('green', 'extra-light');
+            }
+        }
+    }
+
+    .admin__subtitle {
+        text-align: center;
+        margin-bottom: vw(30px);
+        @include fs36();
+    }
+
+    .admin__table-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(30px);
+        width: vw(371px);
+        margin-inline: auto;
+        margin-bottom: vw(52px);
+
+    }
+
+    .admin__table-label {
+        text-transform: uppercase;
+        @include fs16(400);
+    }
+
+    .admin__btn {
+        border: vw(1px) solid color('black');
+        border-radius: 0.3em;
+        text-align: center;
+        background-color: color('green', 'extra-light');
+        cursor: pointer;
+        padding: 0.3em 0.75em;
+        width: vw(138px);
+        text-transform: uppercase;
+        @include fs16(400);
+    }
+
+
+    .admin__table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        width: 100%;
+
+        thead {
+            background-color: color('green', 'light');
+        }
+
+
+        th {
+            border: vw(1px) solid color('gray');
+            text-transform: uppercase;
+            padding: 0.2em;
+            @include fs20('Bold');
+        }
+
+        td {
+            border: vw(1px) solid color('gray');
+            max-width: vw(314px);
+            padding: 0.2em;
+            text-align: center;
+
+            @include fs20('Regular');
+        }
+
+        tbody {
+            th {
+                width: vw(30px);
+                height: vw(30px);
+
+                img {
+                    @include image();
+                }
+            }
+        }
+    }
+}

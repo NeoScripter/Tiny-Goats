@@ -147,11 +147,16 @@
     }
 }
 
-@mixin fs36() {
+@mixin fs36($font-weight: 800) {
     font-size: vw(36px);
     font-style: normal;
     font-family: 'ExtraBold';
-    font-weight: 800;
     line-height: 120%;
     letter-spacing: vw(0.18px);
+
+    @if ($font-weight == 800) {
+        font-family: 'ExtraBold';
+    } @else {
+        font-family: 'Bold';
+    }
 }

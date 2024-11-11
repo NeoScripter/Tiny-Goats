@@ -21,7 +21,7 @@
 }
 
 
-@mixin btn-large() {
+@mixin btn-large($bg: color('green'), $color: color('white')) {
     text-align: center;
     font-family: "SemiBold";
     font-size: vw(16px);
@@ -30,8 +30,8 @@
     line-height: 120%;
     letter-spacing: vw(0.08px);
     padding: vw(18px) vw(33px);
-    background-color: color('green');
-    color: color('white');
+    background-color: $bg;
+    color: $color;
     border-radius: 0.5em;
     transition: background-color 0.3s ease;
     width: max-content;
