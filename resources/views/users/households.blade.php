@@ -11,47 +11,17 @@
             <div class="list__seach-bar">
                 <input type="search" placeholder="Поиск по хозяйствам">
                 <button class="list__search-btn">Найти</button>
-                <button class="list__add-btn">Добавить животное</button>
+                <a href="/register" class="list__add-btn">Добавить хозяйство</a>
             </div>
 
             <div class="list__keys">
 
                 @php
-                    $letters = [
-                        'А',
-                        'Б',
-                        'В',
-                        'Г',
-                        'Д',
-                        'Е',
-                        'Ё',
-                        'Ж',
-                        'З',
-                        'И',
-                        'Й',
-                        'К',
-                        'Л',
-                        'М',
-                        'Н',
-                        'О',
-                        'П',
-                        'Р',
-                        'С',
-                        'Т',
-                        'У',
-                        'Ф',
-                        'Х',
-                        'Ц',
-                        'Ч',
-                        'Ш',
-                        'Щ',
-                        'Ъ',
-                        'Ы',
-                        'Ь',
-                        'Э',
-                        'Ю',
-                        'Я',
-                    ];
+                    $englishLetters = range('A', 'Z');
+
+                    $russianLetters = array_map(fn($code) => mb_chr($code, 'UTF-8'), range(0x0410, 0x042f));
+
+                    $letters = array_merge($englishLetters, $russianLetters);
                 @endphp
 
                 @foreach ($letters as $letter)
@@ -81,13 +51,14 @@
             </table>
 
             <div class="list__pagination">
-                <a href="" class="list__page"><</a>
-                <a href="" class="list__page list__page--active">20</a>
-                <a href="" class="list__page">40</a>
-                <a href="" class="list__page">60</a>
-                <a href="" class="list__page">80</a>
-                <a href="" class="list__page">100</a>
-                <a href="" class="list__page">></a>
+                <a href="" class="list__page">
+                    << /a>
+                        <a href="" class="list__page list__page--active">20</a>
+                        <a href="" class="list__page">40</a>
+                        <a href="" class="list__page">60</a>
+                        <a href="" class="list__page">80</a>
+                        <a href="" class="list__page">100</a>
+                        <a href="" class="list__page">></a>
             </div>
 
         </section>

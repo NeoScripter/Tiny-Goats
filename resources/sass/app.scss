@@ -16,6 +16,7 @@
 
 // Pages
 
+// User
 @import "pages/user/index";
 @import "pages/user/agenda";
 @import "pages/user/rules";
@@ -34,3 +35,8 @@
 @import "pages/user/partners";
 @import "pages/user/contacts";
 @import "pages/user/search";
+
+// Admin
+
+@import "pages/admin/index";
+@import "pages/admin/login";

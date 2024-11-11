@@ -32,39 +32,13 @@
                     Животные
                     <ul class="lg-header__nav-dropdown" x-cloak x-show="showDropdown"
                         @mouseleave="showDropdown = false">
-                        <li><a href="/search-animals" class="lg-header__dropdown-link">Поиск</a></li>
-                        <li><a href="" class="lg-header__dropdown-link">Добавить</a></li>
                         <li><a href="/animals" class="lg-header__dropdown-link">Список</a></li>
                         <li><a href="/coupling" class="lg-header__dropdown-link">Подбор пар</a></li>
                     </ul>
                 </button>
             </li>
-            <li>
-                <button class="lg-header__nav-btn" x-data="{ showDropdown: false, timer: null }"
-                    @mouseenter="clearTimeout(timer); showDropdown = true"
-                    @mouseleave="timer = setTimeout(() => showDropdown = false, 200)">
-                    Хозяйства
-                    <ul class="lg-header__nav-dropdown" x-cloak x-show="showDropdown"
-                        @mouseleave="showDropdown = false">
-                        <li><a href="" class="lg-header__dropdown-link">Поиск</a></li>
-                        <li><a href="" class="lg-header__dropdown-link">Добавить</a></li>
-                        <li><a href="/households" class="lg-header__dropdown-link">Список</a></li>
-                    </ul>
-                </button>
-            </li>
-            <li>
-                <button class="lg-header__nav-btn" x-data="{ showDropdown: false, timer: null }"
-                    @mouseenter="clearTimeout(timer); showDropdown = true"
-                    @mouseleave="timer = setTimeout(() => showDropdown = false, 200)">
-                    Специалисты
-                    <ul class="lg-header__nav-dropdown" x-cloak x-show="showDropdown"
-                        @mouseleave="showDropdown = false">
-                        <li><a href="" class="lg-header__dropdown-link">Поиск</a></li>
-                        <li><a href="" class="lg-header__dropdown-link">Добавить</a></li>
-                        <li><a href="/specialists" class="lg-header__dropdown-link">Список</a></li>
-                    </ul>
-                </button>
-            </li>
+            <li><a href="/households" class="lg-header__nav-link">Хозяйства</a></li>
+            <li><a href="/specialists" class="lg-header__nav-link">Специалисты</a></li>
             <li><a href="/sell" class="lg-header__nav-link">На продажу</a></li>
             <li><a href="/partners" class="lg-header__nav-link">Партнеры</a></li>
             <li><a href="/contacts" class="lg-header__nav-link">Контакты</a></li>

@@ -6,7 +6,7 @@
 
         <form class="gens">
 
-            <h1 class="gens__title">Родословная планируемого окоза</h1>
+            <h1 class="gens__title">Родословная планируемого окота</h1>
 
             <div class="gens__params">
                 <div class="gens__param">
