@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -93,8 +94,8 @@ Route::get('/search', function () {
 Route::get('/login', function () {
     return view('auth.login');
 })
-->middleware('guest')
-->name('login');
+    ->middleware('guest')
+    ->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', function () {
@@ -105,3 +106,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/login', [LoginController::class, 'showLogin'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'signOut'])->middleware('auth')->name('logout');
+
+Route::prefix('admin')
+    ->middleware('auth')
+    ->group(function () {
+        Route::resource('news', NewsController::class);
+    });

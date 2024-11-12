@@ -1,4 +1,4 @@
-.user-news {
+.admin-news {
     // News Section
 
     .news {
@@ -30,13 +30,8 @@
         gap: vw(34px);
     }
 
-    .news__category {
-        text-transform: uppercase;
-        @include fs15();
-    }
-
-    .news__category--active {
-        color: color("green");
+    .news__add {
+        @include btn-primary();
     }
 
     .news__grid {
@@ -49,6 +44,47 @@
         flex: 1 0 32%;
         border: vw(1px) solid color("gray", "extra-light");
         background-color: color("white");
+        position: relative;
+    }
+
+    .news__delete-button {
+        position: absolute;
+        background-color: color("red");
+        right: 0;
+        top: 0;
+        width: vw(34px);
+        aspect-ratio: 1/1;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        img {
+            aspect-ratio: 1/1;
+            width: vw(24px);
+            object-fit: contain;
+        }
+    }
+
+    .news__edit-link {
+        position: absolute;
+        background-color: color("green");
+        right: vw(34px);
+        top: 0;
+        width: vw(34px);
+        aspect-ratio: 1/1;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        img {
+            aspect-ratio: 1/1;
+            width: vw(20px);
+            object-fit: contain;
+        }
     }
 
     .news__content {
@@ -103,99 +139,28 @@
     }
 }
 
-.user-news-show {
-    // News Piece
+.pagination {
 
-    .piece {
-        padding: vw(51px) vw(122px) 0;
-        p {
-            max-width: 100%;
-            margin-block: 0.75em;
-            @include fs16(400);
-        }
-    }
-
-    .piece__title {
-        margin-bottom: 0.75em;
-        @include fs36();
-    }
-
-    .piece__image {
-        width: vw(550px);
-        height: vw(550px);
-        float: right;
-        margin: 0 0 vw(50px) vw(50px);
-
-        img {
-            @include image();
-        }
-    }
-
-    // News Section
-
-    .news {
-        padding: vw(73px) vw(122px) vw(97px);
-    }
-
-    .news__headline {
-        display: flex;
+    display: flex;
         align-items: center;
-        justify-content: space-between;
-        margin-bottom: vw(61px);
+        justify-content: center;
+        margin-top: vw(42px);
+        gap: vw(5px);
+
+
+    li a {
+        @include fs15();
     }
 
-    .news__title {
-        color: color("black");
-        @include fs36();
+    li a:hover {
+        color: color("green");
     }
 
-    .news__btn {
-        @include btn-large();
+    .active span {
+        color: color("green");
     }
 
-    .news__grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: vw(20px);
-    }
-
-    .news__item {
-        flex: 1 0 32%;
-        border: vw(1px) solid color("gray", "extra-light");
-        background-color: color("white");
-    }
-
-    .news__content {
-        padding: 0 vw(16px);
-    }
-
-    .news__image {
-        position: relative;
-        margin-bottom: vw(16px);
-        img {
-            @include image();
-        }
-    }
-
-    .news__heading {
-        margin-bottom: vw(25px);
-        @include fs24();
-    }
-
-    .news__description {
-        margin-bottom: vw(25px);
-        @include fs16(400);
-    }
-
-    .news__label {
-        position: absolute;
-        display: block;
-        left: 0;
-        bottom: 0;
-        padding: vw(7px) vw(15px);
-        width: min-content;
-        background-color: color("green");
-        color: color("white");
-        @include fs12();
+    .disabled span {
+        color: #999;
     }
 }
