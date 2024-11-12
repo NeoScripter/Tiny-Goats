@@ -23,7 +23,7 @@
                             </button>
                         </form>
 
-                        <a href="{{ route('news.edit',1) }}" class="news__edit-link">
+                        <a href="{{ route('news.edit', $news->id) }}" class="news__edit-link">
                             <img src="{{ asset('images/svgs/pencil.svg') }}" alt="Редактировать">
                         </a>
 
@@ -33,22 +33,11 @@
                         </div>
                         <div class="news__content">
                             <h4 class="news__heading">{{ $news->title }}</h4>
-                            <p class="news__description">{{ \Illuminate\Support\Str::limit($news->content, 50) }}</p>
+                            <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
                         </div>
                     </div>
                 @endforeach
             </div>
-
-{{--
-            <div class="news__pagination">
-                <a href="" class="news__page"><<</a>
-                <a href="" class="news__page news__page--active">1</a>
-                <a href="" class="news__page">2</a>
-                <a href="" class="news__page">3</a>
-                <a href="" class="news__page">4</a>
-                <a href="" class="news__page">5</a>
-                <a href="" class="news__page">>></a>
-            </div> --}}
 
             {{ $newsItems->links('vendor.pagination.default') }}
 

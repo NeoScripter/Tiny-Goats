@@ -12,8 +12,8 @@
                 <div class="admin__group">
                     <h3>Новости</h3>
                     <div class="admin__links">
-                        <a href="">добавить</a>
-                        <a href="">управлять</a>
+                        <a href="{{ route('news.create') }}">добавить</a>
+                        <a href="{{ route('news.index') }}">управлять</a>
                     </div>
                 </div>
                 <div class="admin__group">

@@ -67,7 +67,7 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        return view('news.edit', compact('news'));
+        return view('admin.news.edit', compact('news'));
     }
 
     /**
@@ -80,7 +80,7 @@ class NewsController extends Controller
             'content' => 'required|string',
             'categories' => 'required|array',
             'categories.*' => 'string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         // Handle the image upload if a new one is uploaded

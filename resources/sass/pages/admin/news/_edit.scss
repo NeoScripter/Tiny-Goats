@@ -1,0 +1,144 @@
+.admin-edit-news {
+    padding: vw(58px) vw(92px) vw(59px);
+
+    .edit-news {
+        display: flex;
+        align-items: flex-start;
+        gap: vw(82px);
+        margin-bottom: vw(105px);
+
+        & > * {
+            flex: 1;
+        }
+    }
+
+    .edit-news__visual {
+        flex-basis: vw(467px);
+    }
+
+    .edit-news__snapshot {
+        aspect-ratio: 1/1;
+        margin-bottom: vw(19px);
+        img {
+            @include image();
+        }
+
+        label {
+            cursor: pointer;
+        }
+
+        input {
+            display: none;
+        }
+    }
+
+    .edit-news__data {
+        flex-basis: vw(639px);
+        display: grid;
+        gap: vw(10px);
+
+        input {
+            width: vw(639px);
+            border: vw(1px) solid color('gray', 'extra-light');
+            padding: 0.2em;
+            @include fs16(400);
+        }
+
+        textarea {
+            width: 100%;
+        }
+
+        .ck-editor {
+            width: vw(639px);
+        }
+    }
+
+    .edit-news__item {
+        display: flex;
+        align-items: flex-start;
+        gap: vw(49px);
+
+        & > * {
+            flex: 1;
+        }
+    }
+
+    .edit-news__property {
+        text-transform: uppercase;
+        @include fs16();
+    }
+
+    .edit-news__value {
+        @include fs16(400);
+    }
+
+    .edit-news__label-title {
+        @include fs36();
+    }
+
+    .edit-news__label-edit {
+        @include fs16();
+    }
+
+    .edit-news__checkboxes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(35px);
+
+        label {
+            text-transform: uppercase;
+            @include fs16();
+        }
+
+        .edit-news__checkbox-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: vw(5px);
+            @include fs16(400);
+
+            input {
+                color: black;
+            }
+        }
+    }
+
+    .edit-news__btns {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(29px);
+        margin-top: vw(51px);
+
+        button {
+            flex-basis: vw(213px);
+        }
+    }
+
+    .edit-news__publish-btn {
+        text-transform: uppercase;
+        @include btn-large();
+    }
+
+    .edit-news__delete-btn {
+        text-transform: uppercase;
+        transition: opacity 0.3s ease;
+        @include btn-large($bg: color('red'));
+
+        @include hover() {
+            background-color: color('red');
+            opacity: 0.6;
+        }
+    }
+
+    .edit-news__error {
+        color: red;
+        display: block;
+        margin-inline: auto;
+        margin-top: 0.5em;
+        width: max-content;
+        @include fs15();
+    }
+
+}
