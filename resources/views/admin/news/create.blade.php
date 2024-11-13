@@ -11,7 +11,7 @@
                 <div class="edit-news__data">
                     <!-- Title Input -->
                     <label for="title" class="edit-news__label-title">Введите заголовок</label>
-                    <input type="text" name="title" id="title"
+                    <input type="text" name="title" id="title" value="{{ old('title') }}"
                         class="news__input" required>
                     @error('title')
                         <span class="edit-news__error">{{ $message }}</span>
@@ -19,7 +19,7 @@
 
                     <!-- Content Textarea -->
                     <label for="content" class="edit-news__label-edit">Введите текст</label>
-                    <textarea name="content" id="content" rows="6" class="wysiwyg-editor news__textarea" required></textarea>
+                    <textarea name="content" id="content" rows="6" class="wysiwyg-editor news__textarea">{!! old('content') !!}</textarea>
                     @error('content')
                         <span class="edit-news__error">{{ $message }}</span>
                     @enderror
@@ -31,7 +31,7 @@
                         <!-- Image Preview & File Upload -->
                         <label for="image">
                             <img id="imagePreview"
-                                src="{{ asset('images/pages/user/animal/placeholder.png') }}"
+                                src="{{ asset('images/partials/placeholder.webp') }}"
                                 alt="News Image">
                         </label>
                         <input type="file" name="image" id="image" accept="image/*" class="news__file-input"

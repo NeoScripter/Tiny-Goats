@@ -292,8 +292,10 @@
     }
 
     .news__image {
+        display: block;
         position: relative;
         margin-bottom: vw(16px);
+        height: vw(280px);
         img {
             @include image();
         }

@@ -19,6 +19,7 @@
     .edit-news__snapshot {
         aspect-ratio: 1/1;
         margin-bottom: vw(19px);
+        position: relative;
         img {
             @include image();
         }
@@ -30,6 +31,18 @@
         input {
             display: none;
         }
+
+        &::after {
+            content: 'загрузить фото';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-transform: uppercase;
+            text-decoration: underline;
+            pointer-events: none;
+            @include fs24();
+        }
     }
 
     .edit-news__data {
@@ -39,8 +52,8 @@
 
         input {
             width: vw(639px);
-            border: vw(1px) solid color('gray', 'extra-light');
-            padding: 0.2em;
+            border: vw(1px) solid color("gray", "extra-light");
+            padding: 0.3em;
             @include fs16(400);
         }
 
@@ -96,10 +109,45 @@
             align-items: center;
             justify-content: center;
             gap: vw(5px);
+            display: grid;
+            grid-template-columns: 1em auto;
+            gap: 1em;
             @include fs16(400);
 
             input {
-                color: black;
+                -webkit-appearance: none;
+                appearance: none;
+                background-color: #fff;
+                font: inherit;
+                color: currentColor;
+                width: 1.5em;
+                height: 1.5em;
+                border: 0.1em solid color('gray');
+                border-radius: 0.15em;
+                display: grid;
+                place-content: center;
+                cursor: pointer;
+
+                &::before {
+                    content: "";
+                    width: 0.85em;
+                    height: 0.85em;
+                    transform: scale(0);
+                    transition: 120ms transform ease-in-out;
+                    box-shadow: inset 1em 1em #000;
+                    transform-origin: bottom left;
+                    clip-path: polygon(
+                        14% 44%,
+                        0 65%,
+                        50% 100%,
+                        100% 16%,
+                        80% 0%,
+                        43% 62%
+                    );
+                }
+                &:checked::before {
+                    transform: scale(1);
+                }
             }
         }
     }
@@ -124,10 +172,10 @@
     .edit-news__delete-btn {
         text-transform: uppercase;
         transition: opacity 0.3s ease;
-        @include btn-large($bg: color('red'));
+        @include btn-large($bg: color("red"));
 
         @include hover() {
-            background-color: color('red');
+            background-color: color("red");
             opacity: 0.6;
         }
     }
@@ -140,5 +188,4 @@
         width: max-content;
         @include fs15();
     }
-
 }

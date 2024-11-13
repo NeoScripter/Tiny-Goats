@@ -9,36 +9,42 @@
             <h2 class="news__title">Новости и статьи</h2>
 
             <div class="news__categories">
-                <a href="" class="news__category news__category--active">Все</a>
-                <a href="" class="news__category">Новости</a>
-                <a href="" class="news__category">Статьи</a>
-                <a href="" class="news__category">События</a>
+                <a href="{{ route('user.news.index') }}" class="news__category {{ request('category') ? '' : 'news__category--active' }}">
+                    Все
+                </a>
+                <!-- Links for specific categories -->
+                <a href="{{ route('user.news.index', ['category' => 'Новости']) }}" class="news__category {{ request('category') === 'Новости' ? 'news__category--active' : '' }}">
+                    Новости
+                </a>
+                <a href="{{ route('user.news.index', ['category' => 'Статьи']) }}" class="news__category {{ request('category') === 'Статьи' ? 'news__category--active' : '' }}">
+                    Статьи
+                </a>
+                <a href="{{ route('user.news.index', ['category' => 'События']) }}" class="news__category {{ request('category') === 'События' ? 'news__category--active' : '' }}">
+                    События
+                </a>
             </div>
 
             <div class="news__grid">
-                @for ($i = 0; $i < 16; $i++)
+                @foreach ($news as $item)
                     <div class="news__item">
-                        <div class="news__image">
-                            <img src="{{ asset('images/pages/user/home/news/news-'.($i % 4 + 1).'.webp') }}" alt="image">
-                            <span class="news__label">Раздел новости</span>
-                        </div>
+                        <a href="{{ route('user.news.show', $item->id) }}" class="news__image">
+                            <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/partials/placeholder.webp') }}"
+                                alt="image">
+                            <span class="news__label">Раздел
+                                {{ \Illuminate\Support\Str::lower($item->categories[0]) }}</span>
+                        </a>
+
                         <div class="news__content">
-                            <h4 class="news__heading">Заголовок последней новости в несколько строк</h4>
-                            <p class="news__description">Описание в 1-2 строчки</p>
+                            <h4 class="news__heading">{{ $item->title }}</h4>
+                            <div class="news__description">{!! Str::limit($item->content, 50) !!}</div>
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
 
 
             <div class="news__pagination">
-                <a href="" class="news__page"><<</a>
-                <a href="" class="news__page news__page--active">1</a>
-                <a href="" class="news__page">2</a>
-                <a href="" class="news__page">3</a>
-                <a href="" class="news__page">4</a>
-                <a href="" class="news__page">5</a>
-                <a href="" class="news__page">>></a>
+                {{ $news->links('vendor.pagination.default') }}
             </div>
 
         </section>

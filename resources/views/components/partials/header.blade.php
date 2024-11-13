@@ -24,7 +24,7 @@
     <nav class="header__nav">
         <ul class="header__ul">
             <li><a href="/rules" class="header__nav-link {{ Request::is('rules') ? 'header__nav-link--active' : '' }}">Правила</a></li>
-            <li><a href="/news" class="header__nav-link {{ Request::is('news') ? 'header__nav-link--active' : '' }}">Новости</a></li>
+            <li><a href="{{ route('user.news.index') }}" class="header__nav-link {{ Route::is('user.news.index') ? 'header__nav-link--active' : '' }}">Новости</a></li>
             <li>
                 <button class="header__nav-btn" x-data="{ showDropdown: false, timer: null }"
                     @mouseenter="clearTimeout(timer); showDropdown = true"

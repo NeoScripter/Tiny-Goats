@@ -28,3 +28,18 @@ img {
 [x-cloak] {
     display: none !important;
 }
+
+.notification-popup {
+    position: fixed;
+    display: grid;
+    place-content: center;
+    padding: vw(15px) vw(30px);
+    border-radius: 1em;
+    background-color: color('white');
+    top: vw(100px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    columns: color('black');
+    @include fs16();
+}

@@ -93,8 +93,9 @@
 
     .news__image {
         position: relative;
+        display: block;
         margin-bottom: vw(16px);
-        aspect-ratio: 1/1;
+        height: vw(280px);
         img {
             @include image();
         }

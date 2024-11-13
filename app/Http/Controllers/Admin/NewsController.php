@@ -37,7 +37,7 @@ class NewsController extends Controller
             'content' => 'required|string',
             'categories' => 'required|array',
             'categories.*' => 'string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         // Handle the image upload
@@ -59,7 +59,8 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        return view('news.show', compact('news'));
+        $latest_news = News::latest()->take(4)->get();
+        return view('admin.news.show', compact('news', 'latest_news'));
     }
 
     /**

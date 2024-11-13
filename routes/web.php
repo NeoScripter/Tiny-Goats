@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\User\NewsController as UserNewsController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\News;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('users.index');
+    $latest_news = News::latest()->take(4)->get();
+    return view('users.index', compact('latest_news'));
 });
 
 Route::get('/agenda', function () {
-    return view('users.agenda');
+    $latest_news = News::latest()->take(4)->get();
+    return view('users.agenda', compact('latest_news'));
 });
 
 Route::get('/faq', function () {
@@ -31,13 +35,12 @@ Route::get('/rules', function () {
     return view('users.rules');
 });
 
-Route::get('/news', function () {
-    return view('users.news');
-});
+Route::get('/news/category/{category?}', [UserNewsController::class, 'index'])->name('user.news.index');
 
-Route::get('/news/1', function () {
-    return view('users.news-show');
-});
+Route::get('/news/{news}', function (News $news) {
+    $latest_news = News::latest()->take(4)->get();
+    return view('users.news-show', compact('news', 'latest_news'));
+})->name('user.news.show');
 
 Route::get('/animals', function () {
     return view('users.animals');

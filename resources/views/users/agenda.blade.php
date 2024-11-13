@@ -64,23 +64,24 @@
             <div class="news__headline">
                 <h2 class="news__title">Новости и статьи</h2>
 
-                <button class="news__btn">Смотреть все</button>
+                <a href="{{ route('user.news.index') }}" class="news__btn">Смотреть все</a>
             </div>
 
 
             <div class="news__grid">
-                @for ($i = 1; $i < 5; $i++)
+                @foreach ($latest_news as $news)
                     <div class="news__item">
-                        <div class="news__image">
-                            <img src="{{ asset("images/pages/user/home/news/news-$i.webp") }}" alt="image">
-                            <span class="news__label">Раздел новости</span>
-                        </div>
+                        <a href="{{ route('user.news.show', $news->id) }}" class="news__image">
+                            <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="image">
+                            <span class="news__label">Раздел
+                                {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>
+                        </a>
                         <div class="news__content">
-                            <h4 class="news__heading">Заголовок последней новости в несколько строк</h4>
-                            <p class="news__description">Описание в 1-2 строчки</p>
+                            <h4 class="news__heading">{{ $news->title }}</h4>
+                            <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
 
         </section>

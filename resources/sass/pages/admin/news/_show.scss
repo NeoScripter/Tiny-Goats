@@ -4,6 +4,7 @@
 
     .piece {
         padding: vw(51px) vw(122px) 0;
+        min-height: vw(600px);
         p {
             max-width: 100%;
             margin-block: 0.75em;
@@ -49,6 +50,12 @@
         @include btn-large();
     }
 
+    .news__btn--edit {
+        margin-bottom: vw(41px);
+        text-transform: uppercase;
+        margin-inline: auto;
+    }
+
     .news__grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -68,6 +75,7 @@
     .news__image {
         position: relative;
         margin-bottom: vw(16px);
+        height: vw(280px);
         img {
             @include image();
         }

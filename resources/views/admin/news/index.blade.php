@@ -15,7 +15,8 @@
             <div class="news__grid">
                 @foreach ($newsItems as $news)
                     <div class="news__item">
-                        <form method="POST" action="{{ route('news.destroy', $news->id) }}" onsubmit="return confirm('Вы уверены что хотите удалить данную новость?');">
+                        <form method="POST" action="{{ route('news.destroy', $news->id) }}"
+                            onsubmit="return confirm('Вы уверены что хотите удалить данную новость?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="news__delete-button">
@@ -27,10 +28,12 @@
                             <img src="{{ asset('images/svgs/pencil.svg') }}" alt="Редактировать">
                         </a>
 
-                        <div class="news__image">
-                            <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="image">
-                            <span class="news__label">Раздел {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>
-                        </div>
+                        <a href="{{ route('news.show', $news->id) }}" class="news__image">
+                            <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}"
+                                alt="image">
+                            <span class="news__label">Раздел
+                                {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>
+                        </a>
                         <div class="news__content">
                             <h4 class="news__heading">{{ $news->title }}</h4>
                             <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
@@ -44,6 +47,12 @@
         </section>
 
     </div>
+
+    @if (session('success'))
+        <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="notification-popup">
+           {{ session('success') }}
+        </div>
+    @endif
 
 
     <x-partials.footer />
