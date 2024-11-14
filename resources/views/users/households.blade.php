@@ -51,8 +51,7 @@
             </table>
 
             <div class="list__pagination">
-                <a href="" class="list__page">
-                    << /a>
+                <a href="" class="list__page"><</a>
                         <a href="" class="list__page list__page--active">20</a>
                         <a href="" class="list__page">40</a>
                         <a href="" class="list__page">60</a>

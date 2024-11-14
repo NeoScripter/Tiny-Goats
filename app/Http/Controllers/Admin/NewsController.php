@@ -59,7 +59,7 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        $latest_news = News::latest()->take(4)->get();
+        $latest_news = News::inRandomOrder()->take(4)->get();
         return view('admin.news.show', compact('news', 'latest_news'));
     }
 

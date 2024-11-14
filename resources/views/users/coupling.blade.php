@@ -32,7 +32,7 @@
             <div class="gens__table">
 
                 @php
-                    $cols = 2;
+                    $cols = 8;
                 @endphp
 
                 <div class="gens__column">

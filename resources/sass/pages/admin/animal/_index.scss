@@ -1,0 +1,169 @@
+.admin-animals {
+    // animals Section
+
+    .animals {
+        padding: vw(51px) vw(122px) vw(97px);
+    }
+
+    .animals__title {
+        margin-inline: auto;
+        text-align: center;
+        width: vw(900px);
+        margin-bottom: vw(38px);
+        @include fs36();
+    }
+
+    .animals__subtitle {
+        margin-inline: auto;
+        text-align: center;
+        display: block;
+        width: vw(552px);
+        margin-bottom: vw(48px);
+        @include fs16(400);
+    }
+
+    .animals__categories {
+        margin-block: vw(38px) vw(55px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(34px);
+    }
+
+    .animals__add {
+        @include btn-primary();
+    }
+
+    .animals__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: vw(20px);
+    }
+
+    .animals__item {
+        flex: 1 0 32%;
+        border: vw(1px) solid color("gray", "extra-light");
+        background-color: color("white");
+        position: relative;
+    }
+
+    .animals__delete-button {
+        position: absolute;
+        background-color: color("red");
+        right: 0;
+        top: 0;
+        width: vw(34px);
+        aspect-ratio: 1/1;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        img {
+            aspect-ratio: 1/1;
+            width: vw(24px);
+            object-fit: contain;
+        }
+    }
+
+    .animals__edit-link {
+        position: absolute;
+        background-color: color("green");
+        right: vw(34px);
+        top: 0;
+        width: vw(34px);
+        aspect-ratio: 1/1;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        img {
+            aspect-ratio: 1/1;
+            width: vw(20px);
+            object-fit: contain;
+        }
+    }
+
+    .animals__content {
+        padding: 0 vw(16px);
+        text-align: center;
+        padding-bottom: vw(20px);
+    }
+
+    .animals__image {
+        position: relative;
+        display: block;
+        margin-bottom: vw(16px);
+        height: vw(280px);
+        img {
+            @include image();
+        }
+    }
+
+    .animals__heading {
+        margin-bottom: vw(10px);
+        @include fs24();
+    }
+
+    .animals__description {
+        margin-bottom: vw(10px);
+        @include fs16(400);
+    }
+
+    .animals__label {
+        position: absolute;
+        display: block;
+        left: 0;
+        bottom: 0;
+        padding: vw(7px) vw(15px);
+        width: min-content;
+        background-color: color("green");
+        color: color("white");
+        @include fs12();
+    }
+
+    .animals__pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: vw(42px);
+        gap: vw(5px);
+    }
+
+    .animals__page {
+        @include fs15();
+    }
+
+    .animals__page--active {
+        color: color("green");
+    }
+}
+
+.pagination {
+
+    display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: vw(42px);
+        gap: vw(5px);
+
+
+    li a {
+        @include fs15();
+    }
+
+    li a:hover {
+        color: color("green");
+    }
+
+    .active span {
+        color: color("green");
+    }
+
+    .disabled span {
+        color: #999;
+    }
+}

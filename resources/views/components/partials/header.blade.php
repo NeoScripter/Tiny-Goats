@@ -37,7 +37,7 @@
                     </ul>
                 </button>
             </li>
-            <li><a href="/households" class="header__nav-link {{ Request::is('specialists') ? 'header__nav-link--active' : '' }}">Хозяйства</a></li>
+            <li><a href="/households" class="header__nav-link {{ Request::is('households') ? 'header__nav-link--active' : '' }}">Хозяйства</a></li>
             <li><a href="/specialists" class="header__nav-link {{ Request::is('specialists') ? 'header__nav-link--active' : '' }}">Специалисты</a></li>
             <li><a href="/sell" class="header__nav-link {{ Request::is('sell') ? 'header__nav-link--active' : '' }}">На продажу</a></li>
             <li><a href="/partners" class="header__nav-link {{ Request::is('partners') ? 'header__nav-link--active' : '' }}">Партнеры</a></li>

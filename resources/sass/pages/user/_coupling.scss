@@ -91,6 +91,8 @@
         }
     }
 
+    @include nth-flex(8);
+
     .gens__item {
         height: max-content;
         display: grid;

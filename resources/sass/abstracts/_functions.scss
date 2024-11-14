@@ -41,3 +41,20 @@
         define-limits($initial-screen-width, $initial-size, $large-screen-size) // Максимальное значение размера.
     );
 }
+
+@function calculate-flex($n) {
+    $flex-value: 1;
+    @for $i from 2 through $n {
+        $flex-value: $flex-value * 0.7;
+    }
+    @return $flex-value;
+}
+
+// Mixin to apply the flex value based on nth-of-type
+@mixin nth-flex($total) {
+    @for $i from 1 through $total {
+        .gens__column:nth-of-type(#{$i}) {
+            flex: calculate-flex($i);
+        }
+    }
+}

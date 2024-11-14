@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnimalController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\User\NewsController as UserNewsController;
 use App\Http\Controllers\Auth\LoginController;
@@ -18,12 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $latest_news = News::latest()->take(4)->get();
+    $latest_news = News::inRandomOrder()->take(4)->get();
     return view('users.index', compact('latest_news'));
 });
 
 Route::get('/agenda', function () {
-    $latest_news = News::latest()->take(4)->get();
+    $latest_news = News::inRandomOrder()->take(4)->get();
     return view('users.agenda', compact('latest_news'));
 });
 
@@ -38,7 +39,7 @@ Route::get('/rules', function () {
 Route::get('/news/category/{category?}', [UserNewsController::class, 'index'])->name('user.news.index');
 
 Route::get('/news/{news}', function (News $news) {
-    $latest_news = News::latest()->take(4)->get();
+    $latest_news = News::inRandomOrder()->take(4)->get();
     return view('users.news-show', compact('news', 'latest_news'));
 })->name('user.news.show');
 
@@ -114,4 +115,22 @@ Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
         Route::resource('news', NewsController::class);
+
+        // Animals
+
+        Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');
+
+        Route::get('/animals/create', [AnimalController::class, 'create'])->name('animals.create');
+
+        Route::post('/animals', [AnimalController::class, 'store'])->name('animals.store');
+
+        Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
+
+        Route::get('/animals/{animal}/edit', [AnimalController::class, 'edit'])->name('animals.edit');
+
+        Route::put('/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
+
+        Route::delete('/animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
+
+        Route::post('/animals/{animal}/move-image', [AnimalController::class, 'moveImageToFront'])->name('animals.moveImage');
     });

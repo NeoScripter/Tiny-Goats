@@ -20,7 +20,7 @@
 
                     <!-- Content Textarea -->
                     <label for="content" class="edit-news__label-edit">Введите текст</label>
-                    <textarea name="content" id="content" rows="6" class="wysiwyg-editor news__textarea" required>{!! old('content', $news->content) !!}</textarea>
+                    <textarea name="content" id="content" rows="6" class="wysiwyg-editor news__textarea">{!! old('content', $news->content) !!}</textarea>
                     @error('content')
                         <span class="edit-news__error">{{ $message }}</span>
                     @enderror
