@@ -60,7 +60,7 @@ class AnimalController extends Controller
         $imagePaths = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                if (count($imagePaths) >= 5) break;
+                if (count($imagePaths) >= 4) break;
                 $path = $image->store('animals_images', 'public');
                 $imagePaths[] = $path;
             }
@@ -103,12 +103,15 @@ class AnimalController extends Controller
     // Show the form for editing the specified animal
     public function edit(Animal $animal)
     {
-        return view('admin.animals.edit', compact('animal'));
+        $maleAnimals = Animal::where('isMale', true)->get();
+        $femaleAnimals = Animal::where('isMale', false)->get();
+        $allAnimals = Animal::all();
+        return view('admin.animals.edit', compact('animal', 'maleAnimals', 'femaleAnimals', 'allAnimals'));
     }
 
-    // Update the specified animal in storage
     public function update(Request $request, Animal $animal)
     {
+        // Validate the request data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'isMale' => 'required|boolean',
@@ -131,25 +134,71 @@ class AnimalController extends Controller
             'showOnMain' => 'nullable|boolean',
             'mother_id' => 'nullable|exists:animals,id',
             'father_id' => 'nullable|exists:animals,id',
+            'children' => 'nullable|array',
+            'children.*' => 'exists:animals,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
         ]);
 
-        // Handle image uploads and update existing images
-        $imagePaths = $animal->images ?? [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                if (count($imagePaths) >= 5) break; // Limit to 5 images
-                $path = $image->store('animals_images', 'public');
-                $imagePaths[] = $path;
-            }
-        }
-        $validated['images'] = array_slice($imagePaths, 0, 5);
+        // Handle checkboxes (they are not included in the request if unchecked)
+        $validated['forSale'] = $request->has('forSale');
+        $validated['showOnMain'] = $request->has('showOnMain');
 
+        // Handle existing images and new uploads
+        $sortedImages = json_decode($request->input('sortedImages'), true);
+
+        if ($request->hasFile('images')) {
+            $newImages = [];
+            foreach ($request->file('images') as $index => $image) {
+                if ($index >= 4) break;
+                $path = $image->store('animals_images', 'public');
+                $newImages[] = $path;
+            }
+            $validated['images'] = $newImages;
+        } else {
+            // Update the images with the new order from the input if no new images are uploaded
+            $validated['images'] = $sortedImages;
+        }
+
+        // Update all other fields in the animal model
         $animal->update($validated);
 
-        return redirect()->route('animals.index')->with('success', 'Животное успешно добавлено!');
-    }
+        if (isset($validated['children'])) {
+            $newChildrenIds = $validated['children'];
 
+            // Fetch current children based on the animal's gender
+            $currentChildren = $animal->isMale
+                ? Animal::where('father_id', $animal->id)->get()
+                : Animal::where('mother_id', $animal->id)->get();
+
+            // Remove current animal as a parent for children that are no longer selected
+            foreach ($currentChildren as $child) {
+                if (!in_array($child->id, $newChildrenIds)) {
+                    if ($animal->isMale) {
+                        $child->father_id = null;
+                    } else {
+                        $child->mother_id = null;
+                    }
+                    $child->save();
+                }
+            }
+
+            // Assign new children
+            foreach ($newChildrenIds as $childId) {
+                $child = Animal::find($childId);
+                if ($child) {
+                    if ($animal->isMale) {
+                        $child->father_id = $animal->id;
+                    } else {
+                        $child->mother_id = $animal->id;
+                    }
+                    $child->save();
+                }
+            }
+        }
+
+
+        return redirect()->route('animals.index')->with('success', 'Животное успешно обновлено!');
+    }
 
 
     // Remove the specified animal from storage

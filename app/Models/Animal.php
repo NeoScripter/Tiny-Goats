@@ -10,10 +10,28 @@ class Animal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'isMale', 'breed', 'forSale', 'color', 'eyeColor', 'birthDate',
-        'direction', 'siblings', 'hornedness', 'birthCountry', 'residenceCountry',
-        'status', 'labelNumber', 'height', 'rudiment', 'extraInfo',
-        'certificates', 'showOnMain', 'images', 'mother_id', 'father_id'
+        'name',
+        'isMale',
+        'breed',
+        'forSale',
+        'color',
+        'eyeColor',
+        'birthDate',
+        'direction',
+        'siblings',
+        'hornedness',
+        'birthCountry',
+        'residenceCountry',
+        'status',
+        'labelNumber',
+        'height',
+        'rudiment',
+        'extraInfo',
+        'certificates',
+        'showOnMain',
+        'images',
+        'mother_id',
+        'father_id'
     ];
 
     protected $casts = [
@@ -34,9 +52,21 @@ class Animal extends Model
         return $this->belongsTo(Animal::class, 'father_id');
     }
 
+    // Relationship to get children where the animal is the mother
+    public function childrenAsMother()
+    {
+        return $this->hasMany(Animal::class, 'mother_id');
+    }
+
+    // Relationship to get children where the animal is the father
+    public function childrenAsFather()
+    {
+        return $this->hasMany(Animal::class, 'father_id');
+    }
+
+    // Combined relationship for all children (both as mother and father)
     public function children()
     {
-        return Animal::where('mother_id', $this->id)
-                     ->orWhere('father_id', $this->id);
+        return $this->childrenAsMother()->union($this->childrenAsFather());
     }
 }

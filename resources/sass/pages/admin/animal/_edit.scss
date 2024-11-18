@@ -1,7 +1,7 @@
 .admin-animal-show {
     padding: vw(58px) vw(92px) vw(163px);
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
         width: vw(15px);
         height: vw(15px);
     }
@@ -34,7 +34,7 @@
         }
 
         &::after {
-            content: 'загрузить фото';
+            content: "загрузить фото";
             position: absolute;
             left: 50%;
             top: 50%;
@@ -66,7 +66,7 @@
     }
 
     .info__error {
-        color: color('red');
+        color: color("red");
         margin-top: 0.3em;
         @include fs12();
     }
@@ -83,18 +83,18 @@
 
     .info__gens-search {
         flex: 3;
-        border: vw(1px) solid color('gray');
+        border: vw(1px) solid color("gray");
         padding: 0.3em;
         width: 100%;
         border-radius: 0.3em;
         @include fs16(400);
 
         &:focus {
-            outline: 1px solid color('green');
+            outline: 1px solid color("green");
         }
     }
 
-    .info__add-btn  {
+    .info__add-btn {
         flex: 1;
         @include btn-primary();
     }
@@ -147,7 +147,7 @@
     }
 
     .info__select {
-        border: vw(1px) solid color('gray');
+        border: vw(1px) solid color("gray");
         padding: 0.3em;
         width: 100%;
         border-radius: 0.3em;
@@ -157,26 +157,137 @@
     .info__radio-label {
         display: flex;
         align-items: center;
-        gap: 0.5em;
+        justify-content: center;
+        gap: vw(5px);
+        display: grid;
+        grid-template-columns: 1em auto;
+        gap: 1em;
+        @include fs16(400);
 
         input {
-            width: vw(15px);
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            font: inherit;
+            color: currentColor;
+            width: 1.5em;
+            height: 1.5em;
+            border: 0.1em solid color("gray");
+            border-radius: 0.15em;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+
+            &::before {
+                content: "";
+                width: 0.85em;
+                height: 0.85em;
+                transform: scale(0);
+                transition: 120ms transform ease-in-out;
+                box-shadow: inset 1em 1em #000;
+                transform-origin: bottom left;
+                clip-path: polygon(
+                    14% 44%,
+                    0 65%,
+                    50% 100%,
+                    100% 16%,
+                    80% 0%,
+                    43% 62%
+                );
+            }
+            &:checked::before {
+                transform: scale(1);
+            }
+        }
+    }
+
+    .edit-animals__btns {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(29px);
+        margin-top: vw(51px);
+
+        button, a {
+            flex-basis: vw(213px);
+        }
+    }
+
+    .edit-animals__publish-btn {
+        text-transform: uppercase;
+        @include btn-large();
+    }
+
+    .edit-animals__delete-btn {
+        display: block;
+        text-transform: uppercase;
+        transition: opacity 0.3s ease;
+        @include btn-large($bg: color("red"));
+
+        @include hover() {
+            background-color: color("red");
+            opacity: 0.6;
+        }
+    }
+
+    .info__value--checkbox {
+        display: flex;
+        align-items: center;
+        gap: vw(5px);
+        display: grid;
+        grid-template-columns: 1em auto;
+        gap: 1em;
+        @include fs16(400);
+
+        input {
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #fff;
+            font: inherit;
+            color: currentColor;
+            width: 1.5em;
+            height: 1.5em;
+            border: 0.1em solid color("gray");
+            border-radius: 0.15em;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+
+            &::before {
+                content: "";
+                width: 0.85em;
+                height: 0.85em;
+                transform: scale(0);
+                transition: 120ms transform ease-in-out;
+                box-shadow: inset 1em 1em #000;
+                transform-origin: bottom left;
+                clip-path: polygon(
+                    14% 44%,
+                    0 65%,
+                    50% 100%,
+                    100% 16%,
+                    80% 0%,
+                    43% 62%
+                );
+            }
+            &:checked::before {
+                transform: scale(1);
+            }
         }
     }
 
     .info__input {
-        border: vw(1px) solid color('gray');
+        border: vw(1px) solid color("gray");
         padding: 0.3em;
         width: 100%;
         border-radius: 0.3em;
         @include fs16(400);
 
         &:focus {
-            outline: 1px solid color('green');
+            outline: 1px solid color("green");
         }
     }
 
-    .gens {}
 
     .gens__title {
         text-align: center;
@@ -191,7 +302,6 @@
         gap: vw(68px);
         margin-inline: auto;
         margin-bottom: vw(30px);
-
     }
 
     .gens__button {
@@ -211,17 +321,17 @@
         @include fs16(400);
     }
 
-    .gens__param-label {}
+    .gens__param-label {
+    }
 
     .gens__select {
-        border: vw(1px) solid color('gray');
+        border: vw(1px) solid color("gray");
         border-radius: 0.3em;
-        background-color: color('green', 'extra-light');
+        background-color: color("green", "extra-light");
         cursor: pointer;
         padding: 0.3em 0.75em;
         text-transform: uppercase;
         @include fs16(400);
-
     }
 
     .gens__table {
@@ -247,8 +357,8 @@
         display: grid;
         place-content: center;
         padding: 10%;
-        border: vw(1px) solid color('gray');
-        background-color: color('green', 'extra-light');
+        border: vw(1px) solid color("gray");
+        background-color: color("green", "extra-light");
 
         & > * {
             margin-inline: auto;
@@ -270,9 +380,6 @@
     }
 
     .gens__breed {
-
         @include fs16(400);
     }
-
-
 }

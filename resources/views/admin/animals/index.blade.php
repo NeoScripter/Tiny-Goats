@@ -9,7 +9,7 @@
             <h2 class="animals__title">Животные</h2>
 
             <div class="animals__categories">
-                <a href="{{ route('news.create') }}" class="animals__add">Добавить</a>
+                <a href="{{ route('animals.create') }}" class="animals__add">Добавить</a>
             </div>
 
             <div class="animals__grid">

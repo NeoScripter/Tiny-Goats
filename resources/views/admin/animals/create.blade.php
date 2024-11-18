@@ -177,7 +177,7 @@
                     <!-- For Sale -->
                     <div class="info__item">
                         <div class="info__property">На продажу</div>
-                        <div class="info__value">
+                        <div class="info__value info__value--checkbox">
                             <input type="checkbox" name="forSale" value="1"
                                 {{ old('forSale') ? 'checked' : '' }}>
                         </div>
@@ -190,7 +190,7 @@
                     <!-- Show on Main -->
                     <div class="info__item">
                         <div class="info__property">Показывать на главной</div>
-                        <div class="info__value">
+                        <div class="info__value info__value--checkbox">
                             <input type="checkbox" name="showOnMain" value="1"
                                 {{ old('showOnMain') ? 'checked' : '' }}>
                         </div>
@@ -201,6 +201,11 @@
                     @enderror
 
                 </div>
+            </div>
+            <div class="edit-animals__btns">
+                <button type="submit" class="edit-animals__publish-btn">Опубликовать</button>
+                <!-- Delete Button -->
+                <a href="{{ route('animals.index') }}" class="edit-animals__delete-btn">Удалить</a>
             </div>
         </form>
 
@@ -215,19 +220,16 @@
             const mainImagePreview = document.getElementById('mainImagePreview');
             const galleryPreview = document.getElementById('galleryPreview');
 
-            // Clear the gallery before adding new images
             galleryPreview.innerHTML = '';
 
             if (files.length > 0) {
-                // Display the first image in the main image preview
                 const mainReader = new FileReader();
                 mainReader.onload = function(e) {
                     mainImagePreview.src = e.target.result;
                 };
                 mainReader.readAsDataURL(files[0]);
 
-                // Display the remaining images in the gallery
-                for (let i = 1; i < files.length; i++) {
+                for (let i = 1; i < Math.min(files.length, 4); i++) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         const galleryImage = document.createElement('div');
@@ -247,7 +249,6 @@
                 filteredAnimals: [],
                 selectedChildren: [],
 
-                // Filter animals based on the search query
                 filterAnimals() {
                     if (this.searchQuery.length > 0) {
                         this.filteredAnimals = this.allAnimals.filter(animal =>
@@ -258,7 +259,6 @@
                     }
                 },
 
-                // Add an animal to the list of selected children
                 selectAnimal(animal) {
                     if (!this.selectedChildren.some(child => child.id === animal.id)) {
                         this.selectedChildren.push(animal);
@@ -267,7 +267,6 @@
                     this.filteredAnimals = [];
                 },
 
-                // Add animal by pressing the button (if exact match)
                 addAnimal() {
                     const matchedAnimal = this.allAnimals.find(animal =>
                         animal.name.toLowerCase() === this.searchQuery.toLowerCase()
@@ -277,7 +276,6 @@
                     }
                 },
 
-                // Remove a child from the selected list
                 removeChild(index) {
                     this.selectedChildren.splice(index, 1);
                 }
