@@ -19,12 +19,16 @@ class AnimalController extends Controller
     // Show the form for creating a new animal
     public function create()
     {
-        return view('admin.animals.create');
+        $maleAnimals = Animal::where('isMale', true)->get();
+        $femaleAnimals = Animal::where('isMale', false)->get();
+        $allAnimals = Animal::all();
+        return view('admin.animals.create', compact('maleAnimals', 'femaleAnimals', 'allAnimals'));
     }
 
     // Store a newly created animal in storage
     public function store(Request $request)
     {
+        // Validate the request data, including the children array
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'isMale' => 'required|boolean',
@@ -47,6 +51,8 @@ class AnimalController extends Controller
             'showOnMain' => 'nullable|boolean',
             'mother_id' => 'nullable|exists:animals,id',
             'father_id' => 'nullable|exists:animals,id',
+            'children' => 'nullable|array',
+            'children.*' => 'exists:animals,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
         ]);
 
@@ -61,10 +67,30 @@ class AnimalController extends Controller
         }
         $validated['images'] = $imagePaths;
 
-        Animal::create($validated);
+        // Create the animal record
+        $animal = Animal::create($validated);
+
+        // Attach children to the newly created animal as either mother or father
+        if ($request->has('children') && is_array($validated['children'])) {
+            foreach ($validated['children'] as $childId) {
+                $child = Animal::find($childId);
+                if ($child) {
+                    // Assign the new animal as the parent
+                    if ($animal->isMale) {
+                        // If the animal is male, set as father
+                        $child->father_id = $animal->id;
+                    } else {
+                        // If the animal is female, set as mother
+                        $child->mother_id = $animal->id;
+                    }
+                    $child->save();
+                }
+            }
+        }
 
         return redirect()->route('animals.index')->with('success', 'Животное успешно добавлено!');
     }
+
 
 
 
@@ -142,22 +168,22 @@ class AnimalController extends Controller
     }
 
     public function moveImageToFront(Request $request, Animal $animal)
-{
-    $validated = $request->validate([
-        'image' => 'required|string',
-    ]);
+    {
+        $validated = $request->validate([
+            'image' => 'required|string',
+        ]);
 
-    $images = $animal->images ?? [];
-    $imageToMove = $validated['image'];
+        $images = $animal->images ?? [];
+        $imageToMove = $validated['image'];
 
-    if (in_array($imageToMove, $images)) {
-        // Remove the image from its current position
-        $images = array_filter($images, fn($img) => $img !== $imageToMove);
-        // Add the image to the beginning
-        array_unshift($images, $imageToMove);
-        $animal->update(['images' => $images]);
+        if (in_array($imageToMove, $images)) {
+            // Remove the image from its current position
+            $images = array_filter($images, fn($img) => $img !== $imageToMove);
+            // Add the image to the beginning
+            array_unshift($images, $imageToMove);
+            $animal->update(['images' => $images]);
+        }
+
+        return redirect()->route('animals.edit', $animal->id)->with('success', 'Image moved to front successfully.');
     }
-
-    return redirect()->route('animals.edit', $animal->id)->with('success', 'Image moved to front successfully.');
-}
 }

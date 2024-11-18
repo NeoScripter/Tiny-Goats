@@ -36,7 +36,7 @@ class Animal extends Model
 
     public function children()
     {
-        return $this->hasMany(Animal::class, 'mother_id')
-            ->orWhere('father_id', $this->id);
+        return Animal::where('mother_id', $this->id)
+                     ->orWhere('father_id', $this->id);
     }
 }

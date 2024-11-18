@@ -29,8 +29,10 @@
                         </a>
 
                         <a href="{{ route('animals.show', $animal->id) }}" class="animals__image">
-                            <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                alt="image">
+
+                            <img src="{{ isset($animal->images) && is_array($animal->images) && !empty($animal->images) && $animal->images[0]
+                            ? asset('storage/' . $animal->images[0])
+                            : asset('images/partials/placeholder.webp') }}" alt="Animal Image">
                         </a>
                         <div class="animals__content">
                             <h4 class="animals__heading">{{ $animal->name }}</h4>
