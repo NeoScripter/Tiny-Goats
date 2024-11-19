@@ -161,7 +161,7 @@
                     <x-form-input label="Номер чипа/бирки" name="labelNumber" value="{{ old('labelNumber') }}" />
 
                     <!-- height -->
-                    <x-form-input label="Рост в 1;2;3 года" name="height" value="{{ old('height') }}" />
+                    <x-form-input label="Рост в 1; 2; 3 года" name="height" value="{{ old('height') }}" />
 
                     <!-- rudiment -->
                     <x-form-input label="Рудименты" name="rudiment" value="{{ old('rudiment') }}" />

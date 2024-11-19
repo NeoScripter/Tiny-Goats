@@ -93,11 +93,29 @@
         padding-bottom: vw(20px);
     }
 
+    .news__categories {
+        margin-block: vw(38px) vw(55px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(34px);
+    }
+
+    .news__category {
+        text-transform: uppercase;
+        @include fs15();
+    }
+
+    .news__category--active {
+        color: color("green");
+    }
+
     .animals__image {
         position: relative;
         display: block;
         margin-bottom: vw(16px);
         height: vw(280px);
+        z-index: 2;
         img {
             @include image();
         }

@@ -54,6 +54,7 @@
     }
 
     .info__image {
+        cursor: pointer;
         aspect-ratio: 1/1;
         img {
             @include image();
@@ -286,100 +287,5 @@
         &:focus {
             outline: 1px solid color("green");
         }
-    }
-
-
-    .gens__title {
-        text-align: center;
-        margin-bottom: vw(42px);
-        @include fs36();
-    }
-
-    .gens__params {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: vw(68px);
-        margin-inline: auto;
-        margin-bottom: vw(30px);
-    }
-
-    .gens__button {
-        margin-inline: auto;
-        margin-bottom: vw(53px);
-        @include btn-primary();
-    }
-
-    .gens__param {
-        width: max-content;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-transform: uppercase;
-        gap: vw(10px);
-
-        @include fs16(400);
-    }
-
-    .gens__param-label {
-    }
-
-    .gens__select {
-        border: vw(1px) solid color("gray");
-        border-radius: 0.3em;
-        background-color: color("green", "extra-light");
-        cursor: pointer;
-        padding: 0.3em 0.75em;
-        text-transform: uppercase;
-        @include fs16(400);
-    }
-
-    .gens__table {
-        display: flex;
-
-        & > * {
-            flex: 1;
-        }
-    }
-
-    .gens__column {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        & > * {
-            flex: 1;
-        }
-    }
-
-    .gens__item {
-        height: max-content;
-        display: grid;
-        place-content: center;
-        padding: 10%;
-        border: vw(1px) solid color("gray");
-        background-color: color("green", "extra-light");
-
-        & > * {
-            margin-inline: auto;
-        }
-    }
-
-    .gens__image {
-        aspect-ratio: 1/1;
-        max-width: 80%;
-        img {
-            @include image();
-        }
-    }
-
-    .gens__name {
-        margin-top: 0.3em;
-        text-transform: uppercase;
-        @include fs16();
-    }
-
-    .gens__breed {
-        @include fs16(400);
     }
 }

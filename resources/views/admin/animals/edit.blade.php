@@ -2,238 +2,242 @@
 
     <x-partials.header />
 
-    <div class="admin-animal-show">
+    @isset($animal)
 
-        <form method="POST" action="{{ route('animals.update', $animal->id) }}" enctype="multipart/form-data"
-            x-data="animalSearch()">
-            @csrf
-            @method('PUT')
+        <div class="admin-animal-show">
 
-            <div class="info">
+            <form method="POST" action="{{ route('animals.update', $animal->id) }}" enctype="multipart/form-data"
+                x-data="animalSearch()">
+                @csrf
+                @method('PUT')
 
-                <!-- Main Visual Section -->
-                <div class="info__visual">
-                    <!-- Main Image Preview -->
-                    <div class="info__snapshot">
-                        <label for="images">
-                            <img id="mainImagePreview"
-                                src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                alt="Main Image">
-                        </label>
-                        <input type="file" name="images[]" id="images" accept="image/*" multiple
-                            onchange="previewImages(event)">
-                    </div>
+                <div class="info">
 
-                    <div class="info__gallery" id="galleryPreview">
-                        @foreach ($animal->images as $index => $image)
-                            <div class="info__image" onclick="moveExistingImageToFront({{ $index }})">
-                                <img src="{{ asset('storage/' . $image) }}" alt="Gallery Image">
+                    <!-- Main Visual Section -->
+                    <div class="info__visual">
+                        <!-- Main Image Preview -->
+                        <div class="info__snapshot">
+                            <label for="images">
+                                <img id="mainImagePreview"
+                                    src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                    alt="Main Image">
+                            </label>
+                            <input type="file" name="images[]" id="images" accept="image/*" multiple
+                                onchange="previewImages(event)">
+                        </div>
+
+                        <div class="info__gallery" id="galleryPreview">
+                            @foreach ($animal->images as $index => $image)
+                                <div class="info__image" onclick="moveExistingImageToFront({{ $index }})">
+                                    <img src="{{ asset('storage/' . $image) }}" alt="Gallery Image">
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Hidden input to store the reordered image paths -->
+                        <input type="hidden" name="sortedImages" id="sortedImages"
+                            value="{{ json_encode($animal->images) }}">
+
+                        <!-- Children Selection Section -->
+                        <div class="info__children">
+                            <h3 class="info__label">Потомство</h3>
+
+                            <!-- Search Input -->
+                            <div class="info__search">
+                                <input type="search" x-model="searchQuery" placeholder="Поиск животного..."
+                                    class="info__gens-search" @input="filterAnimals">
+                                <button type="button" @click="addAnimal()" class="info__add-btn">Добавить</button>
                             </div>
-                        @endforeach
+
+                            <!-- Dropdown List for Matching Animals -->
+                            <ul class="info__dropdown" x-show="filteredAnimals.length > 0 && searchQuery !== ''">
+                                <template x-for="animal in filteredAnimals" :key="animal.id">
+                                    <li class="info__li">
+                                        <a href="#" @click.prevent="selectAnimal(animal)" x-text="animal.name"></a>
+                                    </li>
+                                </template>
+                            </ul>
+
+                            <!-- List of Selected Children -->
+                            <ul class="info__ul">
+                                <template x-for="(child, index) in selectedChildren" :key="child.id">
+                                    <li class="info__li">
+                                        <input type="hidden" name="children[]" :value="child.id">
+                                        <span x-text="child.name"></span>
+                                        <button type="button" @click="removeChild(index)"
+                                            class="info__remove-btn">&times;</button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
                     </div>
 
-                    <!-- Hidden input to store the reordered image paths -->
-                    <input type="hidden" name="sortedImages" id="sortedImages"
-                        value="{{ json_encode($animal->images) }}">
+                    <!-- Form Data Section -->
+                    <div class="info__data">
+                        <x-form-input label="Кличка" name="name" value="{{ old('name', $animal->name) }}" />
 
-                    <!-- Children Selection Section -->
-                    <div class="info__children">
-                        <h3 class="info__label">Потомство</h3>
+                        <!-- Gender -->
+                        <div class="info__item">
+                            <div class="info__property">Пол</div>
+                            <div class="info__value">
+                                <label class="info__radio-label">
+                                    <input type="radio" name="isMale" value="1"
+                                        {{ old('isMale', $animal->isMale) == '1' ? 'checked' : '' }}>
+                                    М
+                                </label>
+                                <label class="info__radio-label">
+                                    <input type="radio" name="isMale" value="0"
+                                        {{ old('isMale', $animal->isMale) == '0' ? 'checked' : '' }}>
+                                    Ж
+                                </label>
+                            </div>
+                        </div>
+                        @error('isMale')
+                            <div class="info__error info__error--shifted">{{ $message }}</div>
+                        @enderror
 
-                        <!-- Search Input -->
-                        <div class="info__search">
-                            <input type="search" x-model="searchQuery" placeholder="Поиск животного..."
-                                class="info__gens-search" @input="filterAnimals">
-                            <button type="button" @click="addAnimal()" class="info__add-btn">Добавить</button>
+                        <!-- Breed -->
+                        <x-form-input label="Порода, помесь пород" name="breed"
+                            value="{{ old('breed', $animal->breed) }}" />
+
+                        <!-- Color -->
+                        <x-form-input label="Окрас" name="color" value="{{ old('color', $animal->color) }}" />
+
+                        <!-- eyeColor -->
+                        <x-form-input label="Цвет глаз" name="eyeColor" value="{{ old('eyeColor', $animal->eyeColor) }}" />
+
+                        <!-- Birth Date -->
+                        <div class="info__item">
+                            <div class="info__property">Дата рождения</div>
+                            <div class="info__value">
+                                <input type="date" name="birthDate" value="{{ old('birthDate', $animal->birthDate) }}"
+                                    class="info__input">
+                            </div>
                         </div>
 
-                        <!-- Dropdown List for Matching Animals -->
-                        <ul class="info__dropdown" x-show="filteredAnimals.length > 0 && searchQuery !== ''">
-                            <template x-for="animal in filteredAnimals" :key="animal.id">
-                                <li class="info__li">
-                                    <a href="#" @click.prevent="selectAnimal(animal)" x-text="animal.name"></a>
-                                </li>
-                            </template>
-                        </ul>
+                        <!-- Direction -->
+                        <x-form-input label="Направление" name="direction"
+                            value="{{ old('direction', $animal->direction) }}" />
 
-                        <!-- List of Selected Children -->
-                        <ul class="info__ul">
-                            <template x-for="(child, index) in selectedChildren" :key="child.id">
-                                <li class="info__li">
-                                    <input type="hidden" name="children[]" :value="child.id">
-                                    <span x-text="child.name"></span>
-                                    <button type="button" @click="removeChild(index)"
-                                        class="info__remove-btn">&times;</button>
-                                </li>
-                            </template>
-                        </ul>
+                        <!-- Siblings -->
+                        <x-form-input label="В числе скольких рождён(на)" name="siblings"
+                            value="{{ old('siblings', $animal->siblings) }}" />
+
+                        <!-- Hornedness -->
+                        <x-form-input label="Рогатость" name="hornedness"
+                            value="{{ old('hornedness', $animal->hornedness) }}" />
+
+                        <!-- Mother -->
+                        <div class="info__item">
+                            <div class="info__property">Мама</div>
+                            <div class="info__value">
+                                <select name="mother_id" class="info__select">
+                                    <option value="">-- Выбрать мать --</option>
+                                    @foreach ($femaleAnimals as $female)
+                                        <option value="{{ $female->id }}"
+                                            {{ old('mother_id', $animal->mother_id) == $female->id ? 'selected' : '' }}>
+                                            {{ $female->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        @error('mother_id')
+                            <div class="info__error info__error--shifted">{{ $message }}</div>
+                        @enderror
+
+                        <!-- Father -->
+                        <div class="info__item">
+                            <div class="info__property">Папа</div>
+                            <div class="info__value">
+                                <select name="father_id" class="info__select">
+                                    <option value="">-- Выбрать отца --</option>
+                                    @foreach ($maleAnimals as $male)
+                                        <option value="{{ $male->id }}"
+                                            {{ old('father_id', $animal->father_id) == $male->id ? 'selected' : '' }}>
+                                            {{ $male->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        @error('father_id')
+                            <div class="info__error info__error--shifted">{{ $message }}</div>
+                        @enderror
+
+                        <!-- birthCountry -->
+                        <x-form-input label="Страна рождения" name="birthCountry"
+                            value="{{ old('birthCountry', $animal->birthCountry) }}" />
+
+                        <!-- residenceCountry -->
+                        <x-form-input label="Страна проживания" name="residenceCountry"
+                            value="{{ old('residenceCountry', $animal->residenceCountry) }}" />
+
+                        <!-- Status -->
+                        <x-form-input label="Статус" name="status" value="{{ old('status', $animal->status) }}" />
+
+                        <!-- labelNumber -->
+                        <x-form-input label="Номер чипа/бирки" name="labelNumber"
+                            value="{{ old('labelNumber', $animal->labelNumber) }}" />
+
+                        <!-- height -->
+                        <x-form-input label="Рост в 1; 2; 3 года" name="height"
+                            value="{{ old('height', $animal->height) }}" />
+
+                        <!-- rudiment -->
+                        <x-form-input label="Рудименты" name="rudiment"
+                            value="{{ old('rudiment', $animal->rudiment) }}" />
+
+                        <!-- extraInfo -->
+                        <x-form-textarea label="Дополнительная информация" name="extraInfo"
+                            value="{{ old('extraInfo', $animal->extraInfo) }}" rows="3" />
+
+                        <!-- Certificates -->
+                        <x-form-textarea label="Тесты и сертификаты" name="certificates"
+                            value="{{ old('certificates', $animal->certificates) }}" rows="3" />
+
+                        <!-- For Sale -->
+                        <div class="info__item">
+                            <div class="info__property">На продажу</div>
+                            <div class="info__value info__value--checkbox">
+                                <input type="checkbox" name="forSale" value="1"
+                                    {{ old('forSale', $animal->forSale) ? 'checked' : '' }}>
+                            </div>
+                        </div>
+
+                        @error('forSale')
+                            <div class="info__error info__error--shifted">{{ $message }}</div>
+                        @enderror
+
+                        <!-- Show on Main -->
+                        <div class="info__item">
+                            <div class="info__property">Показывать на главной</div>
+                            <div class="info__value info__value--checkbox">
+                                <input type="checkbox" name="showOnMain" value="1"
+                                    {{ old('showOnMain', $animal->showOnMain) ? 'checked' : '' }}>
+                            </div>
+                        </div>
+
+                        @error('showOnMain')
+                            <div class="info__error info__error--shifted">{{ $message }}</div>
+                        @enderror
+
                     </div>
                 </div>
-
-                <!-- Form Data Section -->
-                <div class="info__data">
-                    <x-form-input label="Кличка" name="name" value="{{ old('name', $animal->name) }}" />
-
-                    <!-- Gender -->
-                    <div class="info__item">
-                        <div class="info__property">Пол</div>
-                        <div class="info__value">
-                            <label class="info__radio-label">
-                                <input type="radio" name="isMale" value="1"
-                                    {{ old('isMale', $animal->isMale) == '1' ? 'checked' : '' }}>
-                                М
-                            </label>
-                            <label class="info__radio-label">
-                                <input type="radio" name="isMale" value="0"
-                                    {{ old('isMale', $animal->isMale) == '0' ? 'checked' : '' }}>
-                                Ж
-                            </label>
-                        </div>
-                    </div>
-                    @error('isMale')
-                        <div class="info__error info__error--shifted">{{ $message }}</div>
-                    @enderror
-
-                    <!-- Breed -->
-                    <x-form-input label="Порода, помесь пород" name="breed"
-                        value="{{ old('breed', $animal->breed) }}" />
-
-                    <!-- Color -->
-                    <x-form-input label="Окрас" name="color" value="{{ old('color', $animal->color) }}" />
-
-                    <!-- eyeColor -->
-                    <x-form-input label="Цвет глаз" name="eyeColor" value="{{ old('eyeColor', $animal->eyeColor) }}" />
-
-                    <!-- Birth Date -->
-                    <div class="info__item">
-                        <div class="info__property">Дата рождения</div>
-                        <div class="info__value">
-                            <input type="date" name="birthDate" value="{{ old('birthDate', $animal->birthDate) }}"
-                                class="info__input">
-                        </div>
-                    </div>
-
-                    <!-- Direction -->
-                    <x-form-input label="Направление" name="direction"
-                        value="{{ old('direction', $animal->direction) }}" />
-
-                    <!-- Siblings -->
-                    <x-form-input label="В числе скольких рождён(на)" name="siblings"
-                        value="{{ old('siblings', $animal->siblings) }}" />
-
-                    <!-- Hornedness -->
-                    <x-form-input label="Рогатость" name="hornedness"
-                        value="{{ old('hornedness', $animal->hornedness) }}" />
-
-                    <!-- Mother -->
-                    <div class="info__item">
-                        <div class="info__property">Мама</div>
-                        <div class="info__value">
-                            <select name="mother_id" class="info__select">
-                                <option value="">-- Выбрать мать --</option>
-                                @foreach ($femaleAnimals as $female)
-                                    <option value="{{ $female->id }}"
-                                        {{ old('mother_id', $animal->mother_id) == $female->id ? 'selected' : '' }}>
-                                        {{ $female->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    @error('mother_id')
-                        <div class="info__error info__error--shifted">{{ $message }}</div>
-                    @enderror
-
-                    <!-- Father -->
-                    <div class="info__item">
-                        <div class="info__property">Папа</div>
-                        <div class="info__value">
-                            <select name="father_id" class="info__select">
-                                <option value="">-- Выбрать отца --</option>
-                                @foreach ($maleAnimals as $male)
-                                    <option value="{{ $male->id }}"
-                                        {{ old('father_id', $animal->father_id) == $male->id ? 'selected' : '' }}>
-                                        {{ $male->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    @error('father_id')
-                        <div class="info__error info__error--shifted">{{ $message }}</div>
-                    @enderror
-
-                    <!-- birthCountry -->
-                    <x-form-input label="Страна рождения" name="birthCountry"
-                        value="{{ old('birthCountry', $animal->birthCountry) }}" />
-
-                    <!-- residenceCountry -->
-                    <x-form-input label="Страна проживания" name="residenceCountry"
-                        value="{{ old('residenceCountry', $animal->residenceCountry) }}" />
-
-                    <!-- Status -->
-                    <x-form-input label="Статус" name="status" value="{{ old('status', $animal->status) }}" />
-
-                    <!-- labelNumber -->
-                    <x-form-input label="Номер чипа/бирки" name="labelNumber"
-                        value="{{ old('labelNumber', $animal->labelNumber) }}" />
-
-                    <!-- height -->
-                    <x-form-input label="Рост в 1;2;3 года" name="height"
-                        value="{{ old('height', $animal->height) }}" />
-
-                    <!-- rudiment -->
-                    <x-form-input label="Рудименты" name="rudiment"
-                        value="{{ old('rudiment', $animal->rudiment) }}" />
-
-                    <!-- extraInfo -->
-                    <x-form-textarea label="Дополнительная информация" name="extraInfo"
-                        value="{{ old('extraInfo', $animal->extraInfo) }}" rows="3" />
-
-                    <!-- Certificates -->
-                    <x-form-textarea label="Тесты и сертификаты" name="certificates"
-                        value="{{ old('certificates', $animal->certificates) }}" rows="3" />
-
-                    <!-- For Sale -->
-                    <div class="info__item">
-                        <div class="info__property">На продажу</div>
-                        <div class="info__value info__value--checkbox">
-                            <input type="checkbox" name="forSale" value="1"
-                                {{ old('forSale', $animal->forSale) ? 'checked' : '' }}>
-                        </div>
-                    </div>
-
-                    @error('forSale')
-                        <div class="info__error info__error--shifted">{{ $message }}</div>
-                    @enderror
-
-                    <!-- Show on Main -->
-                    <div class="info__item">
-                        <div class="info__property">Показывать на главной</div>
-                        <div class="info__value info__value--checkbox">
-                            <input type="checkbox" name="showOnMain" value="1"
-                                {{ old('showOnMain', $animal->showOnMain) ? 'checked' : '' }}>
-                        </div>
-                    </div>
-
-                    @error('showOnMain')
-                        <div class="info__error info__error--shifted">{{ $message }}</div>
-                    @enderror
-
+                <div class="edit-animals__btns">
+                    <button type="submit" class="edit-animals__publish-btn">Сохранить</button>
+                    <!-- Delete Button -->
+                    <button type="submit" form="delete-animal" class="edit-animals__delete-btn">Удалить</button>
                 </div>
-            </div>
-            <div class="edit-animals__btns">
-                <button type="submit" class="edit-animals__publish-btn">Сохранить</button>
-                <!-- Delete Button -->
-                <button type="submit" form="delete-animal" class="edit-animals__delete-btn">Удалить</button>
-            </div>
+            </form>
+        </div>
+
+        <form method="POST" id="delete-animal" action="{{ route('animals.destroy', $animal->id) }}"
+            onsubmit="return confirm('Вы уверены что хотите удалить данное животное из базы данных?');">
+            @csrf
+            @method('delete');
         </form>
-    </div>
-
-    <form method="POST" id="delete-animal" action="{{ route('animals.destroy', $animal->id) }}" onsubmit="return confirm('Вы уверены что хотите удалить данное животное из базы данных?');">
-        @csrf
-        @method('delete');
-    </form>
+    @endisset
 
     <x-partials.footer />
 
@@ -242,12 +246,10 @@
         let uploadedFiles = [];
         const maxImages = 5;
 
-        // Function to render gallery images
         function renderGallery() {
             const galleryPreview = document.getElementById('galleryPreview');
             galleryPreview.innerHTML = '';
 
-            // Render existing images
             existingImages.forEach((image, index) => {
                 if (index >= maxImages) return;
                 const galleryImage = document.createElement('div');
@@ -257,7 +259,6 @@
                 galleryPreview.appendChild(galleryImage);
             });
 
-            // Render newly uploaded images
             uploadedFiles.forEach((file, index) => {
                 if (index >= maxImages) return;
                 const reader = new FileReader();
@@ -275,28 +276,24 @@
             updateHiddenInput();
         }
 
-        // Function to handle new file uploads
         function previewImages(event) {
             uploadedFiles = Array.from(event.target.files).slice(0, maxImages);
-            existingImages = []; // Clear existing images if new files are uploaded
+            existingImages = [];
             renderGallery();
         }
 
-        // Move existing image to the front
         function moveExistingImageToFront(index) {
             const [selectedImage] = existingImages.splice(index, 1);
             existingImages.unshift(selectedImage);
             renderGallery();
         }
 
-        // Move newly uploaded file to the front
         function moveUploadedFileToFront(index) {
             const [selectedFile] = uploadedFiles.splice(index, 1);
             uploadedFiles.unshift(selectedFile);
             renderGallery();
         }
 
-        // Update the main image preview
         function updateMainImage() {
             const mainImagePreview = document.getElementById('mainImagePreview');
             if (existingImages.length > 0) {
@@ -312,14 +309,12 @@
             }
         }
 
-        // Update hidden input field with the reordered image paths
         function updateHiddenInput() {
             const sortedImagesInput = document.getElementById('sortedImages');
             const allImages = [...existingImages, ...uploadedFiles.map(file => URL.createObjectURL(file))];
             sortedImagesInput.value = JSON.stringify(allImages);
         }
 
-        // Initial rendering of existing images on page load
         window.onload = renderGallery;
 
         function animalSearch() {

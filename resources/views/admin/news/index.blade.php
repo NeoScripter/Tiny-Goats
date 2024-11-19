@@ -12,6 +12,7 @@
                 <a href="{{ route('news.create') }}" class="news__add">Добавить новость</a>
             </div>
 
+            @isset($newsItems)
             <div class="news__grid">
                 @foreach ($newsItems as $news)
                     <div class="news__item">
@@ -43,7 +44,7 @@
             </div>
 
             {{ $newsItems->links('vendor.pagination.default') }}
-
+            @endisset
         </section>
 
     </div>

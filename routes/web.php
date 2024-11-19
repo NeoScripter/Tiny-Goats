@@ -118,19 +118,17 @@ Route::prefix('admin')
 
         // Animals
 
-        Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');
+        Route::get('/animals/category/{category?}', [AnimalController::class, 'index'])->name('animals.index');
 
         Route::get('/animals/create', [AnimalController::class, 'create'])->name('animals.create');
 
         Route::post('/animals', [AnimalController::class, 'store'])->name('animals.store');
 
-        Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
-
         Route::get('/animals/{animal}/edit', [AnimalController::class, 'edit'])->name('animals.edit');
+
+        Route::get('/animals/{animal}/{gens?}', [AnimalController::class, 'show'])->name('animals.show');
 
         Route::put('/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
 
         Route::delete('/animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
-
-        Route::post('/animals/{animal}/move-image', [AnimalController::class, 'moveImageToFront'])->name('animals.moveImage');
     });

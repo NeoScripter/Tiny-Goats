@@ -40,10 +40,8 @@ class NewsController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
-        // Handle the image upload
         $imagePath = $request->file('image')?->store('news_images', 'public');
 
-        // Create the news item
         News::create([
             'title' => $validatedData['title'],
             'content' => $validatedData['content'],
@@ -84,9 +82,7 @@ class NewsController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
-        // Handle the image upload if a new one is uploaded
         if ($request->hasFile('image')) {
-            // Delete the old image if it exists
             if ($news->image) {
                 Storage::disk('public')->delete($news->image);
             }
@@ -95,7 +91,6 @@ class NewsController extends Controller
             $imagePath = $news->image;
         }
 
-        // Update the news item
         $news->update([
             'title' => $validatedData['title'],
             'content' => $validatedData['content'],
@@ -111,7 +106,6 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        // Delete the associated image if it exists
         if ($news->image) {
             Storage::disk('public')->delete($news->image);
         }

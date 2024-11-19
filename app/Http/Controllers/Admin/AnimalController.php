@@ -9,14 +9,19 @@ use Illuminate\Support\Facades\Storage;
 
 class AnimalController extends Controller
 {
-    // Display a listing of the animals
-    public function index()
+    public function index($category = null)
     {
-        $animals = Animal::latest()->paginate(16);
+        $query = Animal::latest();
+
+        if ($category && $category === 'forSale') {
+            $query->where('forSale', true);
+        }
+
+        $animals = $query->paginate(16);
+
         return view('admin.animals.index', compact('animals'));
     }
 
-    // Show the form for creating a new animal
     public function create()
     {
         $maleAnimals = Animal::where('isMale', true)->get();
@@ -25,10 +30,8 @@ class AnimalController extends Controller
         return view('admin.animals.create', compact('maleAnimals', 'femaleAnimals', 'allAnimals'));
     }
 
-    // Store a newly created animal in storage
     public function store(Request $request)
     {
-        // Validate the request data, including the children array
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'isMale' => 'required|boolean',
@@ -56,7 +59,6 @@ class AnimalController extends Controller
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
         ]);
 
-        // Handle image uploads
         $imagePaths = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -67,20 +69,15 @@ class AnimalController extends Controller
         }
         $validated['images'] = $imagePaths;
 
-        // Create the animal record
         $animal = Animal::create($validated);
 
-        // Attach children to the newly created animal as either mother or father
         if ($request->has('children') && is_array($validated['children'])) {
             foreach ($validated['children'] as $childId) {
                 $child = Animal::find($childId);
                 if ($child) {
-                    // Assign the new animal as the parent
                     if ($animal->isMale) {
-                        // If the animal is male, set as father
                         $child->father_id = $animal->id;
                     } else {
-                        // If the animal is female, set as mother
                         $child->mother_id = $animal->id;
                     }
                     $child->save();
@@ -92,15 +89,17 @@ class AnimalController extends Controller
     }
 
 
-
-
-    // Display the specified animal
-    public function show(Animal $animal)
+    public function show(Animal $animal, $gens = 3)
     {
-        return view('admin.animals.show', compact('animal'));
+        if ($gens < 2 || $gens > 7 || !is_int($gens)) {
+            $gens = 3;
+        }
+
+        $mother = Animal::find($animal->mother_id);
+        $father = Animal::find($animal->father_id);
+        return view('admin.animals.show', compact('animal', 'gens', 'mother', 'father'));
     }
 
-    // Show the form for editing the specified animal
     public function edit(Animal $animal)
     {
         $maleAnimals = Animal::where('isMale', true)->get();
@@ -111,7 +110,6 @@ class AnimalController extends Controller
 
     public function update(Request $request, Animal $animal)
     {
-        // Validate the request data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'isMale' => 'required|boolean',
@@ -139,11 +137,9 @@ class AnimalController extends Controller
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
         ]);
 
-        // Handle checkboxes (they are not included in the request if unchecked)
         $validated['forSale'] = $request->has('forSale');
         $validated['showOnMain'] = $request->has('showOnMain');
 
-        // Handle existing images and new uploads
         $sortedImages = json_decode($request->input('sortedImages'), true);
 
         if ($request->hasFile('images')) {
@@ -155,22 +151,18 @@ class AnimalController extends Controller
             }
             $validated['images'] = $newImages;
         } else {
-            // Update the images with the new order from the input if no new images are uploaded
             $validated['images'] = $sortedImages;
         }
 
-        // Update all other fields in the animal model
         $animal->update($validated);
 
         if (isset($validated['children'])) {
             $newChildrenIds = $validated['children'];
 
-            // Fetch current children based on the animal's gender
             $currentChildren = $animal->isMale
                 ? Animal::where('father_id', $animal->id)->get()
                 : Animal::where('mother_id', $animal->id)->get();
 
-            // Remove current animal as a parent for children that are no longer selected
             foreach ($currentChildren as $child) {
                 if (!in_array($child->id, $newChildrenIds)) {
                     if ($animal->isMale) {
@@ -182,7 +174,6 @@ class AnimalController extends Controller
                 }
             }
 
-            // Assign new children
             foreach ($newChildrenIds as $childId) {
                 $child = Animal::find($childId);
                 if ($child) {
@@ -201,7 +192,6 @@ class AnimalController extends Controller
     }
 
 
-    // Remove the specified animal from storage
     public function destroy(Animal $animal)
     {
         if ($animal->images && is_array($animal->images)) {
@@ -213,7 +203,7 @@ class AnimalController extends Controller
         }
 
         $animal->delete();
-        return redirect()->route('animals.index')->with('success', 'Animal deleted successfully.');
+        return redirect()->route('animals.index')->with('success', 'Животное успешно удалено!');
     }
 
     public function moveImageToFront(Request $request, Animal $animal)
@@ -226,9 +216,7 @@ class AnimalController extends Controller
         $imageToMove = $validated['image'];
 
         if (in_array($imageToMove, $images)) {
-            // Remove the image from its current position
             $images = array_filter($images, fn($img) => $img !== $imageToMove);
-            // Add the image to the beginning
             array_unshift($images, $imageToMove);
             $animal->update(['images' => $images]);
         }
