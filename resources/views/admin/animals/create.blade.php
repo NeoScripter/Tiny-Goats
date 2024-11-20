@@ -82,8 +82,28 @@
                         <div class="info__error info__error--shifted">{{ $message }}</div>
                     @enderror
 
+                    @php
+                        $categories = ['Нигерийская', 'Нигерийско-камерунская', 'Камерунская', 'Метис', 'Другие'];
+                    @endphp
+
                     <!-- Breed -->
-                    <x-form-input label="Порода, помесь пород" name="breed" value="{{ old('breed') }}" />
+
+                    <div class="info__item">
+                        <div class="info__property">Порода, помесь пород</div>
+                        <div class="info__value">
+                            <select name="breed" class="info__select">
+                                @foreach ($categories as $category)
+                                    <option value="{{ strtolower($category) }}"
+                                        {{ old('breed') == strtolower($category) ? 'selected' : '' }}>{{ $category }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    @error('father_id')
+                        <div class="info__error info__error--shifted">{{ $message }}</div>
+                    @enderror
 
                     <!-- Color -->
                     <x-form-input label="Окрас" name="color" value="{{ old('color') }}" />

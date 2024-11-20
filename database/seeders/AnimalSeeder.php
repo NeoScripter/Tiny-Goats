@@ -13,6 +13,6 @@ class AnimalSeeder extends Seeder
      */
     public function run(): void
     {
-        Animal::factory()->count(25)->create();
+        Animal::factory()->count(6)->create();
     }
 }

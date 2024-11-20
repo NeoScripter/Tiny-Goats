@@ -10,31 +10,25 @@
 
                 <h1 class="list__title">Животные</h1>
 
-                <div class="list__seach-bar">
-                    <input type="search" placeholder="Поиск по животным">
-                    <button class="list__search-btn">Найти</button>
+                <form method="GET" action="{{ route('user.animals.index') }}" class="list__seach-bar">
+                    <input type="search" name="name" placeholder="Поиск по животным">
+                    <button type="submit" class="list__search-btn">Найти</button>
                     <a href="/register" class="list__add-btn">Добавить животное</a>
-                </div>
+                </form>
 
                 <div class="list__categories">
                     @php
-                        $categories = [
-                            'Нигерийская',
-                            'Нигерийско-камерунская',
-                            'Камерунская',
-                            'метис',
-                            'другие',
-                        ];
+                        $categories = ['Нигерийская', 'Нигерийско-камерунская', 'Камерунская', 'метис', 'другие'];
                     @endphp
 
                     <a href="{{ route('user.animals.index') }}"
-                        class="list__category">
+                        class="list__category {{ empty(request()->query()) ? 'list__key--active' : '' }}">
                         Все
                     </a>
 
                     @foreach ($categories as $category)
                         <a href="{{ route('user.animals.index', array_merge(request()->query(), ['breed' => $category])) }}"
-                            class="list__category {{ request('char') == $category ? 'list__key--active' : '' }}">
+                            class="list__category {{ strtolower(request('breed')) == strtolower($category) ? 'list__key--active' : '' }}">
                             {{ $category }}
                         </a>
                     @endforeach
@@ -111,7 +105,7 @@
                                         <a href="{{ route('user.animals.show', $animal->father->id) }}"
                                             class="list__link">{{ $animal->father->name }}</a>
                                     @else
-                                        Неизвестен
+                                        ?
                                     @endif
                                 </td>
                                 <td>
@@ -119,11 +113,11 @@
                                         <a href="{{ route('user.animals.show', $animal->mother->id) }}"
                                             class="list__link">{{ $animal->mother->name }}</a>
                                     @else
-                                        Неизвестен
+                                        ?
                                     @endif
                                 </td>
                                 <td>{{ $animal->isMale ? 'Самец' : 'Самка' }}</td>
-                                <td>{{ $animal->birthDate ? \Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y') : 'Неизвестно' }}
+                                <td>{{ $animal->birthDate ? \Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y') : '?' }}
                                 </td>
                             </tr>
                         @endforeach
