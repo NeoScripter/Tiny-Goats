@@ -21,7 +21,6 @@
                     </div>
 
                     <div class="info__gallery" id="galleryPreview">
-                        <!-- Initially empty, will be populated by JavaScript -->
                     </div>
 
 

@@ -83,7 +83,28 @@
         @include fs16(400);
     }
 
-    .gens {}
+    .gens__param--popup {
+        position: relative;
+
+    }
+
+    .gens__copy-message {
+        position: absolute;
+        top: vw(20px);
+        right: -2%;
+        background-color: #fff;
+        padding: 0.3em 0.5em;
+        border-radius: 0.5em;
+        border: vw(1px) solid color('green');
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
 
     .gens__title {
         text-align: center;
@@ -118,7 +139,7 @@
         @include fs16(400);
     }
 
-    .gens__param-label {}
+
 
     .gens__select {
         border: vw(1px) solid color('gray');
@@ -181,5 +202,6 @@
         @include fs16(400);
     }
 
+    @include nth-flex(8);
 
 }

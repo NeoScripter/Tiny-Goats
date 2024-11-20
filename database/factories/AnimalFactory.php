@@ -23,9 +23,8 @@ class AnimalFactory extends Factory
     public function definition(): array
     {
         $client = new Client();
-
         $images = [];
-        for ($i = 0; $i < rand(1, 5); $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $imageUrl = 'https://picsum.photos/400/300';
             $response = $client->get($imageUrl);
             $imageName = 'animals_images/' . Str::random(10) . '.jpg';

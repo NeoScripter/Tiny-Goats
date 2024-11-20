@@ -93,6 +93,29 @@
         @include fs16(400);
     }
 
+    .gens__param--popup {
+        position: relative;
+
+    }
+
+    .gens__copy-message {
+        position: absolute;
+        top: vw(20px);
+        right: -2%;
+        background-color: #fff;
+        padding: 0.3em 0.5em;
+        border-radius: 0.5em;
+        border: vw(1px) solid color('green');
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
     .gens__title {
         text-align: center;
         margin-bottom: vw(42px);
@@ -155,6 +178,7 @@
         }
     }
 
+
     .gens__item {
         height: max-content;
         display: grid;
@@ -188,4 +212,5 @@
     }
 
 
+    @include nth-flex(8);
 }

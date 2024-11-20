@@ -3,7 +3,9 @@
 use App\Http\Controllers\Admin\AnimalController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\User\NewsController as UserNewsController;
+use App\Http\Controllers\User\AnimalController as UserAnimalController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Animal;
 use App\Models\News;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $latest_news = News::inRandomOrder()->take(4)->get();
-    return view('users.index', compact('latest_news'));
+    $animals = Animal::where('showOnMain', true)->latest()->get();
+    return view('users.index', compact('latest_news', 'animals'));
 });
 
 Route::get('/agenda', function () {
@@ -43,17 +46,13 @@ Route::get('/news/{news}', function (News $news) {
     return view('users.news-show', compact('news', 'latest_news'));
 })->name('user.news.show');
 
-Route::get('/animals', function () {
-    return view('users.animals');
-});
+Route::get('/animals', [UserAnimalController::class, 'index'])->name('user.animals.index');
 
 Route::get('/register', function () {
     return view('users.register');
 });
 
-Route::get('/animals/1', function () {
-    return view('users.animal-card');
-});
+Route::get('/animals/{animal}/{gens?}/{photo?}', [UserAnimalController::class, 'show'])->name('user.animals.show');
 
 Route::get('/coupling', function () {
     return view('users.coupling');
@@ -76,7 +75,8 @@ Route::get('/specialists/1', function () {
 });
 
 Route::get('/sell', function () {
-    return view('users.sell');
+    $animals = Animal::where('forSale', true)->latest()->paginate(16);
+    return view('users.sell', compact('animals'));
 });
 
 Route::get('/partners', function () {
@@ -126,7 +126,7 @@ Route::prefix('admin')
 
         Route::get('/animals/{animal}/edit', [AnimalController::class, 'edit'])->name('animals.edit');
 
-        Route::get('/animals/{animal}/{gens?}', [AnimalController::class, 'show'])->name('animals.show');
+        Route::get('/animals/{animal}/{gens?}/{photo?}', [AnimalController::class, 'show'])->name('animals.show');
 
         Route::put('/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
 

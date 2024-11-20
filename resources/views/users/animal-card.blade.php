@@ -4,109 +4,204 @@
 
     <div class="animal-card">
 
-        <section class="info">
+        @isset($animal)
 
-            <div class="info__visual">
+            <section class="info">
 
-                <div class="info__snapshot">
-                    <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
-                </div>
+                <div class="info__visual">
 
-                <div class="info__gallery">
-
-                    @for ($i = 0; $i < 4; $i++)
-                        <div class="info__image">
-                            <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
-                        </div>
-                    @endfor
-                </div>
-
-                <div class="info__children">
-
-                    <h3 class="info__label">потомство</h3>
-
-                    <ul class="info__ul">
-                        @for ($i = 0; $i < 7; $i++)
-                            <li class="info__li">
-                                <a href="">Lorem Ipsum, </a>
-                            </li>
-                        @endfor
-                    </ul>
-                </div>
-            </div>
-
-            <div class="info__data">
-                @for ($i = 0; $i < 7; $i++)
-                    <div class="info__item">
-                        <div class="info__property">Кличка</div>
-                        <div class="info__value">LOREM IPSUM</div>
+                    <div class="info__snapshot">
+                        <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
+                            alt="">
                     </div>
-                @endfor
 
-            </div>
+                    <div class="info__gallery">
 
-        </section>
+                        @foreach ($animal->images as $image)
+                            <div class="info__image">
+                                <img src="{{ asset('storage/' . $image) }}" alt="Goat image">
+                            </div>
+                        @endforeach
+                    </div>
 
-        <form class="gens">
+                    <div class="info__children">
 
-            <h1 class="gens__title">Родословная</h1>
+                        @if (count($animal->children) > 0)
+                            <h3 class="info__label">потомство</h3>
 
-            <div class="gens__params">
-                <div class="gens__param">
-                    <p class="gens__param-label">Количество поколений</p>
-                    <select name="" id="" class="gens__select">
-                        @for ($i = 1; $i < 9; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
+                            <ul class="info__ul">
+                                @foreach ($animal->children as $child)
+                                    <li class="info__li">
+                                        <a
+                                            href="{{ route('animals.show', $child->id) }}">{{ $child->name }}{{ !$loop->last ? ',' : '' }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
                 </div>
 
-                <div class="gens__param">
-                    <p class="gens__param-label">Версия для печати</p>
-                    <select name="" id="" class="gens__select">
-                        <option value="">С фото</option>
-                        <option value="">без фото</option>
-                    </select>
+                <div class="info__data">
+                    <x-admin.info-item :property="$animal->name" label="Кличка" />
+
+                    <x-admin.info-item :property="$animal->isMale ? 'Самец' : 'Самка'" label="Пол" />
+
+                    <x-admin.info-item :property="$animal->breed" label="Порода, помесь пород" />
+
+                    <x-admin.info-item :property="$animal->color" label="Окрас" />
+
+                    <x-admin.info-item :property="$animal->eyeColor" label="Цвет глаз" />
+
+                    <x-admin.info-item :property="$animal->birthDate" label="Дата рождения" :value="\Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y')" />
+
+                    <x-admin.info-item :property="$animal->direction" label="Направление" />
+
+                    <x-admin.info-item :property="$animal->siblings" label="В числе скольки рожден(на)" />
+
+                    <x-admin.info-item :property="$animal->hornedness" label="Рогатость" />
+
+
+                    @isset($father)
+                        <div class="info__item">
+                            <div class="info__property">Папа</div>
+                            <a href="{{ route('animals.show', $father->id) }}" class="info__value info__value--link">
+                                {{ $father->name }}</a>
+                        </div>
+                    @endisset
+
+                    @isset($mother)
+                        <div class="info__item">
+                            <div class="info__property">Мама</div>
+                            <a href="{{ route('animals.show', $mother->id) }}" class="info__value info__value--link">
+                                {{ $mother->name }}</a>
+                        </div>
+                    @endisset
+
+                    <x-admin.info-item :property="$animal->birthCountry" label="Страна рождения" />
+
+                    <x-admin.info-item :property="$animal->residenceCountry" label="Страна проживания" />
+
+                    <x-admin.info-item :property="$animal->status" label="Статус" />
+
+                    <x-admin.info-item :property="$animal->labelNumber" label="Номер чипа/бирки" />
+
+                    <x-admin.info-item :property="$animal->height" label="Рост в 1; 2; 3 года" />
+
+                    <x-admin.info-item :property="$animal->rudiment" label="Рудименты" />
+
+                    <x-admin.info-item :property="$animal->extraInfo" label="Доп. информация" />
+
+                    <x-admin.info-item :property="$animal->certificates" label="Тесты и сертификаты" />
+
                 </div>
-            </div>
 
-            <button class="gens__button">Сгенерировать</button>
+            </section>
 
-            <div class="gens__table">
+            <form method="GET" action="{{ route('animals.show', $animal->id) }}" class="gens">
 
-                @php
-                    $cols = 4;
-                @endphp
 
-                @for ($i = 0; $i < $cols; $i++)
+                <h1 class="gens__title">Родословная</h1>
+
+                <div class="gens__params">
+                    <div class="gens__param">
+                        <p class="gens__param-label">Количество поколений</p>
+                        <select name="gens" class="gens__select">
+                            @for ($i = 1; $i < 8; $i++)
+                                <option value="{{ $i }}" {{ request('gens', $gens) == $i ? 'selected' : '' }}>
+                                    {{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+
+                    <div class="gens__param">
+                        <p class="gens__param-label">Версия для печати</p>
+                        <select name="photo" class="gens__select">
+                            <option value="1" {{ $photo ? 'selected' : '' }}>С фото</option>
+                            <option value="0" {{ !$photo ? 'selected' : '' }}>Без фото</option>
+                        </select>
+                    </div>
+
+                    <div class="gens__param gens__param--popup">
+                        <p class="gens__param-label">HTML код родословной</p>
+                        <button type="button" id="copyUrlButton" class="gens__select">Копировать</button>
+                        <span class="gens__copy-message">Скопировано!</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="gens__button">Сгенерировать</button>
+
+                <div class="gens__table">
 
                     <div class="gens__column">
 
-                        @php
-                            $powerOfTwo = pow(2, $i);
-                        @endphp
-
-                        @for ($j = 0; $j < $powerOfTwo; $j++)
-                            <div class="gens__item">
-                                <div class="gens__image">
-                                    <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
-                                </div>
-
-                                <h3 class="gens__name">Кличка</h3>
-                                <p class="gens__breed">Порода</p>
+                        <div class="gens__item">
+                            <div class="gens__image">
+                                <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                    alt="">
                             </div>
-                        @endfor
+
+                            <h3 class="gens__name">{{ $animal->name }}</h3>
+                            <p class="gens__breed">{{ $animal->breed }}</p>
+                        </div>
 
                     </div>
-                @endfor
 
-            </div>
+                    @foreach ($genealogy as $generationIndex => $generation)
+                        <div class="gens__column">
+                            @foreach ($generation as $parent)
+                                <div class="gens__item">
+                                    @if ($parent)
+                                        <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
+                                            @if ($photo)
+                                                <img src="{{ $photo && $parent->images[0] ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                    alt="">
+                                            @else
+                                                <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
+                                            @endif
+                                        </a>
+                                        <h3 class="gens__name">{{ $parent->name }}</h3>
+                                        <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
+                                    @else
+                                        <div class="gens__image">
+                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="">
+                                        </div>
+                                        <h3 class="gens__name">?</h3>
+                                        <p class="gens__breed">?</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
 
-        </form>
+                </div>
+
+            </form>
+
+        @endisset
+
 
     </div>
 
 
     <x-partials.footer />
+
+    <script>
+        document.getElementById('copyUrlButton').addEventListener('click', function() {
+            const url = window.location.href;
+
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    const message = document.querySelector('.gens__copy-message');
+                    message.classList.add('visible');
+                    setTimeout(() => {
+                        message.classList.remove('visible');
+                    }, 2000);
+
+                })
+                .catch(err => {
+                    console.error('Failed to copy URL: ', err);
+                });
+        });
+    </script>
 
 </x-layouts.app>

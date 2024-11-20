@@ -4,108 +4,154 @@
 
     <div class="user-seach-animal">
 
-        <section class="list">
+        @isset($animals)
 
-            <h1 class="list__title">Животные</h1>
+            <section class="list">
 
-            <div class="list__seach-bar">
-                <input type="search" placeholder="Поиск по животным">
-                <button class="list__search-btn">Найти</button>
-                <a href="/register" class="list__add-btn">Добавить животное</a>
-            </div>
+                <h1 class="list__title">Животные</h1>
 
-            <div class="list__categories">
-                @php
-                    $categories = [
-                        'Все',
-                        'Нигерийская',
-                        'Нигерийско-камерунская',
-                        'Камерунская',
-                        'метис',
-                        'другие',
-                        'M',
-                        'Ж',
-                    ];
-                @endphp
+                <div class="list__seach-bar">
+                    <input type="search" placeholder="Поиск по животным">
+                    <button class="list__search-btn">Найти</button>
+                    <a href="/register" class="list__add-btn">Добавить животное</a>
+                </div>
 
-                @foreach ($categories as $category)
-                    <a href="" class="list__category">{{ $category }}</a>
-                @endforeach
-            </div>
+                <div class="list__categories">
+                    @php
+                        $categories = [
+                            'Нигерийская',
+                            'Нигерийско-камерунская',
+                            'Камерунская',
+                            'метис',
+                            'другие',
+                        ];
+                    @endphp
 
-            <div class="list__keys">
+                    <a href="{{ route('user.animals.index') }}"
+                        class="list__category">
+                        Все
+                    </a>
+
+                    @foreach ($categories as $category)
+                        <a href="{{ route('user.animals.index', array_merge(request()->query(), ['breed' => $category])) }}"
+                            class="list__category {{ request('char') == $category ? 'list__key--active' : '' }}">
+                            {{ $category }}
+                        </a>
+                    @endforeach
+                    <a href="{{ route('user.animals.index', array_merge(request()->query(), ['gender' => 'male'])) }}"
+                        class="list__key {{ request('gender') == 'male' ? 'list__key--active' : '' }}">
+                        М
+                    </a>
+                    <a href="{{ route('user.animals.index', array_merge(request()->query(), ['gender' => 'female'])) }}"
+                        class="list__key {{ request('gender') == 'female' ? 'list__key--active' : '' }}">
+                        Ж
+                    </a>
+                </div>
+
+                <div class="list__keys">
 
 
-                @php
-                    $englishLetters = range('A', 'Z');
+                    @php
+                        $englishLetters = range('A', 'Z');
 
-                    $russianLetters = array_map(fn($code) => mb_chr($code, 'UTF-8'), range(0x0410, 0x042f));
+                        $russianLetters = array_map(fn($code) => mb_chr($code, 'UTF-8'), range(0x0410, 0x042f));
 
-                    $letters = array_merge($englishLetters, $russianLetters);
+                        $letters = array_merge($englishLetters, $russianLetters);
 
-                @endphp
+                    @endphp
 
-                @foreach ($letters as $letter)
-                    <a href="" class="list__key">{{ $letter }}</a>
-                @endforeach
-            </div>
+                    @foreach ($letters as $letter)
+                        <a href="{{ route('user.animals.index', array_merge(request()->query(), ['char' => $letter])) }}"
+                            class="list__key {{ request('char') == $letter ? 'list__key--active' : '' }}">
+                            {{ $letter }}
+                        </a>
+                    @endforeach
+                </div>
 
-            <table class="list__table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Кличка</th>
-                        <th scope="col">Отец</th>
-                        <th scope="col">Мать</th>
-                        <th scope="col">Пол</th>
-                        <th scope="col">Год рож.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for ($i = 0; $i < 10; $i++)
+                <table class="list__table">
+                    <thead>
                         <tr>
-                            <th scope="row">
-                                <img src="{{ asset('images/pages/user/search-animal/red.png') }}" alt="">
-                            </th>
-                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, sequi?</td>
-                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, sequi?</td>
-                            <td>Lorem ipsum dolor sit amet</td>
-                            <td>M</td>
-                            <td>XXXX</td>
+                            <th scope="col"></th>
+                            <th scope="col">Кличка</th>
+                            <th scope="col">Отец</th>
+                            <th scope="col">Мать</th>
+                            <th scope="col">Пол</th>
+                            <th scope="col">Год рож.</th>
                         </tr>
-                    @endfor
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($animals as $index => $animal)
+                            <tr>
+                                <th scope="row">
+                                    @if (in_array(null, [
+                                            $animal->mother_id,
+                                            $animal->father_id,
+                                            $animal->isMale,
+                                            $animal->breed,
+                                            $animal->color,
+                                            $animal->eyeColor,
+                                            $animal->birthDate,
+                                            $animal->hornedness,
+                                            $animal->birthCountry,
+                                            $animal->residenceCountry,
+                                        ]))
+                                        <img src="{{ asset('images/pages/user/search-animal/red.png') }}"
+                                            alt="Красный олень">
+                                    @else
+                                        <img src="{{ asset('images/pages/user/search-animal/green.png') }}"
+                                            alt="Зеленый олень">
+                                    @endif
+                                </th>
+                                <td>
+                                    <a href="{{ route('user.animals.show', $animal->id) }}"
+                                        class="list__link">{{ $animal->name }}</a>
+                                </td>
+                                <td>
+                                    @if ($animal->father)
+                                        <a href="{{ route('user.animals.show', $animal->father->id) }}"
+                                            class="list__link">{{ $animal->father->name }}</a>
+                                    @else
+                                        Неизвестен
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($animal->mother)
+                                        <a href="{{ route('user.animals.show', $animal->mother->id) }}"
+                                            class="list__link">{{ $animal->mother->name }}</a>
+                                    @else
+                                        Неизвестен
+                                    @endif
+                                </td>
+                                <td>{{ $animal->isMale ? 'Самец' : 'Самка' }}</td>
+                                <td>{{ $animal->birthDate ? \Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y') : 'Неизвестно' }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
-            <div class="list__pagination">
-                <a href="" class="list__page">
-                    << /a>
-                        <a href="" class="list__page list__page--active">20</a>
-                        <a href="" class="list__page">40</a>
-                        <a href="" class="list__page">60</a>
-                        <a href="" class="list__page">80</a>
-                        <a href="" class="list__page">100</a>
-                        <a href="" class="list__page">></a>
-            </div>
+                {{ $animals->links('vendor.pagination.default') }}
 
-            <div class="list__caption">
+                <div class="list__caption">
 
-                <div class="list__note">
-                    <div class="list__icon">
-                        <img src="{{ asset('images/pages/user/search-animal/green.png') }}" alt="">
+                    <div class="list__note">
+                        <div class="list__icon">
+                            <img src="{{ asset('images/pages/user/search-animal/green.png') }}" alt="">
+                        </div>
+                        Основные данные присутствуют.
                     </div>
-                    Основные данные присутствуют.
+
+                    <div class="list__note">
+                        <div class="list__icon">
+                            <img src="{{ asset('images/pages/user/search-animal/red.png') }}" alt="">
+                        </div>
+                        Отсутствуют основные данные (или некоторые из них: отец, мать, пол, окрас)
+                    </div>
                 </div>
 
-                <div class="list__note">
-                    <div class="list__icon">
-                        <img src="{{ asset('images/pages/user/search-animal/red.png') }}" alt="">
-                    </div>
-                    Отсутствуют основные данные (или некоторые из них: отец, мать, пол, окрас)
-                </div>
-            </div>
+            </section>
 
-        </section>
+        @endisset
 
     </div>
 

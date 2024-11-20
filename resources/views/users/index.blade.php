@@ -108,33 +108,37 @@
             <div class="animals__headline">
                 <h2 class="animals__title">Животные</h2>
 
-                <button class="animals__btn">Смотреть все</button>
+                <a href="/animals" class="animals__btn">Смотреть все</a>
             </div>
 
-            <div class="animals__wrapper" x-data="{ currentSlide: 0, totalSlides: 8 }">
-                <button class="animals__controller animals__btn--prev" x-show="currentSlide !== 0"
-                    @click="currentSlide = currentSlide - 1">
-                    {!! file_get_contents(public_path('images/svgs/prev-btn-dark.svg')) !!}
-                </button>
-                <div class="animals__carousel">
-                    <div class="animals__viewport" :style="{ transform: `translateX(${currentSlide * -25}%)` }">
-                        @for ($i = 1; $i < 9; $i++)
-                            <div class="animals__item">
-                                <div class="animals__image">
-                                    <img src="{{ asset("images/pages/user/home/animals/animal-$i.webp") }}"
-                                        alt="image">
+            @isset($animals)
+                <div class="animals__wrapper" x-data="{ currentSlide: 0, totalSlides: {{ count($animals) }} }">
+                    <button class="animals__controller animals__btn--prev" x-show="currentSlide !== 0"
+                        @click="currentSlide = currentSlide - 1">
+                        {!! file_get_contents(public_path('images/svgs/prev-btn-dark.svg')) !!}
+                    </button>
+                    <div class="animals__carousel">
+                        <div class="animals__viewport" :style="{ transform: `translateX(${currentSlide * -25}%)` }">
+                            @foreach ($animals as $animal)
+                                <div class="animals__item">
+                                    <div class="animals__image">
+                                        <img src="{{ isset($animal->images) && $animal->images[0]
+                                    ? asset('storage/' . $animal->images[0])
+                                    : asset('images/partials/placeholder.webp') }}"
+                                            alt="image">
+                                    </div>
+                                    <a href="{{ route('user.animals.show', $animal->id) }}" class="animals__name">{{ $animal->name }}</a>
+                                    <p class="animals__breed">{{ $animal->breed }}</p>
                                 </div>
-                                <h4 class="animals__name">Кличка</h4>
-                                <p class="animals__breed">Порода</p>
-                            </div>
-                        @endfor
+                            @endforeach
+                        </div>
                     </div>
+                    <button class="animals__controller animals__btn--next" x-show="currentSlide !== (totalSlides - 4)"
+                        @click="currentSlide = currentSlide + 1">
+                        {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
+                    </button>
                 </div>
-                <button class="animals__controller animals__btn--next" x-show="currentSlide !== (totalSlides - 4)"
-                    @click="currentSlide = currentSlide + 1">
-                    {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
-                </button>
-            </div>
+            @endisset
 
         </section>
 
@@ -143,7 +147,7 @@
             <div class="farm__headline">
                 <h2 class="farm__title">Хозяйства</h2>
 
-                <button class="farm__btn">Смотреть все</button>
+                <a href="/households" class="farm__btn">Смотреть все</a>
             </div>
 
             <div class="farm__wrapper" x-data="{ currentSlide: 0, totalSlides: 6 }">
@@ -183,19 +187,21 @@
 
 
             <div class="news__grid">
-                @foreach ($latest_news as $news)
-                    <div class="news__item">
-                        <a href="{{ route('user.news.show', $news->id) }}" class="news__image">
-                            <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="image">
-                            <span class="news__label">Раздел
-                                {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>
-                        </a>
-                        <div class="news__content">
-                            <h4 class="news__heading">{{ $news->title }}</h4>
-                            <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
+                @isset($latest_news)
+                    @foreach ($latest_news as $news)
+                        <div class="news__item">
+                            <a href="{{ route('user.news.show', $news->id) }}" class="news__image">
+                                <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="image">
+                                <span class="news__label">Раздел
+                                    {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>
+                            </a>
+                            <div class="news__content">
+                                <h4 class="news__heading">{{ $news->title }}</h4>
+                                <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endisset
             </div>
 
         </section>

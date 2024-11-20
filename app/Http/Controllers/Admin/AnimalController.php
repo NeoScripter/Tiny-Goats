@@ -89,16 +89,54 @@ class AnimalController extends Controller
     }
 
 
-    public function show(Animal $animal, $gens = 3)
+    public function show(Animal $animal, Request $request)
     {
-        if ($gens < 2 || $gens > 7 || !is_int($gens)) {
-            $gens = 3;
+        $gens = $request->query('gens', 3);
+        $photo = $request->query('photo', true);
+
+        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 7 ? (int) $gens : 3;
+
+        $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
+
+        function fetchGenerations($animal, $currentGen, $maxGen, &$memo)
+        {
+            if ($currentGen > $maxGen) {
+                return;
+            }
+
+            if (!$animal) {
+                $memo[$currentGen - 1][] = null;
+                $memo[$currentGen - 1][] = null;
+
+                fetchGenerations(null, $currentGen + 1, $maxGen, $memo);
+                fetchGenerations(null, $currentGen + 1, $maxGen, $memo);
+                return;
+            }
+
+            if (!isset($memo[$currentGen - 1])) {
+                $memo[$currentGen - 1] = [];
+            }
+
+            $mother = Animal::find($animal->mother_id);
+            $father = Animal::find($animal->father_id);
+
+            $memo[$currentGen - 1][] = $mother;
+            $memo[$currentGen - 1][] = $father;
+
+            fetchGenerations($mother, $currentGen + 1, $maxGen, $memo);
+            fetchGenerations($father, $currentGen + 1, $maxGen, $memo);
         }
+
+        $genealogy = [];
+        fetchGenerations($animal, 1, $gens, $genealogy);
 
         $mother = Animal::find($animal->mother_id);
         $father = Animal::find($animal->father_id);
-        return view('admin.animals.show', compact('animal', 'gens', 'mother', 'father'));
+
+
+        return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy'));
     }
+
 
     public function edit(Animal $animal)
     {
