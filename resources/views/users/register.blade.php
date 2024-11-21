@@ -5,7 +5,7 @@
     <div class="register">
 
         <section class="preview">
-            <img src="{{ asset('/images/pages/user/rules/rules-2.webp') }}" alt="" class="preview__image">
+            <img src="{{ asset('/images/pages/user/rules/rules-2.webp') }}" alt="Цветок" class="preview__image" aria-label="hidden">
 
             <h1 class="preview__title">Регистрация в Реестре</h1>
 

@@ -130,14 +130,14 @@
 
                     <div class="list__note">
                         <div class="list__icon">
-                            <img src="{{ asset('images/pages/user/search-animal/green.png') }}" alt="">
+                            <img src="{{ asset('images/pages/user/search-animal/green.png') }}" alt="Зеленая фигурка оленя">
                         </div>
                         Основные данные присутствуют.
                     </div>
 
                     <div class="list__note">
                         <div class="list__icon">
-                            <img src="{{ asset('images/pages/user/search-animal/red.png') }}" alt="">
+                            <img src="{{ asset('images/pages/user/search-animal/red.png') }}" alt="Красная фигурка оленя">
                         </div>
                         Отсутствуют основные данные (или некоторые из них: отец, мать, пол, окрас)
                     </div>

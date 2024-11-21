@@ -43,7 +43,7 @@
                     <div class="gens__item">
 
                         <div class="gens__image">
-                            <img src="{{ asset('images/pages/user/coupling/coupling-goat.webp') }}" alt="">
+                            <img src="{{ asset('images/pages/user/coupling/coupling-goat.webp') }}" alt="Фото козла">
                         </div>
                     </div>
                 </div>
@@ -52,40 +52,58 @@
                     <div class="gens__item">
 
                         <div class="gens__select-wrapper">
-                            <img src="{{ asset('images/pages/user/coupling/coupling-female.webp') }}" alt="">
-                            <select name="mother">
-                                <option value="" selected>Другая мать </option>
-                                @for ($i = 1; $i < 9; $i++)
-                                    <option value="">Lorem ipsum </option>
-                                @endfor
+                            <img src="{{ asset('images/pages/user/coupling/coupling-female.webp') }}" alt="Фото козла">
+                            <select name="mother_id">
+                                <option value="">Другая мать</option>
+                                @foreach ($femaleAnimals as $female)
+                                    <option value="{{ $female->id }}"
+                                        {{ (old('mother_id') ?? $mother?->id) == $female->id ? 'selected' : '' }}>{{ $female->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
-                        <div class="gens__image">
-                            <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
-                        </div>
+                        @if (isset($mother))
+                            <div class="gens__image">
+                                <img src="{{ $mother->images[0] ? asset('storage/' . $mother->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                    alt="Фото козла">
+                            </div>
 
-                        <h3 class="gens__name">Кличка</h3>
-                        <p class="gens__breed">Порода</p>
+                            <h3 class="gens__name">{{ $mother->name }}</h3>
+                            <p class="gens__breed">{{ $mother->breed }}</p>
+                        @else
+                            <div class="gens__image">
+                                <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="Фото козла">
+                            </div>
+                        @endif
                     </div>
                     <div class="gens__item">
 
                         <div class="gens__select-wrapper">
-                            <img src="{{ asset('images/pages/user/coupling/coupling-male.webp') }}" alt="">
-                            <select name="father">
-                                <option value="" selected>Другой отец </option>
-                                @for ($i = 1; $i < 9; $i++)
-                                    <option value="">Lorem ipsum </option>
-                                @endfor
+                            <img src="{{ asset('images/pages/user/coupling/coupling-male.webp') }}" alt="Фото козла">
+                            <select name="father_id">
+                                <option value="">Другой отец</option>
+                                @foreach ($maleAnimals as $male)
+                                    <option value="{{ $male->id }}"
+                                        {{ (old('father_id') ?? $father?->id) == $male->id ? 'selected' : '' }}>{{ $male->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
-                        <div class="gens__image">
-                            <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
-                        </div>
+                        @if (isset($father))
+                            <div class="gens__image">
+                                <img src="{{ $father->images[0] ? asset('storage/' . $father->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                    alt="Фото козла">
+                            </div>
 
-                        <h3 class="gens__name">Кличка</h3>
-                        <p class="gens__breed">Порода</p>
+                            <h3 class="gens__name">{{ $father->name }}</h3>
+                            <p class="gens__breed">{{ $father->breed }}</p>
+                        @else
+                            <div class="gens__image">
+                                <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="Фото козла">
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -95,7 +113,7 @@
                             @foreach ($generation as $parent)
                                 <div class="gens__item">
                                     @if ($parent)
-                                        <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
+                                        <a href="{{ route('user.animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)
                                                 <img src="{{ $photo && $parent->images[0] ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
                                                     alt="">
@@ -107,10 +125,9 @@
                                         <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
                                     @else
                                         <div class="gens__image">
-                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="">
+                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="Нет фотографии">
                                         </div>
                                         <h3 class="gens__name">?</h3>
-                                        <p class="gens__breed">?</p>
                                     @endif
                                 </div>
                             @endforeach
@@ -235,5 +252,24 @@
 
 
     <x-partials.footer />
+
+    <script>
+        document.getElementById('copyUrlButton').addEventListener('click', function() {
+            const url = window.location.href;
+
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    const message = document.querySelector('.gens__copy-message');
+                    message.classList.add('visible');
+                    setTimeout(() => {
+                        message.classList.remove('visible');
+                    }, 2000);
+
+                })
+                .catch(err => {
+                    console.error('Failed to copy URL: ', err);
+                });
+        });
+    </script>
 
 </x-layouts.app>

@@ -86,9 +86,12 @@ class AnimalController extends Controller
 
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
+        $maleAnimals = Animal::where('isMale', true)->get();
+        $femaleAnimals = Animal::where('isMale', false)->get();
+
         $genealogy = [];
-        $mother = Animal::find($mother_id);
-        $father = Animal::find($father_id);
+        $mother = Animal::find($mother_id) ?? null;
+        $father = Animal::find($father_id) ?? null;
 
         function fetchGens($animal, $currentGen, $maxGen, &$memo)
         {
@@ -115,14 +118,14 @@ class AnimalController extends Controller
             $memo[$currentGen - 1][] = $mother;
             $memo[$currentGen - 1][] = $father;
 
-            fetchGenerations($mother, $currentGen + 1, $maxGen, $memo);
-            fetchGenerations($father, $currentGen + 1, $maxGen, $memo);
+            fetchGens($mother, $currentGen + 1, $maxGen, $memo);
+            fetchGens($father, $currentGen + 1, $maxGen, $memo);
         }
 
         fetchGens($mother, 2, $gens, $genealogy);
         fetchGens($father, 2, $gens, $genealogy);
 
 
-        return view('users.coupling', compact('mother', 'father', 'gens', 'photo', 'genealogy'));
+        return view('users.coupling', compact('mother', 'father', 'gens', 'photo', 'genealogy', 'maleAnimals', 'femaleAnimals'));
     }
 }

@@ -13,7 +13,7 @@
                 @for ($i = 0; $i < 6; $i++)
                     <div class="news__item">
                         <div class="news__image">
-                            <img src="{{ asset('images/pages/user/partners/partner-'.($i % 3 + 1).'.webp') }}" alt="image">
+                            <img src="{{ asset('images/pages/user/partners/partner-'.($i % 3 + 1).'.webp') }}" alt="Фото компании">
                         </div>
                         <div class="news__content">
                             <h4 class="news__heading">Название компании</h4>

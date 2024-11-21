@@ -83,7 +83,7 @@
                         @for ($i = 1; $i < 6; $i++)
                             <div class="goals__image">
                                 <img src="{{ asset("images/pages/user/home/goals/index-slide-$i.webp") }}"
-                                    alt="image">
+                                    alt="Фото козла">
                             </div>
                         @endfor
                     </div>
@@ -125,7 +125,7 @@
                                         <img src="{{ isset($animal->images) && $animal->images[0]
                                     ? asset('storage/' . $animal->images[0])
                                     : asset('images/partials/placeholder.webp') }}"
-                                            alt="image">
+                                            alt="Фото козла">
                                     </div>
                                     <a href="{{ route('user.animals.show', $animal->id) }}" class="animals__name">{{ $animal->name }}</a>
                                     <p class="animals__breed">{{ $animal->breed }}</p>
@@ -160,7 +160,7 @@
                         @for ($i = 1; $i < 7; $i++)
                             <div class="farm__item">
                                 <div class="farm__image">
-                                    <img src="{{ asset("images/pages/user/home/farm/farm-$i.webp") }}" alt="image">
+                                    <img src="{{ asset("images/pages/user/home/farm/farm-$i.webp") }}" alt="Фото хозяйства">
                                 </div>
                                 <h4 class="farm__name">Хозяйство 3</h4>
                                 <p class="farm__place">Регион</p>
@@ -191,7 +191,7 @@
                     @foreach ($latest_news as $news)
                         <div class="news__item">
                             <a href="{{ route('user.news.show', $news->id) }}" class="news__image">
-                                <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="image">
+                                <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="Фото новости">
                                 <span class="news__label">Раздел
                                     {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>
                             </a>

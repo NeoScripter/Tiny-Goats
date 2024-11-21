@@ -140,9 +140,18 @@ class AnimalController extends Controller
 
     public function edit(Animal $animal)
     {
-        $maleAnimals = Animal::where('isMale', true)->get();
-        $femaleAnimals = Animal::where('isMale', false)->get();
-        $allAnimals = Animal::all();
+        $maleAnimals = Animal::where('isMale', true)->where('id', '!=', $animal->id)->get();
+        $femaleAnimals = Animal::where('isMale', false)->where('id', '!=', $animal->id)->get();
+
+        $allAnimals = Animal::where('id', '!=', $animal->id)
+        ->when(
+            $animal->birthDate,
+            fn($query) => $query->where(function ($q) use ($animal) {
+                $q->where('birthDate', '<', $animal->birthDate)
+                  ->orWhereNull('birthDate');
+            })
+        )
+        ->all();
         return view('admin.animals.edit', compact('animal', 'maleAnimals', 'femaleAnimals', 'allAnimals'));
     }
 
@@ -242,23 +251,5 @@ class AnimalController extends Controller
 
         $animal->delete();
         return redirect()->route('animals.index')->with('success', 'Животное успешно удалено!');
-    }
-
-    public function moveImageToFront(Request $request, Animal $animal)
-    {
-        $validated = $request->validate([
-            'image' => 'required|string',
-        ]);
-
-        $images = $animal->images ?? [];
-        $imageToMove = $validated['image'];
-
-        if (in_array($imageToMove, $images)) {
-            $images = array_filter($images, fn($img) => $img !== $imageToMove);
-            array_unshift($images, $imageToMove);
-            $animal->update(['images' => $images]);
-        }
-
-        return redirect()->route('animals.edit', $animal->id)->with('success', 'Image moved to front successfully.');
     }
 }

@@ -29,7 +29,7 @@
                     <div class="news__item">
                         <a href="{{ route('user.news.show', $item->id) }}" class="news__image">
                             <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/partials/placeholder.webp') }}"
-                                alt="image">
+                                alt="Фото новости">
                             <span class="news__label">Раздел
                                 {{ \Illuminate\Support\Str::lower($item->categories[0]) }}</span>
                         </a>

@@ -137,7 +137,7 @@
                         <div class="gens__item">
                             <div class="gens__image">
                                 <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                    alt="">
+                                    alt="Фото козла">
                             </div>
 
                             <h3 class="gens__name">{{ $animal->name }}</h3>
@@ -154,7 +154,7 @@
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)
                                                 <img src="{{ $photo && $parent->images[0] ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                                    alt="">
+                                                    alt="Фото козла">
                                             @else
                                                 <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
                                             @endif
@@ -163,7 +163,7 @@
                                         <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
                                     @else
                                         <div class="gens__image">
-                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="">
+                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="Нет фотографии">
                                         </div>
                                         <h3 class="gens__name">?</h3>
                                         <p class="gens__breed">?</p>

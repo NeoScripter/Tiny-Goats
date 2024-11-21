@@ -9,7 +9,7 @@
             <div class="info__visual">
 
                 <div class="info__snapshot">
-                    <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
+                    <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="Фото специалиста">
                 </div>
 
             </div>
