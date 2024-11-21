@@ -7,6 +7,7 @@ use App\Http\Controllers\User\AnimalController as UserAnimalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Animal;
 use App\Models\News;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -100,9 +101,10 @@ Route::get('/login', function () {
     ->name('login');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index');
-    });
+    Route::get('/admin/{days?}', function ($days = 7) {
+        $animals = Animal::where('updated_at', '>=', Carbon::now()->subDays((int)$days))->paginate(20);
+        return view('admin.index', compact('animals'));
+    })->name('admin.index');
 });
 
 Route::get('/login', [LoginController::class, 'showLogin'])->middleware('guest')->name('login');

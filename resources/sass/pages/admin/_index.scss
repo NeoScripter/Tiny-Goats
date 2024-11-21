@@ -62,12 +62,25 @@
         gap: vw(30px);
         width: vw(371px);
         margin-inline: auto;
-        margin-bottom: vw(52px);
+        margin-bottom: vw(32px);
 
     }
 
+
+    .admin__search-btn {
+        margin-inline: auto;
+        margin-bottom: vw(40px);
+        @include btn-primary();
+    }
+
+
     .admin__table-label {
         text-transform: uppercase;
+        @include fs16(400);
+    }
+
+    .admin__nothing-found {
+        text-align: center;
         @include fs16(400);
     }
 
@@ -82,7 +95,6 @@
         text-transform: uppercase;
         @include fs16(400);
     }
-
 
     .admin__table {
         border-spacing: 0;

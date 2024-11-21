@@ -56,15 +56,28 @@
 
         <section class="admin__changes">
 
-            <h2 class="admin__subtitle">Последние изменения</h2>
+            <form method="GET" action="{{ route('admin.index') }}">
+                <h2 class="admin__subtitle">Последние изменения</h2>
 
-            <div class="admin__table-controls">
-                <div class="admin__table-label">Выберете период</div>
-                <select name="" id="" class="admin__btn">
-                    <option value="">1 день</option>
-                    <option value="">2 дня</option>
-                </select>
-            </div>
+                <div class="admin__table-controls">
+                    <div class="admin__table-label">Выберете период</div>
+                    <select name="days" class="admin__btn">
+                        <option value="1" {{ request('days') == 1 ? 'selected' : '' }}>1 день</option>
+                        <option value="2" {{ request('days') == 2 ? 'selected' : '' }}>2 дня</option>
+                        <option value="3" {{ request('days') == 3 ? 'selected' : '' }}>3 дня</option>
+                        <option value="4" {{ request('days') == 4 ? 'selected' : '' }}>4 дня</option>
+                        <option value="7" {{ request('days') == 7 || !request('days') ? 'selected' : '' }}>7 дней
+                        </option>
+                        <option value="15" {{ request('days') == 15 ? 'selected' : '' }}>15 дней</option>
+                        <option value="30" {{ request('days') == 30 ? 'selected' : '' }}>30 дней</option>
+                        <option value="60" {{ request('days') == 60 ? 'selected' : '' }}>60 дней</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="admin__search-btn">Показать</button>
+            </form>
+
+            @if(isset($animals))
             <table class="admin__table">
                 <thead>
                     <tr>
@@ -74,22 +87,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 0; $i < 10; $i++)
-                        <tr>
-                            <th scope="row">
-                                <img src="{{ asset('images/pages/user/search-animal/red.png') }}" alt="">
-                            </th>
-                            <td>Lorem ipsum dolor sit amet</td>
-                            <td>DD.MM.YYYY</td>
-                        </tr>
-                    @endfor
+                        @foreach ($animals as $index => $animal)
+                            <tr>
+                                <th scope="row">
+                                    @if (in_array(null, [
+                                            $animal->mother_id,
+                                            $animal->father_id,
+                                            $animal->isMale,
+                                            $animal->breed,
+                                            $animal->color,
+                                            $animal->eyeColor,
+                                            $animal->birthDate,
+                                            $animal->hornedness,
+                                            $animal->birthCountry,
+                                            $animal->residenceCountry,
+                                        ]))
+                                        <img src="{{ asset('images/pages/user/search-animal/red.png') }}"
+                                            alt="Красный олень">
+                                    @else
+                                        <img src="{{ asset('images/pages/user/search-animal/green.png') }}"
+                                            alt="Зеленый олень">
+                                    @endif
+                                </th>
+                                <td>
+                                    <a href="{{ route('animals.show', $animal->id) }}"
+                                        class="list__link">{{ $animal->name }}</a>
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($animal->updated_at)->diffForHumans() }}
+                                </td>
+                            </tr>
+                        @endforeach
+
                 </tbody>
             </table>
+
+            {{ $animals->links('vendor.pagination.default') }}
+            @else
+                <p class="admin__nothing-found">Изменения за указанный период отсутствуют</p>
+            @endif
         </section>
 
     </div>
 
 
     <x-partials.footer />
+
+    @if (request()->query())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (window.location.search) {
+                    window.scrollTo(0, document.body.scrollHeight);
+                }
+            });
+        </script>
+    @endif
 
 </x-layouts.app>

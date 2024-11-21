@@ -25,25 +25,19 @@ class AnimalFactory extends Factory
         $client = new Client();
         $images = [];
 
-        // Pixabay API URL (replace YOUR_API_KEY with your actual key)
         $pixabayUrl = 'https://pixabay.com/api/?key=47185109-3d7800540e3a0a59061a64e22&q=goat&image_type=photo';
 
-        // Fetch JSON data from Pixabay API
         $response = $client->get($pixabayUrl);
         $data = json_decode($response->getBody(), true);
 
-        // Use 'hits' array to retrieve image URLs
         if (isset($data['hits'])) {
-            // Shuffle the hits array to randomize the image order
             $shuffledHits = collect($data['hits'])->shuffle();
 
-            // Limit to 2 unique images per animal
-            foreach ($shuffledHits->take(3) as $hit) {
+            foreach ($shuffledHits->take(4) as $hit) {
                 $imageUrl = $hit['webformatURL'];
                 $response = $client->get($imageUrl);
                 $imageName = 'animals_images/' . Str::random(10) . '.jpg';
 
-                // Save image to storage
                 Storage::disk('public')->put($imageName, $response->getBody());
                 $images[] = $imageName;
             }
