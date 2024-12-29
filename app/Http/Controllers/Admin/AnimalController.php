@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class AnimalController extends Controller
 {
@@ -98,44 +99,53 @@ class AnimalController extends Controller
 
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
-        function fetchGenerations($animal, $currentGen, $maxGen, &$memo)
-        {
-            if ($currentGen > $maxGen) {
-                return;
-            }
+        $genealogy = $this->fetchGenealogy($animal->id, $gens);
 
-            if (!$animal) {
-                $memo[$currentGen - 1][] = null;
-                $memo[$currentGen - 1][] = null;
+        $flatGenealogy = $genealogy->flatten(1);
 
-                fetchGenerations(null, $currentGen + 1, $maxGen, $memo);
-                fetchGenerations(null, $currentGen + 1, $maxGen, $memo);
-                return;
-            }
-
-            if (!isset($memo[$currentGen - 1])) {
-                $memo[$currentGen - 1] = [];
-            }
-
-            $mother = Animal::find($animal->mother_id);
-            $father = Animal::find($animal->father_id);
-
-            $memo[$currentGen - 1][] = $mother;
-            $memo[$currentGen - 1][] = $father;
-
-            fetchGenerations($mother, $currentGen + 1, $maxGen, $memo);
-            fetchGenerations($father, $currentGen + 1, $maxGen, $memo);
-        }
-
-        $genealogy = [];
-        fetchGenerations($animal, 1, $gens, $genealogy);
-
-        $mother = Animal::find($animal->mother_id);
-        $father = Animal::find($animal->father_id);
-
+        $mother = $flatGenealogy->firstWhere('id', $animal->mother_id);
+        $father = $flatGenealogy->firstWhere('id', $animal->father_id);
 
         return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy'));
     }
+
+
+    private function fetchGenealogy($animalId, $maxGenerations)
+    {
+        $query = <<<SQL
+            WITH RECURSIVE genealogy_tree AS (
+                SELECT
+                    id, name, "isMale", mother_id, father_id, "birthDate", "images", breed, 1 AS generation
+                FROM animals
+                WHERE id = :animalId
+                UNION ALL
+                SELECT
+                    a.id, a.name, a."isMale", a.mother_id, a.father_id, a."birthDate", a."images", a.breed, gt.generation + 1
+                FROM animals a
+                INNER JOIN genealogy_tree gt ON (a.id = gt.mother_id OR a.id = gt.father_id)
+                WHERE gt.generation < :maxGenerations
+                  AND a.id != :animalId
+            )
+            SELECT * FROM genealogy_tree ORDER BY generation, id;
+        SQL;
+
+        // Fetch all generations in a single query
+        $results = collect(DB::select($query, [
+            'animalId' => $animalId,
+            'maxGenerations' => $maxGenerations,
+        ]));
+
+        // Process the results to decode JSON fields
+        return $results->map(function ($row) {
+            $row->images = $row->images ? json_decode($row->images, true) : [];
+            $row->breed = $row->breed ?? 'Unknown'; // Default to 'Unknown' if null
+            return $row;
+        })->groupBy('generation');
+    }
+
+
+
+
 
 
     public function edit(Animal $animal)
@@ -144,14 +154,14 @@ class AnimalController extends Controller
         $femaleAnimals = Animal::where('isMale', false)->where('id', '!=', $animal->id)->get();
 
         $allAnimals = Animal::where('id', '!=', $animal->id)
-        ->when(
-            $animal->birthDate,
-            fn($query) => $query->where(function ($q) use ($animal) {
-                $q->where('birthDate', '<', $animal->birthDate)
-                  ->orWhereNull('birthDate');
-            })
-        )
-        ->get();
+            ->when(
+                $animal->birthDate,
+                fn($query) => $query->where(function ($q) use ($animal) {
+                    $q->where('birthDate', '<', $animal->birthDate)
+                        ->orWhereNull('birthDate');
+                })
+            )
+            ->get();
         return view('admin.animals.edit', compact('animal', 'maleAnimals', 'femaleAnimals', 'allAnimals'));
     }
 

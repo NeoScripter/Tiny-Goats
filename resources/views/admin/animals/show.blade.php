@@ -132,7 +132,7 @@
 
                 <div class="gens__table">
 
-                    <div class="gens__column">
+                    {{-- <div class="gens__column">
 
                         <div class="gens__item">
                             <div class="gens__image">
@@ -144,7 +144,7 @@
                             <p class="gens__breed">{{ $animal->breed }}</p>
                         </div>
 
-                    </div>
+                    </div> --}}
 
                     @foreach ($genealogy as $generationIndex => $generation)
                         <div class="gens__column">
