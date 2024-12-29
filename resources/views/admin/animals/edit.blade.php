@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-    <x-partials.header />
+    <x-admin.header />
 
     @isset($animal)
 

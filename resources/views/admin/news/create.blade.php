@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-    <x-partials.header />
+    <x-admin.header />
 
     <div class="admin-edit-news">
         <form method="POST" action="{{ route('news.store') }}" enctype="multipart/form-data">

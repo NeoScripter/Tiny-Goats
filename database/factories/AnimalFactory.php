@@ -30,11 +30,13 @@ class AnimalFactory extends Factory
                 ->shuffle();
         }
 
+        $gender_bool = $this->faker->boolean;
+
         $image = $availableImages->pop();
 
         return [
-            'name' => $this->faker->firstName,
-            'isMale' => $this->faker->boolean,
+            'name' => $this->faker->firstName($gender_bool ? 'male' :'female'),
+            'isMale' => $gender_bool,
             'breed' => $this->faker->randomElement(['нигерийская', 'нигерийско-камерунская', 'камерунская', 'метис', 'другие']),
             'forSale' => $this->faker->boolean,
             'color' => $this->faker->safeColorName,
