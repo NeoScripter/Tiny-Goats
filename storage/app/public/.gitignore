@@ -1,2 +1,8 @@
-*
-!.gitignore
+# Ignore everything inside the storage folder
+/storage/*
+
+# Except the public folder
+!/storage/public
+
+# Allow files inside the public folder
+/storage/public/*
