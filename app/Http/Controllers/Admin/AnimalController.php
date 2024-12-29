@@ -151,7 +151,7 @@ class AnimalController extends Controller
                   ->orWhereNull('birthDate');
             })
         )
-        ->all();
+        ->get();
         return view('admin.animals.edit', compact('animal', 'maleAnimals', 'femaleAnimals', 'allAnimals'));
     }
 

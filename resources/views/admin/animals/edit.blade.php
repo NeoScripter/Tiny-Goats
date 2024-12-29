@@ -126,7 +126,7 @@
                         <div class="info__item">
                             <div class="info__property">Дата рождения</div>
                             <div class="info__value">
-                                <input type="date" name="birthDate" value="{{ old('birthDate', $animal->birthDate) }}"
+                                <input type="date" name="birthDate" value="{{ old('birthDate', $animal->birthDate ? $animal->birthDate->format('Y-m-d') : '') }}"
                                     class="info__input">
                             </div>
                         </div>

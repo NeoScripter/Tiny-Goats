@@ -21,29 +21,20 @@ class NewsFactory extends Factory
      */
     public function definition(): array
     {
-        $client = new Client();
-        $imageName = '';
+        static $availableImages = null;
 
-        $pixabayUrl = 'https://pixabay.com/api/?key=47185109-3d7800540e3a0a59061a64e22&q=news&image_type=photo';
-
-        $response = $client->get($pixabayUrl);
-        $data = json_decode($response->getBody(), true);
-
-        if (isset($data['hits'])) {
-            $shuffledHits = collect($data['hits'])->shuffle();
-
-            $hit = $shuffledHits[0];
-            $imageUrl = $hit['webformatURL'];
-            $response = $client->get($imageUrl);
-            $imageName = 'news_images/' . Str::random(10) . '.jpg';
-
-            Storage::disk('public')->put($imageName, $response->getBody());
+        if ($availableImages === null) {
+            $availableImages = collect(glob(storage_path('app/public/news_images/*.*')))
+                ->map(fn($path) => 'news_images/' . basename($path))
+                ->shuffle();
         }
+
+        $image = $availableImages->pop();
 
         return [
             'title' => $this->faker->catchPhrase(),
             'content' => $this->faker->paragraphs(10, true),
-            'image' => $imageName,
+            'image' => $image,
             'categories' => $this->faker->randomElements(
                 ['Новости', 'Статьи', 'События'],
                 $this->faker->numberBetween(1, 3)

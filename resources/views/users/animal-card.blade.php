@@ -166,7 +166,6 @@
                                             <img src="{{ asset('images/partials/placeholder.webp') }}" alt="Нет фотографии">
                                         </div>
                                         <h3 class="gens__name">?</h3>
-                                        <p class="gens__breed">?</p>
                                     @endif
                                 </div>
                             @endforeach

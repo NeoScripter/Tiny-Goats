@@ -100,13 +100,6 @@ Route::get('/login', function () {
     ->middleware('guest')
     ->name('login');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/admin/{days?}', function ($days = 7) {
-        $animals = Animal::where('updated_at', '>=', Carbon::now()->subDays((int)$days))->paginate(20);
-        return view('admin.index', compact('animals'));
-    })->name('admin.index');
-});
-
 Route::get('/login', [LoginController::class, 'showLogin'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'signOut'])->middleware('auth')->name('logout');
@@ -131,4 +124,11 @@ Route::prefix('admin')
         Route::put('/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
 
         Route::delete('/animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/admin/{days?}', function ($days = 7) {
+            $animals = Animal::where('updated_at', '>=', Carbon::now()->subDays((int)$days))->paginate(20);
+            return view('admin.index', compact('animals'));
+        })->name('admin.index');
     });

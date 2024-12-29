@@ -20,12 +20,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Storage::disk('public')->deleteDirectory('animals_images');
-        Storage::disk('public')->makeDirectory('animals_images');
-        Storage::disk('public')->deleteDirectory('news_images');
-        Storage::disk('public')->makeDirectory('news_images');
-
-
         $this->call([
             UserSeeder::class,
             NewsSeeder::class,

@@ -22,27 +22,15 @@ class AnimalFactory extends Factory
 
     public function definition(): array
     {
-        $client = new Client();
-        $images = [];
+        static $availableImages = null;
 
-        $pixabayUrl = 'https://pixabay.com/api/?key=47185109-3d7800540e3a0a59061a64e22&q=goat&image_type=photo';
-
-        $response = $client->get($pixabayUrl);
-        $data = json_decode($response->getBody(), true);
-
-        if (isset($data['hits'])) {
-            $shuffledHits = collect($data['hits'])->shuffle();
-
-            foreach ($shuffledHits->take(4) as $hit) {
-                $imageUrl = $hit['webformatURL'];
-                $response = $client->get($imageUrl);
-                $imageName = 'animals_images/' . Str::random(10) . '.jpg';
-
-                Storage::disk('public')->put($imageName, $response->getBody());
-                $images[] = $imageName;
-            }
+        if ($availableImages === null) {
+            $availableImages = collect(glob(storage_path('app/public/animals_images/*.*')))
+                ->map(fn($path) => 'animals_images/' . basename($path))
+                ->shuffle();
         }
 
+        $image = $availableImages->pop();
 
         return [
             'name' => $this->faker->firstName,
@@ -64,7 +52,7 @@ class AnimalFactory extends Factory
             'extraInfo' => $this->faker->paragraph,
             'certificates' => $this->faker->paragraph,
             'showOnMain' => $this->faker->boolean,
-            'images' => $images,
+            'images' => [$image, $image, $image],
             'mother_id' => null,
             'father_id' => null,
             'created_at' => now(),
