@@ -14,16 +14,16 @@ function actingAsAdmin()
     test()->actingAs($user);
 }
 
-it('shows the list of animals with filtering by category', function () {
+it('shows the list of animals for sale', function () {
     actingAsAdmin();
 
     $forSaleAnimals = Animal::factory()->count(3)->create(['forSale' => true]);
     $notForSaleAnimals = Animal::factory()->count(2)->create(['forSale' => false]);
 
-    $response = $this->get(route('animals.index', ['category' => 'forSale']));
+    $response = $this->get(route('animals.index.sale'));
 
     $response->assertStatus(200)
-        ->assertViewIs('admin.animals.index')
+        ->assertViewIs('admin.animals.sale')
         ->assertViewHas('animals');
 
     $forSaleAnimals->each(fn($animal) => $response->assertSee($animal->name));

@@ -111,7 +111,12 @@ Route::prefix('admin')
 
         // Animals
 
-        Route::get('/animals/category/{category?}', [AnimalController::class, 'index'])->name('animals.index');
+        Route::get('/animals/all', [AnimalController::class, 'index'])->name('animals.index');
+
+        Route::get('/animals/sale', function () {
+            $animals = Animal::where('forSale', true)->latest()->paginate(16);
+            return view('admin.animals.sale', compact('animals'));
+        })->name('animals.index.sale');
 
         Route::get('/animals/create', [AnimalController::class, 'create'])->name('animals.create');
 

@@ -10,13 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class AnimalController extends Controller
 {
-    public function index($category = null)
+    public function index()
     {
         $query = Animal::latest();
 
-        if ($category && $category === 'forSale') {
-            $query->where('forSale', true);
-        }
 
         $animals = $query->paginate(16);
 

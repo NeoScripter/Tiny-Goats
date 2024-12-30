@@ -39,9 +39,8 @@
                 </div>
                 <div class="admin__group">
                     <h3>На продажу</h3>
-                    <div class="admin__links">
-                        <a href="{{ route('animals.create') }}">добавить</a>
-                        <a href="{{ route('animals.index', ['category' => 'forSale']) }}">управлять</a>
+                    <div class="admin__links admin__links--sale">
+                        <a href="{{ route('animals.index.sale') }}">управлять</a>
                     </div>
                 </div>
                 <div class="admin__group">

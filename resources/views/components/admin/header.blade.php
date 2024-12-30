@@ -3,11 +3,11 @@
     <div class="header__headline">
 
         <div class="header__signup">
-            <a href="/register" class="header__signup-link">Регистрация</a>
+            <a href="{{ route('logout') }}" class="header__signup-link">Выход</a>
 
-            <div class="header__user-icon">
+            <a href="{{ route('admin.index') }}" class="header__user-icon">
                 <img src="{{ asset('images/svgs/user.svg') }}" alt="Иконка пользователя">
-            </div>
+            </a>
         </div>
 
         <a href="/" class="header__logo">
@@ -23,8 +23,18 @@
 
     <nav class="header__nav">
         <ul class="header__ul">
-            <li><a href="/rules" class="header__nav-link {{ Request::is('rules') ? 'header__nav-link--active' : '' }}">Правила</a></li>
-            <li><a href="{{ route('user.news.index') }}" class="header__nav-link {{ Route::is('user.news.index') ? 'header__nav-link--active' : '' }}">Новости</a></li>
+            <li>
+                <button class="header__nav-btn" x-data="{ showDropdown: false, timer: null }"
+                    @mouseenter="clearTimeout(timer); showDropdown = true"
+                    @mouseleave="timer = setTimeout(() => showDropdown = false, 200)">
+                    Новости
+                    <ul class="header__nav-dropdown" x-cloak x-show="showDropdown"
+                        @mouseleave="showDropdown = false">
+                        <li><a href="{{ route('news.index') }}" class="header__dropdown-link">Управлять</a></li>
+                        <li><a href="{{ route('news.create') }}" class="header__dropdown-link">Добавить</a></li>
+                    </ul>
+                </button>
+            </li>
             <li>
                 <button class="header__nav-btn" x-data="{ showDropdown: false, timer: null }"
                     @mouseenter="clearTimeout(timer); showDropdown = true"
@@ -37,11 +47,43 @@
                     </ul>
                 </button>
             </li>
-            <li><a href="/households" class="header__nav-link {{ Request::is('households') ? 'header__nav-link--active' : '' }}">Хозяйства</a></li>
-            <li><a href="/specialists" class="header__nav-link {{ Request::is('specialists') ? 'header__nav-link--active' : '' }}">Специалисты</a></li>
-            <li><a href="/sell" class="header__nav-link {{ Request::is('sell') ? 'header__nav-link--active' : '' }}">На продажу</a></li>
-            <li><a href="/partners" class="header__nav-link {{ Request::is('partners') ? 'header__nav-link--active' : '' }}">Партнеры</a></li>
-            <li><a href="/contacts" class="header__nav-link {{ Request::is('contacts') ? 'header__nav-link--active' : '' }}">Контакты</a></li>
+            <li>
+                <button class="header__nav-btn" x-data="{ showDropdown: false, timer: null }"
+                    @mouseenter="clearTimeout(timer); showDropdown = true"
+                    @mouseleave="timer = setTimeout(() => showDropdown = false, 200)">
+                    Хозяйства
+                    <ul class="header__nav-dropdown" x-cloak x-show="showDropdown"
+                        @mouseleave="showDropdown = false">
+                        <li><a href="" class="header__dropdown-link">Управлять</a></li>
+                        <li><a href="" class="header__dropdown-link">Добавить</a></li>
+                    </ul>
+                </button>
+            </li>
+            <li>
+                <button class="header__nav-btn" x-data="{ showDropdown: false, timer: null }"
+                    @mouseenter="clearTimeout(timer); showDropdown = true"
+                    @mouseleave="timer = setTimeout(() => showDropdown = false, 200)">
+                    Специалисты
+                    <ul class="header__nav-dropdown" x-cloak x-show="showDropdown"
+                        @mouseleave="showDropdown = false">
+                        <li><a href="" class="header__dropdown-link">Управлять</a></li>
+                        <li><a href="" class="header__dropdown-link">Добавить</a></li>
+                    </ul>
+                </button>
+            </li>
+            <li><a href="{{ route('animals.index.sale') }}" class="header__nav-link {{ Route::is('animals.index.sale') ? 'header__nav-link--active' : '' }}">На продажу</a></li>
+            <li>
+                <button class="header__nav-btn" x-data="{ showDropdown: false, timer: null }"
+                    @mouseenter="clearTimeout(timer); showDropdown = true"
+                    @mouseleave="timer = setTimeout(() => showDropdown = false, 200)">
+                    Партнеры
+                    <ul class="header__nav-dropdown" x-cloak x-show="showDropdown"
+                        @mouseleave="showDropdown = false">
+                        <li><a href="" class="header__dropdown-link">Управлять</a></li>
+                        <li><a href="" class="header__dropdown-link">Добавить</a></li>
+                    </ul>
+                </button>
+            </li>
         </ul>
     </nav>
 </header>
