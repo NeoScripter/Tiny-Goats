@@ -16,8 +16,28 @@ class SpecialistFactory extends Factory
      */
     public function definition(): array
     {
+        static $availableImages = null;
+
+        if ($availableImages === null) {
+            $availableImages = collect(glob(storage_path('app/public/specialists/*.*')))
+                ->map(fn($path) => 'specialists/' . basename($path))
+                ->shuffle();
+        }
+
+        $image = $availableImages->pop();
+
+
         return [
-            //
+            'name' => $this->faker->name(),
+            'image_path' => $image,
+            'speciality' => $this->faker->jobTitle(),
+            'educaiton' => $this->faker->words(10, true),
+            'experience' => $this->faker->words(10, true),
+            'extraInfo' => $this->faker->words(10, true),
+            'contacts' => $this->faker->words(10, true),
+            'website' => $this->faker->url(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

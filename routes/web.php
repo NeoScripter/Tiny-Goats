@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AnimalController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\SpecialistController;
 use App\Http\Controllers\User\NewsController as UserNewsController;
 use App\Http\Controllers\User\AnimalController as UserAnimalController;
 use App\Http\Controllers\Auth\LoginController;
@@ -129,6 +130,22 @@ Route::prefix('admin')
         Route::put('/animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
 
         Route::delete('/animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
+
+        // Specialists
+
+        Route::get('/specialists/all', [SpecialistController::class, 'index'])->name('specialists.index');
+
+        Route::get('/specialists/create', [SpecialistController::class, 'create'])->name('specialists.create');
+
+        Route::post('/specialists', [SpecialistController::class, 'store'])->name('specialists.store');
+
+        Route::get('/specialists/{specialist}/edit', [SpecialistController::class, 'edit'])->name('specialists.edit');
+
+        Route::get('/specialists/{specialist}', [SpecialistController::class, 'show'])->name('specialists.show');
+
+        Route::put('/specialists/{specialist}', [SpecialistController::class, 'update'])->name('specialists.update');
+
+        Route::delete('/specialists/{specialist}', [SpecialistController::class, 'destroy'])->name('specialists.destroy');
     });
 
     Route::middleware('auth')->group(function () {
