@@ -21,7 +21,8 @@ class AnimalController extends Controller
         ->when($name, fn($query) => $query->where('name', 'like', "%$name%"))
         ->when($char, fn($query) => $query->where('name', 'like', "$char%"))
         ->latest()
-        ->paginate(20);
+        ->paginate(20)
+        ->appends($request->query());
 
         return view('users.animals', compact('animals'));
     }

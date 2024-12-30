@@ -254,7 +254,7 @@
 
 
                     <div class="rules__flex">
-                        <a href="/rules" class="rules__btn">Регистрация</a>
+                        <a href="/register" class="rules__btn">Регистрация</a>
                         <a href="/faq" class="rules__btn">Вопросы</a>
                         <a href="/" class="rules__btn">Главная</a>
                     </div>
@@ -262,15 +262,15 @@
                     <div class="rules__images">
 
                         <div class="rules__small-flower">
-                            <img src="{{ asset('images/pages/user/rules/rules-3.webp')}}" alt="">
+                            <img src="{{ asset('images/pages/user/rules/rules-3.webp')}}" alt="Dandelion flower">
                         </div>
 
                         <div class="rules__large-flower">
-                            <img src="{{ asset('images/pages/user/rules/rules-3.webp')}}" alt="">
+                            <img src="{{ asset('images/pages/user/rules/rules-3.webp')}}" alt="Dandelion flower">
                         </div>
 
                         <div class="rules__goat">
-                            <img src="{{ asset('images/pages/user/rules/rules-1.webp')}}" alt="">
+                            <img src="{{ asset('images/pages/user/rules/rules-1.webp')}}" alt="A friendly goat">
                         </div>
 
                         <div class="rules__circle"></div>

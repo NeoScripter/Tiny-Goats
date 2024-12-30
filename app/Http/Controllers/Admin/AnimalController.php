@@ -124,7 +124,6 @@ class AnimalController extends Controller
                 FROM animals a
                 INNER JOIN genealogy_tree gt ON (a.id = gt.mother_id OR a.id = gt.father_id)
                 WHERE gt.generation < :maxGenerations
-                  AND a.id != :animalId
             )
             SELECT * FROM genealogy_tree ORDER BY generation, id;
         SQL;

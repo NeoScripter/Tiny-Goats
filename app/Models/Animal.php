@@ -65,16 +65,16 @@ class Animal extends Model
     }
 
     // Combined relationship for all children (both as mother and father)
-/*     public function children()
+    /*     public function children()
     {
         return $this->childrenAsMother()->union($this->childrenAsFather());
     } */
 
     public function children()
-{
-    $childrenAsMother = $this->childrenAsMother()->select(['id', 'name', 'mother_id']);
-    $childrenAsFather = $this->childrenAsFather()->select(['id', 'name', 'father_id']);
+    {
+        $childrenAsMother = $this->childrenAsMother()->select(['id', 'name', 'mother_id']);
+        $childrenAsFather = $this->childrenAsFather()->select(['id', 'name', 'father_id']);
 
-    return $childrenAsMother->union($childrenAsFather);
-}
+        return $childrenAsMother->union($childrenAsFather);
+    }
 }
