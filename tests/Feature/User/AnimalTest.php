@@ -101,3 +101,28 @@ it('correctly displays the animals page to the user', function () {
         $response->assertSee(\Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y'));
     });
 });
+
+
+it('correctly displays the show animal page to the user', function () {
+
+    $animal = Animal::factory()->create();
+
+    $response = $this->get(route('user.animals.show', $animal));
+
+    $response->assertStatus(200);
+
+    $response->assertSee($animal->name);
+    $response->assertSee($animal->isMale ? 'Самец' :'Самка');
+    $response->assertSee(\Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y'));
+
+});
+
+it('correctly displays the coupling page to the user', function () {
+
+    $response = $this->get('/coupling');
+
+    $response->assertStatus(200);
+
+    $response->assertSee('Родословная планируемого окота');
+
+});

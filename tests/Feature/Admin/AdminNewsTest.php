@@ -8,13 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-// Helper function to authenticate a user
-function actingAsAdmin()
-{
-    $user = User::factory()->create();
-    test()->actingAs($user);
-}
-
 it('shows the list of news items', function () {
     actingAsAdmin();
 

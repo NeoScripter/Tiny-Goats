@@ -10,12 +10,21 @@ use Illuminate\Support\Facades\DB;
 
 class AnimalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $query = Animal::latest();
+        $gender = $request->query('gender');
+        $breed = $request->query('breed');
+        $name = $request->query('name');
+        $char = $request->query('char');
 
-
-        $animals = $query->paginate(16);
+        $animals = Animal::with(['father', 'mother'])
+            ->when($gender, fn($query) => $query->where('isMale', $gender === 'male'))
+            ->when($breed, fn($query) => $query->where('breed', $breed))
+            ->when($name, fn($query) => $query->where('name', 'like', "%$name%"))
+            ->when($char, fn($query) => $query->where('name', 'like', "$char%"))
+            ->latest()
+            ->paginate(20)
+            ->appends($request->query());
 
         return view('admin.animals.index', compact('animals'));
     }
