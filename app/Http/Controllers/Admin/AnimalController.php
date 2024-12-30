@@ -112,34 +112,30 @@ class AnimalController extends Controller
         $query = <<<SQL
             WITH RECURSIVE genealogy_tree AS (
                 SELECT
-                    id, name, "isMale", mother_id, father_id, "birthDate", "images", breed, 1 AS generation
+                    id, name, "isMale", father_id, mother_id, "birthDate", "images", breed, 1 AS generation
                 FROM animals
                 WHERE id = :animalId
                 UNION ALL
                 SELECT
-                    a.id, a.name, a."isMale", a.mother_id, a.father_id, a."birthDate", a."images", a.breed, gt.generation + 1
+                    a.id, a.name, a."isMale", a.father_id, a.mother_id, a."birthDate", a."images", a.breed, gt.generation + 1
                 FROM animals a
-                INNER JOIN genealogy_tree gt ON (a.id = gt.mother_id OR a.id = gt.father_id)
+                INNER JOIN genealogy_tree gt ON (a.id = gt.father_id OR a.id = gt.mother_id)
                 WHERE gt.generation < :maxGenerations
             )
             SELECT * FROM genealogy_tree ORDER BY generation, id;
         SQL;
 
-        // Fetch all generations in a single query
         $results = collect(DB::select($query, [
             'animalId' => $animalId,
             'maxGenerations' => $maxGenerations,
         ]));
 
-        // Process the results to decode JSON fields
         return $results->map(function ($row) {
             $row->images = $row->images ? json_decode($row->images, true) : [];
-            $row->breed = $row->breed ?? 'Unknown'; // Default to 'Unknown' if null
+            $row->breed = $row->breed ?? 'Unknown';
             return $row;
         })->groupBy('generation');
     }
-
-
 
 
     public function edit(Animal $animal)

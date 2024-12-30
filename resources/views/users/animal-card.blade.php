@@ -97,7 +97,7 @@
 
             </section>
 
-            <form method="GET" action="{{ route('animals.show', $animal->id) }}" class="gens">
+            <form method="GET" action="{{ route('user.animals.show', $animal->id) }}" class="gens">
 
 
                 <h1 class="gens__title">Родословная</h1>
@@ -132,23 +132,10 @@
 
                 <div class="gens__table">
 
-                    <div class="gens__column">
-
-                        <div class="gens__item">
-                            <div class="gens__image">
-                                <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                    alt="Фото козла">
-                            </div>
-
-                            <h3 class="gens__name">{{ $animal->name }}</h3>
-                            <p class="gens__breed">{{ $animal->breed }}</p>
-                        </div>
-
-                    </div>
 
                     @foreach ($genealogy as $generationIndex => $generation)
                         <div class="gens__column">
-                            @foreach ($generation as $parent)
+                            @foreach ($generation->reverse() as $parent)
                                 <div class="gens__item">
                                     @if ($parent)
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">

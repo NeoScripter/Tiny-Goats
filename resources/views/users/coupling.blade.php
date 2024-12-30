@@ -52,40 +52,13 @@
                     <div class="gens__item">
 
                         <div class="gens__select-wrapper">
-                            <img src="{{ asset('images/pages/user/coupling/coupling-female.webp') }}" alt="Фото козла">
-                            <select name="mother_id">
-                                <option value="">Другая мать</option>
-                                @foreach ($femaleAnimals as $female)
-                                    <option value="{{ $female->id }}"
-                                        {{ (old('mother_id') ?? $mother?->id) == $female->id ? 'selected' : '' }}>{{ $female->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        @if (isset($mother))
-                            <div class="gens__image">
-                                <img src="{{ $mother->images[0] ? asset('storage/' . $mother->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                    alt="Фото козла">
-                            </div>
-
-                            <h3 class="gens__name">{{ $mother->name }}</h3>
-                            <p class="gens__breed">{{ $mother->breed }}</p>
-                        @else
-                            <div class="gens__image">
-                                <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="Фото козла">
-                            </div>
-                        @endif
-                    </div>
-                    <div class="gens__item">
-
-                        <div class="gens__select-wrapper">
                             <img src="{{ asset('images/pages/user/coupling/coupling-male.webp') }}" alt="Фото козла">
                             <select name="father_id">
                                 <option value="">Другой отец</option>
                                 @foreach ($maleAnimals as $male)
                                     <option value="{{ $male->id }}"
-                                        {{ (old('father_id') ?? $father?->id) == $male->id ? 'selected' : '' }}>{{ $male->name }}
+                                        {{ (old('father_id') ?? $father?->id) == $male->id ? 'selected' : '' }}>
+                                        {{ $male->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -105,27 +78,84 @@
                             </div>
                         @endif
                     </div>
+                    <div class="gens__item">
+
+                        <div class="gens__select-wrapper">
+                            <img src="{{ asset('images/pages/user/coupling/coupling-female.webp') }}" alt="Фото козла">
+                            <select name="mother_id">
+                                <option value="">Другая мать</option>
+                                @foreach ($femaleAnimals as $female)
+                                    <option value="{{ $female->id }}"
+                                        {{ (old('mother_id') ?? $mother?->id) == $female->id ? 'selected' : '' }}>
+                                        {{ $female->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        @if (isset($mother))
+                            <div class="gens__image">
+                                <img src="{{ $mother->images[0] ? asset('storage/' . $mother->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                    alt="Фото козла">
+                            </div>
+
+                            <h3 class="gens__name">{{ $mother->name }}</h3>
+                            <p class="gens__breed">{{ $mother->breed }}</p>
+                        @else
+                            <div class="gens__image">
+                                <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="Фото козла">
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
-                @isset($genealogy)
-                    @foreach ($genealogy as $generationIndex => $generation)
+                @isset($fatherGenealogy)
+                    @foreach ($fatherGenealogy as $generationIndex => $generation)
+                        @php
+                            if ($generationIndex === 1) continue;
+                        @endphp
                         <div class="gens__column">
-                            @foreach ($generation as $parent)
+                            @foreach ($fatherGenealogy[$generationIndex]->reverse() as $parent)
                                 <div class="gens__item">
                                     @if ($parent)
-                                        <a href="{{ route('user.animals.show', $parent->id) }}" class="gens__image">
+                                        <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)
-                                                <img src="{{ $photo && $parent->images[0] ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                                    alt="">
+                                                <img src="{{ $photo && !empty($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                    alt="Ancestor Photo">
                                             @else
-                                                <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
+                                                <img src="{{ asset('images/partials/nophoto.png') }}"
+                                                    alt="No Photo Available">
                                             @endif
                                         </a>
                                         <h3 class="gens__name">{{ $parent->name }}</h3>
                                         <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
                                     @else
                                         <div class="gens__image">
-                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="Нет фотографии">
+                                            <img src="{{ asset('images/partials/placeholder.webp') }}"
+                                                alt="No Photo Available">
+                                        </div>
+                                        <h3 class="gens__name">?</h3>
+                                    @endif
+                                </div>
+                            @endforeach
+                            @foreach ($motherGenealogy[$generationIndex]->reverse() as $parent)
+                                <div class="gens__item">
+                                    @if ($parent)
+                                        <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
+                                            @if ($photo)
+                                                <img src="{{ $photo && !empty($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                    alt="Ancestor Photo">
+                                            @else
+                                                <img src="{{ asset('images/partials/nophoto.png') }}"
+                                                    alt="No Photo Available">
+                                            @endif
+                                        </a>
+                                        <h3 class="gens__name">{{ $parent->name }}</h3>
+                                        <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
+                                    @else
+                                        <div class="gens__image">
+                                            <img src="{{ asset('images/partials/placeholder.webp') }}"
+                                                alt="No Photo Available">
                                         </div>
                                         <h3 class="gens__name">?</h3>
                                     @endif
@@ -138,115 +168,6 @@
             </div>
 
         </form>
-
-
-        {{--  <form class="gens">
-
-            <h1 class="gens__title">Родословная планируемого окота</h1>
-
-            <div class="gens__params">
-                <div class="gens__param">
-                    <p class="gens__param-label">Количество поколений</p>
-                    <select name="" id="" class="gens__select">
-                        @for ($i = 1; $i < 9; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
-                </div>
-
-                <div class="gens__param">
-                    <p class="gens__param-label">Версия для печати</p>
-                    <select name="" id="" class="gens__select">
-                        <option value="">С фото</option>
-                        <option value="">без фото</option>
-                    </select>
-                </div>
-            </div>
-
-            <button class="gens__button">Сгенерировать</button> --}}
-
-        {{--  <div class="gens__table">
-
-                @php
-                    $cols = 8;
-                @endphp --}}
-
-        {{-- <div class="gens__column">
-                    <div class="gens__item">
-
-                        <div class="gens__image">
-                            <img src="{{ asset('images/pages/user/coupling/coupling-goat.webp') }}" alt="">
-                        </div>
-                    </div>
-                </div> --}}
-
-        {{--    <div class="gens__column">
-                    <div class="gens__item">
-
-                        <div class="gens__select-wrapper">
-                            <img src="{{ asset('images/pages/user/coupling/coupling-female.webp') }}" alt="">
-                            <select name="" id="">
-                                <option value="" selected>Другая мать </option>
-                                @for ($i = 1; $i < 9; $i++)
-                                    <option value="">Lorem ipsum </option>
-                                @endfor
-                            </select>
-                        </div>
-
-                        <div class="gens__image">
-                            <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
-                        </div>
-
-                        <h3 class="gens__name">Кличка</h3>
-                        <p class="gens__breed">Порода</p>
-                    </div>
-                    <div class="gens__item">
-
-                        <div class="gens__select-wrapper">
-                            <img src="{{ asset('images/pages/user/coupling/coupling-male.webp') }}" alt="">
-                            <select name="" id="">
-                                <option value="" selected>Другой отец </option>
-                                @for ($i = 1; $i < 9; $i++)
-                                    <option value="">Lorem ipsum </option>
-                                @endfor
-                            </select>
-                        </div>
-
-                        <div class="gens__image">
-                            <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
-                        </div>
-
-                        <h3 class="gens__name">Кличка</h3>
-                        <p class="gens__breed">Порода</p>
-                    </div>
-                </div> --}}
-
-        {{--
-                @for ($i = 2; $i < $cols; $i++)
-
-                    <div class="gens__column">
-
-                        @php
-                            $powerOfTwo = pow(2, $i);
-                        @endphp
-
-                        @for ($j = 0; $j <= $powerOfTwo; $j++)
-                            <div class="gens__item">
-                                <div class="gens__image">
-                                    <img src="{{ asset('images/pages/user/animal/placeholder.png') }}"alt="">
-                                </div>
-
-                                <h3 class="gens__name">Кличка</h3>
-                                <p class="gens__breed">Порода</p>
-                            </div>
-                        @endfor
-
-                    </div>
-                @endfor --}}
-        {{--
-            </div>
-
-        </form> --}}
 
     </div>
 

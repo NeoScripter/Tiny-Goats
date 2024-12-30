@@ -148,7 +148,8 @@
 
                     @foreach ($genealogy as $generationIndex => $generation)
                         <div class="gens__column">
-                            @foreach ($generation as $parent)
+
+                            @foreach ($generation->reverse() as $parent)
                                 <div class="gens__item">
                                     @if ($parent)
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
