@@ -37,7 +37,7 @@ class NewsController extends Controller
             'content' => 'required|string',
             'categories' => 'required|array',
             'categories.*' => 'string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:1024'
         ]);
 
         $imagePath = $request->file('image')?->store('news_images', 'public');
@@ -79,7 +79,7 @@ class NewsController extends Controller
             'content' => 'required|string',
             'categories' => 'required|array',
             'categories.*' => 'string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:1024'
         ]);
 
         if ($request->hasFile('image')) {

@@ -32,6 +32,22 @@ it('correctly displays the home page', function () {
 });
 
 
+it('correctly displays the agenda page', function () {
+    News::factory()->count(4)->create();
+
+    $response = $this->get('/agenda');
+
+    $response->assertStatus(200);
+
+    $response->assertSee('Привлечение специалистов в области');
+
+    News::all()->each(function ($news) use ($response) {
+        $response->assertSee($news->title);
+        $response->assertSee($news->image);
+    });
+
+});
+
 it('correctly displays the for sale page', function () {
     Animal::factory()->count(10)->create([
         'forSale' => true,

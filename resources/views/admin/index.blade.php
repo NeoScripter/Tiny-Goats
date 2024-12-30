@@ -65,12 +65,12 @@
                         <option value="1" {{ request('days') == 1 ? 'selected' : '' }}>1 день</option>
                         <option value="2" {{ request('days') == 2 ? 'selected' : '' }}>2 дня</option>
                         <option value="3" {{ request('days') == 3 ? 'selected' : '' }}>3 дня</option>
-                        <option value="4" {{ request('days') == 4 ? 'selected' : '' }}>4 дня</option>
                         <option value="7" {{ request('days') == 7 || !request('days') ? 'selected' : '' }}>7 дней
                         </option>
-                        <option value="15" {{ request('days') == 15 ? 'selected' : '' }}>15 дней</option>
-                        <option value="30" {{ request('days') == 30 ? 'selected' : '' }}>30 дней</option>
-                        <option value="60" {{ request('days') == 60 ? 'selected' : '' }}>60 дней</option>
+                        <option value="14" {{ request('days') == 14 ? 'selected' : '' }}>14 дней</option>
+                        <option value="21" {{ request('days') == 21 ? 'selected' : '' }}>21 день</option>
+                        <option value="30" {{ request('days') == 30 ? 'selected' : '' }}>1 месяц</option>
+                        <option value="60" {{ request('days') == 60 ? 'selected' : '' }}>2 месяца</option>
                     </select>
                 </div>
 

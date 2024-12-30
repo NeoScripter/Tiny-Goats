@@ -145,8 +145,6 @@ class AnimalController extends Controller
 
 
 
-
-
     public function edit(Animal $animal)
     {
         $maleAnimals = Animal::where('isMale', true)->where('id', '!=', $animal->id)->get();
