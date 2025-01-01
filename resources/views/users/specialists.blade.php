@@ -8,24 +8,31 @@
 
             <h1 class="list__title">Специалисты</h1>
 
-            <div class="list__seach-bar">
-                <input type="search" placeholder="Поиск по спкциалистам">
-                <button class="list__search-btn">Найти</button>
+            <form method="GET" action="{{ route('user.specialists.index') }}" class="list__seach-bar">
+                <input type="search" name="name" placeholder="Поиск по специалистам">
+                <button type="submit" class="list__search-btn">Найти</button>
                 <a href="/register" class="list__add-btn">Добавить специалиста</a>
+            </form>
+
+            <div class="list__categories">
+                <a href="{{ route('user.specialists.index') }}"
+                    class="list__category {{ empty(request()->query()) ? 'list__key--active' : '' }}">
+                    Все
+                </a>
             </div>
 
             <div class="list__keys">
 
+
                 @php
-                    $englishLetters = range('A', 'Z');
-
-                    $russianLetters = array_map(fn($code) => mb_chr($code, 'UTF-8'), range(0x0410, 0x042f));
-
-                    $letters = array_merge($englishLetters, $russianLetters);
+                    $letters = array_map(fn($code) => mb_chr($code, 'UTF-8'), range(0x0410, 0x042f));
                 @endphp
 
                 @foreach ($letters as $letter)
-                    <a href="" class="list__key">{{ $letter }}</a>
+                    <a href="{{ route('user.specialists.index', array_merge(request()->query(), ['char' => $letter])) }}"
+                        class="list__key {{ request('char') == $letter ? 'list__key--active' : '' }}">
+                        {{ $letter }}
+                    </a>
                 @endforeach
             </div>
 
@@ -36,14 +43,21 @@
                         <th scope="col">Специальность</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @for ($i = 0; $i < 10; $i++)
-                        <tr>
-                            <td>Lorem ipsum dolor sit amet</td>
-                            <td>Lorem ipsum </td>
-                        </tr>
-                    @endfor
-                </tbody>
+
+                @isset($specialists)
+                    <tbody>
+                        @foreach ($specialists as $index => $specialist)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('user.specialist.show', $specialist->id) }}"
+                                        class="list__link">{{ $specialist->name }}</a>
+                                </td>
+                                <td>{{ $specialist->speciality ? $specialist->speciality : '?' }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                @endisset
             </table>
 
             <div class="list__pagination">

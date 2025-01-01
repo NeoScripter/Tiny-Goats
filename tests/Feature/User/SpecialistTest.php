@@ -21,7 +21,7 @@ it('correctly displays the specialists to the user', function () {
         ]);
     }
 
-    $response = $this->get(route('specialists.index'));
+    $response = $this->get(route('user.specialists.index'));
 
     $response->assertStatus(200);
 

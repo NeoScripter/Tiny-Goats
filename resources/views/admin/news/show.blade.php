@@ -34,7 +34,7 @@
                         <div class="news__item">
                             <a href="{{ route('news.show', $news->id) }}" class="news__image">
                                 <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}"
-                                    alt="image">
+                                    alt="{{ $news->title }}">
                                 @isset($news->categories[0])
                                     <span class="news__label">Раздел
                                         {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>

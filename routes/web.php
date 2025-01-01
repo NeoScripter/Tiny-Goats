@@ -8,8 +8,10 @@ use App\Http\Controllers\User\AnimalController as UserAnimalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Animal;
 use App\Models\News;
+use App\Models\Specialist;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,13 +68,24 @@ Route::get('/households/1', function () {
     return view('users.household-card');
 });
 
-Route::get('/specialists', function () {
-    return view('users.specialists');
-});
+Route::get('/specialists', function (Request $request) {
+    $name = $request->query('name');
+    $char = $request->query('char');
 
-Route::get('/specialists/1', function () {
-    return view('users.specialists-card');
-});
+    $specialists = Specialist::when($name, fn($query) => $query->where('name', 'like', "%$name%"))
+        ->when($char, fn($query) => $query->where('name', 'like', "$char%"))
+        ->latest()
+        ->paginate(20)
+        ->appends($request->query());
+
+    return view('users.specialists', compact('specialists'));
+})->name('user.specialists.index');
+
+
+Route::get('/specialists/{specialist}', function (Specialist $specialist) {
+
+    return view('users.specialists-card', compact('specialist'));
+})->name('user.specialist.show');;
 
 Route::get('/sell', function () {
     $animals = Animal::where('forSale', true)->latest()->paginate(16);
@@ -148,9 +161,9 @@ Route::prefix('admin')
         Route::delete('/specialists/{specialist}', [SpecialistController::class, 'destroy'])->name('specialist.destroy');
     });
 
-    Route::middleware('auth')->group(function () {
-        Route::get('/admin/{days?}', function ($days = 7) {
-            $animals = Animal::where('updated_at', '>=', Carbon::now()->subDays((int)$days))->paginate(20);
-            return view('admin.index', compact('animals'));
-        })->name('admin.index');
-    });
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/{days?}', function ($days = 7) {
+        $animals = Animal::where('updated_at', '>=', Carbon::now()->subDays((int)$days))->paginate(20);
+        return view('admin.index', compact('animals'));
+    })->name('admin.index');
+});

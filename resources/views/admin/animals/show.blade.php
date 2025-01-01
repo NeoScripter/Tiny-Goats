@@ -11,7 +11,7 @@
 
                     <div class="info__snapshot">
                         <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                            alt="">
+                            alt="{{ $animal->name }}">
                     </div>
 
                     <div class="info__gallery">
@@ -131,20 +131,6 @@
                 <button type="submit" class="gens__button">Сгенерировать</button>
 
                 <div class="gens__table">
-
-                    {{-- <div class="gens__column">
-
-                        <div class="gens__item">
-                            <div class="gens__image">
-                                <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                    alt="">
-                            </div>
-
-                            <h3 class="gens__name">{{ $animal->name }}</h3>
-                            <p class="gens__breed">{{ $animal->breed }}</p>
-                        </div>
-
-                    </div> --}}
 
                     @foreach ($genealogy as $generationIndex => $generation)
                         <div class="gens__column">

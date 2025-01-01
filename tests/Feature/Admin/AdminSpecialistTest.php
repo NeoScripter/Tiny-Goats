@@ -56,7 +56,7 @@ it('stores a new specialist with an image', function () {
 
     $specialist = Specialist::latest()->first();
 
-    $this->assertTrue(Storage::disk('public')->exists($specialist->image_path_path));
+    $this->assertTrue(Storage::disk('public')->exists($specialist->image_path));
 });
 
 
@@ -94,17 +94,20 @@ it('updates a specialist', function () {
 
     $specialist = Specialist::factory()->create([
         'name' => 'Old Title',
+        'image_path' => 'specialists/old_image.jpg',
     ]);
 
     $old_image = $specialist->image_path;
 
     Storage::fake('public');
-    $image = UploadedFile::fake()->image('new_image.jpg');
+    Storage::disk('public')->put($old_image, 'dummy content');
+
+    $new_image = UploadedFile::fake()->image('new_image.jpg');
 
     $response = $this->put(route('specialist.update', $specialist), [
         'name' => 'Updated Title',
         'speciality' => 'Updated content for the specialist.',
-        'image_path' => $image,
+        'image' => $new_image,
     ]);
 
     $response->assertRedirect(route('specialists.index'))
@@ -117,7 +120,7 @@ it('updates a specialist', function () {
             ->exists()
     );
 
-    $specialist = Specialist::latest()->first();
+    $specialist->refresh();
 
     $this->assertFalse(Storage::disk('public')->exists($old_image));
     $this->assertTrue(Storage::disk('public')->exists($specialist->image_path));
@@ -141,7 +144,7 @@ it('deletes a specialist and removes the image', function () {
     $response->assertRedirect(route('specialists.index'))
         ->assertSessionHas('success', 'Специалист успешно удален!');
 
-    $this->assertDatabaseMissing('specialist', ['id' => $specialist->id]);
+    $this->assertDatabaseMissing('specialists', ['id' => $specialist->id]);
 
     $this->assertFalse(Storage::disk('public')->exists($specialist->image_path));
 });

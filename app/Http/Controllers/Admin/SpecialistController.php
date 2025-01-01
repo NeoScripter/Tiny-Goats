@@ -114,7 +114,10 @@ class SpecialistController extends Controller
     public function destroy(Specialist $specialist)
     {
         if ($specialist->image_path) {
-            Storage::disk('public')->delete($specialist->image_path);
+
+            if (Storage::disk('public')->exists($specialist->image_path)) {
+                Storage::disk('public')->delete($specialist->image_path);
+            }
         }
 
         $specialist->delete();
