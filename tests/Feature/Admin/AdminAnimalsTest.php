@@ -167,7 +167,7 @@ it('correctly displays the show animal page to the user', function () {
 });
 
 
-it('correctly displays the animals page to the user', function () {
+it('correctly displays the animals page to the admin', function () {
     actingAsAdmin();
 
     $is_male = [true, false, true, false, true];

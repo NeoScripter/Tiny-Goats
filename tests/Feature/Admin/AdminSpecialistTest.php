@@ -14,24 +14,24 @@ it('shows the list of specialists', function () {
 
     Specialist::factory()->count(5)->create();
 
-    $response = $this->get(route('news.index'));
+    $response = $this->get(route('specialists.index'));
 
     $response->assertStatus(200)
-        ->assertViewIs('admin.news.index')
-        ->assertViewHas('newsItems', fn($newsItems) => $newsItems->count() === 5);
+        ->assertViewIs('admin.specialists.index')
+        ->assertViewHas('specialists', fn($specialists) => $specialists->count() === 5);
 
-    $response->assertSee('Новости и статьи');
+    $response->assertSee('Специалисты');
 });
 
-it('shows the create news form', function () {
+it('shows the create specialist form', function () {
     actingAsAdmin();
 
-    $response = $this->get(route('news.create'));
+    $response = $this->get(route('specialist.create'));
 
     $response->assertStatus(200)
-        ->assertViewIs('admin.news.create');
+        ->assertViewIs('admin.specialists.create');
 
-    $response->assertSee('Введите заголовок');
+    $response->assertSee('Фамилия, имя специалиста');
 });
 
 it('stores a new specialist with an image', function () {
@@ -39,98 +39,88 @@ it('stores a new specialist with an image', function () {
 
     Storage::fake('public');
 
-    $response = $this->post(route('news.store'), [
-        'title' => 'Test News Title',
-        'content' => 'Test content for the news.',
-        'categories' => ['Category1', 'Category2'],
-        'image' => UploadedFile::fake()->image('news.jpg'),
+    $response = $this->post(route('specialist.store'), [
+        'name' => 'Test specialist name',
+        'speciality' => 'Test speciality for the specialist.',
+        'image' => UploadedFile::fake()->image('specialist.jpg'),
     ]);
 
-    $response->assertRedirect(route('news.index'))
-        ->assertSessionHas('success', 'Новость успешно создана!');
+    $response->assertRedirect(route('specialists.index'))
+        ->assertSessionHas('success', 'Специалист успешно создан!');
 
     $this->assertTrue(
-        Specialist::where('title', 'Test News Title')
-            ->where('content', 'Test content for the news.')
-            ->whereRaw("categories::jsonb = ?", [json_encode(['Category1', 'Category2'])])
+        Specialist::where('name', 'Test specialist name')
+            ->where('speciality', 'Test speciality for the specialist.')
             ->exists()
     );
 
-    $news = Specialist::latest()->first();
+    $specialist = Specialist::latest()->first();
 
-    $this->assertTrue(Storage::disk('public')->exists($news->image));
+    $this->assertTrue(Storage::disk('public')->exists($specialist->image_path_path));
 });
+
 
 it('shows a specific specialist', function () {
     actingAsAdmin();
 
-    $news = Specialist::factory()->create();
+    $specialist = Specialist::factory()->create();
 
-    $other_news = Specialist::factory()->count(3)->create();
-
-    $response = $this->get(route('news.show', $news));
+    $response = $this->get(route('specialist.show', $specialist));
 
     $response->assertStatus(200)
-        ->assertViewIs('admin.news.show')
-        ->assertViewHas('news', $news)
-        ->assertSee($news->title)
-        ->assertSee($news->image)
-        ->assertSee($news->content);
+        ->assertViewIs('admin.specialists.show')
+        ->assertViewHas('specialist', $specialist)
+        ->assertSee($specialist->name)
+        ->assertSee($specialist->image_path_path)
+        ->assertSee($specialist->speciality);
 
-
-    foreach ($other_news as $related_news) {
-        $response->assertSee($related_news->title);
-        $response->assertSee($related_news->image);
-    }
 });
 
 it('shows the edit form for a specialist', function () {
     actingAsAdmin();
 
-    $news = Specialist::factory()->create();
+    $specialist = Specialist::factory()->create();
 
-    $response = $this->get(route('news.edit', $news));
+    $response = $this->get(route('specialist.edit', $specialist));
 
     $response->assertStatus(200)
-        ->assertViewIs('admin.news.edit')
-        ->assertViewHas('news', $news)
-        ->assertSee($news->content);
+        ->assertViewIs('admin.specialists.edit')
+        ->assertViewHas('specialist', $specialist)
+        ->assertSee($specialist->speciality);
 });
 
 it('updates a specialist', function () {
     actingAsAdmin();
 
-    $news = Specialist::factory()->create([
-        'title' => 'Old Title',
+    $specialist = Specialist::factory()->create([
+        'name' => 'Old Title',
     ]);
 
-    $old_image = $news->image;
+    $old_image = $specialist->image_path;
 
     Storage::fake('public');
     $image = UploadedFile::fake()->image('new_image.jpg');
 
-    $response = $this->put(route('news.update', $news), [
-        'title' => 'Updated Title',
-        'content' => 'Updated content for the news.',
-        'categories' => ['UpdatedCategory'],
-        'image' => $image,
+    $response = $this->put(route('specialist.update', $specialist), [
+        'name' => 'Updated Title',
+        'speciality' => 'Updated content for the specialist.',
+        'image_path' => $image,
     ]);
 
-    $response->assertRedirect(route('news.index'))
-        ->assertSessionHas('success', 'Новость успешно обновлена!');
+    $response->assertRedirect(route('specialists.index'))
+        ->assertSessionHas('success', 'Специалист успешно обновлен!');
 
     $this->assertTrue(
-        Specialist::where('title', 'Updated Title')
-            ->where('id', $news->id)
-            ->where('content', 'Updated content for the news.')
-            ->whereRaw("categories::jsonb = ?", [json_encode(['UpdatedCategory'])])
+        Specialist::where('name', 'Updated Title')
+            ->where('id', $specialist->id)
+            ->where('speciality', 'Updated content for the specialist.')
             ->exists()
     );
 
-    $news = Specialist::latest()->first();
+    $specialist = Specialist::latest()->first();
 
     $this->assertFalse(Storage::disk('public')->exists($old_image));
-    $this->assertTrue(Storage::disk('public')->exists($news->image));
+    $this->assertTrue(Storage::disk('public')->exists($specialist->image_path));
 });
 
 it('deletes a specialist and removes the image', function () {
@@ -138,20 +128,74 @@ it('deletes a specialist and removes the image', function () {
 
     Storage::fake('public');
 
-    $news = Specialist::factory()->create([
-        'image' => 'news_images/news.jpg',
+    $specialist = Specialist::factory()->create([
+        'image_path' => 'specialists/specialist.jpg',
     ]);
 
-    Storage::disk('public')->put('news_images/news.jpg', 'dummy content');
+    Storage::disk('public')->put('specialists/specialist.jpg', 'dummy content');
 
-    $this->assertTrue(Storage::disk('public')->exists('news_images/news.jpg'));
+    $this->assertTrue(Storage::disk('public')->exists('specialists/specialist.jpg'));
 
-    $response = $this->delete(route('news.destroy', $news));
+    $response = $this->delete(route('specialist.destroy', $specialist));
 
-    $response->assertRedirect(route('news.index'))
-        ->assertSessionHas('success', 'Новость успешно удалена!');
+    $response->assertRedirect(route('specialists.index'))
+        ->assertSessionHas('success', 'Специалист успешно удален!');
 
-    $this->assertDatabaseMissing('news', ['id' => $news->id]);
+    $this->assertDatabaseMissing('specialist', ['id' => $specialist->id]);
 
-    $this->assertFalse(Storage::disk('public')->exists($news->image));
+    $this->assertFalse(Storage::disk('public')->exists($specialist->image_path));
+});
+
+
+it('correctly displays the specialists to the admin', function () {
+    actingAsAdmin();
+
+    $names = ['Matilda', 'Bob', 'Arnak', 'Gupee', 'John'];
+
+    for ($i = 0; $i < 5; $i++) {
+        Specialist::factory()->create([
+            'name' => $names[$i],
+        ]);
+    }
+
+    $response = $this->get(route('specialists.index'));
+
+    $response->assertStatus(200);
+
+    Specialist::all()->each(function ($specialist) use ($response) {
+        $response->assertSee($specialist->name);
+        $response->assertSee($specialist->speciality);
+    });
+
+    // Make a name query
+
+    $response = $this->get('/admin/specialists?name=Matilda');
+
+    $response->assertStatus(200);
+
+    Specialist::where('name', 'not like', "%Matilda%")->get()->each(function ($specialist) use ($response) {
+        $response->assertDontSee($specialist->name);
+        $response->assertDontSee($specialist->speciality);
+    });
+
+    Specialist::where('name', 'like', "%Matilda%")->get()->each(function ($specialist) use ($response) {
+        $response->assertSee($specialist->name);
+        $response->assertSee($specialist->speciality);
+    });
+
+    // Make a character query
+
+    $response = $this->get('/admin/specialists?char=B');
+
+    $response->assertStatus(200);
+
+    Specialist::where('name', 'not like', "B%")->get()->each(function ($specialist) use ($response) {
+        $response->assertDontSee($specialist->name);
+        $response->assertDontSee($specialist->speciality);
+    });
+
+    Specialist::where('name', 'like', "B%")->get()->each(function ($specialist) use ($response) {
+        $response->assertSee($specialist->name);
+        $response->assertSee($specialist->speciality);
+    });
 });

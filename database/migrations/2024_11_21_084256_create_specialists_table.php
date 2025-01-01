@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image_path')->nullable();
             $table->string('speciality')->nullable();
-            $table->string('educaiton')->nullable();
+            $table->string('education')->nullable();
             $table->string('experience')->nullable();
             $table->text('extraInfo')->nullable();
             $table->string('contacts')->nullable();

@@ -66,8 +66,8 @@
                     Специалисты
                     <ul class="header__nav-dropdown" x-cloak x-show="showDropdown"
                         @mouseleave="showDropdown = false">
-                        <li><a href="" class="header__dropdown-link">Управлять</a></li>
-                        <li><a href="" class="header__dropdown-link">Добавить</a></li>
+                        <li><a href="{{ route('specialists.index') }}" class="header__dropdown-link">Управлять</a></li>
+                        <li><a href="{{ route('specialist.create') }}" class="header__dropdown-link">Добавить</a></li>
                     </ul>
                 </button>
             </li>

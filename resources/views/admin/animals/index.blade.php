@@ -13,7 +13,7 @@
                 <form method="GET" action="{{ route('animals.index') }}" class="list__seach-bar">
                     <input type="search" name="name" placeholder="Поиск по животным">
                     <button type="submit" class="list__search-btn">Найти</button>
-                    <a href="/register" class="list__add-btn">Добавить животное</a>
+                    <a href="{{ route('animals.create') }}" class="list__add-btn">Добавить животное</a>
                 </form>
 
                 <div class="list__categories">

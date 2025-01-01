@@ -31,7 +31,7 @@ class SpecialistFactory extends Factory
             'name' => $this->faker->name(),
             'image_path' => $image,
             'speciality' => $this->faker->jobTitle(),
-            'educaiton' => $this->faker->words(10, true),
+            'education' => $this->faker->words(10, true),
             'experience' => $this->faker->words(10, true),
             'extraInfo' => $this->faker->words(10, true),
             'contacts' => $this->faker->words(10, true),

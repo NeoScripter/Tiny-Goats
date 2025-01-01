@@ -133,19 +133,19 @@ Route::prefix('admin')
 
         // Specialists
 
-        Route::get('/specialists/all', [SpecialistController::class, 'index'])->name('specialists.index');
+        Route::get('/specialists', [SpecialistController::class, 'index'])->name('specialists.index');
 
-        Route::get('/specialists/create', [SpecialistController::class, 'create'])->name('specialists.create');
+        Route::get('/specialists/create', [SpecialistController::class, 'create'])->name('specialist.create');
 
-        Route::post('/specialists', [SpecialistController::class, 'store'])->name('specialists.store');
+        Route::post('/specialists', [SpecialistController::class, 'store'])->name('specialist.store');
 
-        Route::get('/specialists/{specialist}/edit', [SpecialistController::class, 'edit'])->name('specialists.edit');
+        Route::get('/specialists/{specialist}/edit', [SpecialistController::class, 'edit'])->name('specialist.edit');
 
-        Route::get('/specialists/{specialist}', [SpecialistController::class, 'show'])->name('specialists.show');
+        Route::get('/specialists/{specialist}', [SpecialistController::class, 'show'])->name('specialist.show');
 
-        Route::put('/specialists/{specialist}', [SpecialistController::class, 'update'])->name('specialists.update');
+        Route::put('/specialists/{specialist}', [SpecialistController::class, 'update'])->name('specialist.update');
 
-        Route::delete('/specialists/{specialist}', [SpecialistController::class, 'destroy'])->name('specialists.destroy');
+        Route::delete('/specialists/{specialist}', [SpecialistController::class, 'destroy'])->name('specialist.destroy');
     });
 
     Route::middleware('auth')->group(function () {

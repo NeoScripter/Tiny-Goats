@@ -33,7 +33,7 @@
                                 @foreach ($animal->children as $child)
                                     <li class="info__li">
                                         <a
-                                            href="{{ route('animals.show', $child->id) }}">{{ $child->name }}{{ !$loop->last ? ',' : '' }}</a>
+                                            href="{{ route('user.animals.show', $child->id) }}">{{ $child->name }}{{ !$loop->last ? ',' : '' }}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -64,7 +64,7 @@
                     @isset($father)
                         <div class="info__item">
                             <div class="info__property">Папа</div>
-                            <a href="{{ route('animals.show', $father->id) }}" class="info__value info__value--link">
+                            <a href="{{ route('user.animals.show', $father->id) }}" class="info__value info__value--link">
                                 {{ $father->name }}</a>
                         </div>
                     @endisset
@@ -72,7 +72,7 @@
                     @isset($mother)
                         <div class="info__item">
                             <div class="info__property">Мама</div>
-                            <a href="{{ route('animals.show', $mother->id) }}" class="info__value info__value--link">
+                            <a href="{{ route('user.animals.show', $mother->id) }}" class="info__value info__value--link">
                                 {{ $mother->name }}</a>
                         </div>
                     @endisset
