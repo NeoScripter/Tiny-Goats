@@ -5,17 +5,16 @@
     <div class="user-specialist-card">
 
         <section class="info">
+            @isset($specialist)
+                <div class="info__visual">
 
-            <div class="info__visual">
+                    <div class="info__snapshot">
+                        <img src="{{ $specialist->image_path ? asset('storage/' . $specialist->image_path) : asset('images/partials/placeholder.webp') }}" alt="Фото специалиста">
+                    </div>
 
-                <div class="info__snapshot">
-                    <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="Фото специалиста">
                 </div>
 
-            </div>
-
-            <div class="info__data">
-                @isset($specialist)
+                <div class="info__data">
                     <div class="info__item">
                         <div class="info__property">Фамилия, имя специалиста</div>
                         <div class="info__value">{{ $specialist->name }}</div>
@@ -50,9 +49,8 @@
                         <div class="info__property">Cайт и/или соцсети</div>
                         <div class="info__value">{{ $specialist->website }}</div>
                     </div>
-                @endisset
-            </div>
-
+                </div>
+            @endisset
         </section>
 
     </div>

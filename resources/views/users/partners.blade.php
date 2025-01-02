@@ -8,22 +8,25 @@
 
             <h2 class="news__title">Наши партнеры</h2>
 
-
+            @isset($partners)
             <div class="news__grid">
-                @for ($i = 0; $i < 6; $i++)
+                @foreach ($partners as $index => $partner)
                     <div class="news__item">
-                        <div class="news__image">
-                            <img src="{{ asset('images/pages/user/partners/partner-'.($i % 3 + 1).'.webp') }}" alt="Фото компании">
-                        </div>
+                        <a href="{{ route('user.partner.show', $partner->id) }}" class="news__image">
+                            <img src="{{ isset($partner->image) ? Storage::url($partner->image) : asset('images/pages/user/animal/placeholder.png') }}" alt="{{$partner->name}}">
+                        </a>
                         <div class="news__content">
-                            <h4 class="news__heading">Название компании</h4>
-                            <p class="news__description">Информация о партнере, услугах, акциях, скидке</p>
-                            <p class="news__description">Условия получения</p>
-                            <a href="" class="news__description">Ссылка на сайт и контакты</a>
+                            <h4 class="news__heading">{{ $partner->name }}</h4>
+                            <p class="news__description">{{ $partner->info }}</p>
+                            <p class="news__description">{{ $partner->conditions }}</p>
+                            <a href="" class="news__description">{{ $partner->website }}</a>
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
+            @endisset
+
+            {{ $partners->links('vendor.pagination.default') }}
 
         </section>
 

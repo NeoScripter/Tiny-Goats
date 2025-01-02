@@ -10,7 +10,7 @@
                 <div class="info__visual">
 
                     <div class="info__snapshot">
-                        <img src="{{ $specialist->image ? asset('storage/' . $specialist->image) : asset('images/partials/placeholder.webp') }}"
+                        <img src="{{ $specialist->image_path ? asset('storage/' . $specialist->image_path) : asset('images/partials/placeholder.webp') }}"
                             alt="{{ $specialist->name }}">
                     </div>
                 </div>

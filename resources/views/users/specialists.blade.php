@@ -60,16 +60,7 @@
                 @endisset
             </table>
 
-            <div class="list__pagination">
-                <a href="" class="list__page">
-                    << /a>
-                        <a href="" class="list__page list__page--active">20</a>
-                        <a href="" class="list__page">40</a>
-                        <a href="" class="list__page">60</a>
-                        <a href="" class="list__page">80</a>
-                        <a href="" class="list__page">100</a>
-                        <a href="" class="list__page">></a>
-            </div>
+            {{ $specialists->links('vendor.pagination.default') }}
 
         </section>
 

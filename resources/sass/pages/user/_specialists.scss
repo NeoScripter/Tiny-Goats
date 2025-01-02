@@ -116,6 +116,11 @@
         margin-bottom: vw(64px);
     }
 
+    .list__categories {
+        text-align: center;
+        margin-bottom: vw(20px);
+    }
+
     .list__page {
 
         @include fs15();

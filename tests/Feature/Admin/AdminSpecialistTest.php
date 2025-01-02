@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Animal;
 use App\Models\Specialist;
-use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -5,24 +5,43 @@
     <div class="user-partners-card">
 
         <section class="info">
+            @isset($partner)
 
             <div class="info__visual">
 
                 <div class="info__snapshot">
-                    <img src="{{ asset('images/pages/user/animal/placeholder.png') }}" alt="">
+                    <img src="{{ $partner->image ? asset('storage/' . $partner->image) : asset('images/partials/placeholder.webp') }}" alt="Фото специалиста">
                 </div>
 
             </div>
 
             <div class="info__data">
-                @for ($i = 0; $i < 5; $i++)
-                    <div class="info__item">
-                        <div class="info__property">Название</div>
-                        <div class="info__value">LOREM IPSUM, LOREM IPSUM, LOREM IPSUM, LOREM IPSUM, LOREM IPSUM</div>
-                    </div>
-                @endfor
+                <div class="info__item">
+                    <div class="info__property">Название</div>
+                    <div class="info__value">{{ $partner->name }}</div>
+                </div>
 
+                <div class="info__item">
+                    <div class="info__property">Информация о партнере, услугах, акциях, скидке</div>
+                    <div class="info__value">{{ $partner->info }}</div>
+                </div>
+
+                <div class="info__item">
+                    <div class="info__property">Условия получения</div>
+                    <div class="info__value">{{ $partner->conditions }}</div>
+                </div>
+
+                <div class="info__item">
+                    <div class="info__property">Сайт</div>
+                    <div class="info__value">{{ $partner->website }}</div>
+                </div>
+
+                <div class="info__item">
+                    <div class="info__property">Контакты</div>
+                    <div class="info__value">{{ $partner->contacts }}</div>
+                </div>
             </div>
+            @endisset
 
         </section>
 

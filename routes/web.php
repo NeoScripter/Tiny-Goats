@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Admin\AnimalController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\SpecialistController;
 use App\Http\Controllers\User\NewsController as UserNewsController;
 use App\Http\Controllers\User\AnimalController as UserAnimalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Animal;
 use App\Models\News;
+use App\Models\Partner;
 use App\Models\Specialist;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
@@ -93,12 +95,15 @@ Route::get('/sell', function () {
 });
 
 Route::get('/partners', function () {
-    return view('users.partners');
-});
+    $partners = Partner::latest()->paginate(6);
 
-Route::get('/partners/1', function () {
-    return view('users.partners-card');
-});
+    return view('users.partners', compact('partners'));
+})->name('user.partners.index');
+
+Route::get('/partners/{partner}', function (Partner $partner) {
+
+    return view('users.partners-card', compact('partner'));
+})->name('user.partner.show');
 
 Route::get('/contacts', function () {
     return view('users.contacts');
@@ -159,6 +164,22 @@ Route::prefix('admin')
         Route::put('/specialists/{specialist}', [SpecialistController::class, 'update'])->name('specialist.update');
 
         Route::delete('/specialists/{specialist}', [SpecialistController::class, 'destroy'])->name('specialist.destroy');
+
+        // Partners
+
+        Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
+
+        Route::get('/partners/create', [PartnerController::class, 'create'])->name('partner.create');
+
+        Route::post('/partners', [PartnerController::class, 'store'])->name('partner.store');
+
+        Route::get('/partners/{partner}/edit', [PartnerController::class, 'edit'])->name('partner.edit');
+
+        Route::get('/partners/{partner}', [PartnerController::class, 'show'])->name('partner.show');
+
+        Route::put('/partners/{partner}', [PartnerController::class, 'update'])->name('partner.update');
+
+        Route::delete('/partners/{partner}', [PartnerController::class, 'destroy'])->name('partner.destroy');
     });
 
 Route::middleware('auth')->group(function () {
