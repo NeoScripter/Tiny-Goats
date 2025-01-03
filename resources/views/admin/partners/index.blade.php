@@ -2,7 +2,6 @@
 
     <x-admin.header />
 
-    <div class="user-seach-animal">
 
         <div class="user-partners">
             @isset($partners)
@@ -11,8 +10,8 @@
 
                 <h2 class="news__title">Наши партнеры</h2>
 
-                <div class="animals__categories">
-                    <a href="{{ route('partner.create') }}" class="animals__add">Добавить</a>
+                <div class="news__categories">
+                    <a href="{{ route('partner.create') }}" class="news__add">Добавить</a>
                 </div>
 
                 <div class="news__grid">
@@ -22,12 +21,12 @@
                                 onsubmit="return confirm('Вы уверены что хотите удалить данного партнера?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="animals__delete-button">
+                                <button type="submit" class="news__delete-button">
                                     <img src="{{ asset('images/svgs/cross.svg') }}" alt="Удалить">
                                 </button>
                             </form>
 
-                            <a href="{{ route('partner.edit', $partner->id) }}" class="animals__edit-link">
+                            <a href="{{ route('partner.edit', $partner->id) }}" class="news__edit-link">
                                 <img src="{{ asset('images/svgs/pencil.svg') }}" alt="Редактировать">
                             </a>
 

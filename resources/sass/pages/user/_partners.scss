@@ -5,11 +5,23 @@
         padding: vw(51px) vw(122px) vw(97px);
     }
 
+    .news__add {
+        @include btn-primary();
+    }
+
+    .news__categories {
+        margin-block: vw(38px) vw(55px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: vw(34px);
+    }
+
     .news__title {
         margin-inline: auto;
         text-align: center;
         width: vw(900px);
-        margin-bottom: vw(66px);
+        margin-bottom: vw(46px);
         @include fs36();
     }
 
@@ -31,7 +43,52 @@
 
     .news__item {
         padding: vw(22px);
+        position: relative;
+
         background-color: color("green", 'extra-light');
+
+        flex: 1 0 32%;
+        border: vw(1px) solid color("gray", "extra-light");
+    }
+
+    .news__delete-button {
+        position: absolute;
+        background-color: color("red");
+        right: 0;
+        top: 0;
+        width: vw(34px);
+        aspect-ratio: 1/1;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        img {
+            aspect-ratio: 1/1;
+            width: vw(24px);
+            object-fit: contain;
+        }
+    }
+
+    .news__edit-link {
+        position: absolute;
+        background-color: color("green");
+        right: vw(34px);
+        top: 0;
+        width: vw(34px);
+        aspect-ratio: 1/1;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        img {
+            aspect-ratio: 1/1;
+            width: vw(20px);
+            object-fit: contain;
+        }
     }
 
     .news__content {
@@ -45,6 +102,8 @@
         height: vw(252px);
         margin-bottom: vw(16px);
         background-color: #fff;
+        position: relative;
+        display: block;
         img {
             @include image();
         }

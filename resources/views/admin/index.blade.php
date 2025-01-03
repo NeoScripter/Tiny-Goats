@@ -46,8 +46,8 @@
                 <div class="admin__group">
                     <h3>Партнеры</h3>
                     <div class="admin__links">
-                        <a href="">добавить</a>
-                        <a href="">управлять</a>
+                        <a href="{{ route('partner.create') }}">добавить</a>
+                        <a href="{{ route('partners.index') }}">управлять</a>
                     </div>
                 </div>
             </div>

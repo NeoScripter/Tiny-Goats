@@ -8,6 +8,7 @@
         @isset($specialist)
             <form method="POST" action="{{ route('specialist.update', $specialist->id) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <div class="info">
 

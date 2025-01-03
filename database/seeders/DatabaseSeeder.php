@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             NewsSeeder::class,
             AnimalSeeder::class,
-            SpecialistSeeder::class
+            SpecialistSeeder::class,
+            PartnerSeeder::class,
         ]);
     }
 }

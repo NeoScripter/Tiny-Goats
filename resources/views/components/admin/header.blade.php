@@ -79,8 +79,8 @@
                     Партнеры
                     <ul class="header__nav-dropdown" x-cloak x-show="showDropdown"
                         @mouseleave="showDropdown = false">
-                        <li><a href="" class="header__dropdown-link">Управлять</a></li>
-                        <li><a href="" class="header__dropdown-link">Добавить</a></li>
+                        <li><a href="{{ route('partners.index') }}" class="header__dropdown-link">Управлять</a></li>
+                        <li><a href="{{ route('partner.create') }}" class="header__dropdown-link">Добавить</a></li>
                     </ul>
                 </button>
             </li>

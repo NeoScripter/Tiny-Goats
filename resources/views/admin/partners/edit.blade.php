@@ -8,6 +8,7 @@
         @isset($partner)
             <form method="POST" action="{{ route('partner.update', $partner->id) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <div class="info">
 
