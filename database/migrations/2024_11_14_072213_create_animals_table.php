@@ -33,6 +33,15 @@ return new class extends Migration
             $table->text('certificates')->nullable();
             $table->boolean('showOnMain')->default(false);
             $table->json('images')->nullable();
+            $table->foreignId('household_owner_id')
+                ->nullable()
+                ->constrained('households')
+                ->onDelete('restrict');
+
+            $table->foreignId('household_breeder_id')
+                ->nullable()
+                ->constrained('households')
+                ->onDelete('restrict');
 
             $table->foreignId('mother_id')->nullable()->constrained('animals')->nullOnDelete();
             $table->foreignId('father_id')->nullable()->constrained('animals')->nullOnDelete();

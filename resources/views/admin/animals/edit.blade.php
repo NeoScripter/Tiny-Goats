@@ -126,7 +126,8 @@
                         <div class="info__item">
                             <div class="info__property">Дата рождения</div>
                             <div class="info__value">
-                                <input type="date" name="birthDate" value="{{ old('birthDate', $animal->birthDate ? $animal->birthDate->format('Y-m-d') : '') }}"
+                                <input type="date" name="birthDate"
+                                    value="{{ old('birthDate', $animal->birthDate ? $animal->birthDate->format('Y-m-d') : '') }}"
                                     class="info__input">
                             </div>
                         </div>
@@ -188,6 +189,49 @@
                         <!-- residenceCountry -->
                         <x-form-input label="Страна проживания" name="residenceCountry"
                             value="{{ old('residenceCountry', $animal->residenceCountry) }}" />
+
+
+                        @isset($households)
+                            <!-- Breeder -->
+                            <div class="info__item">
+                                <div class="info__property">Заводчик</div>
+                                <div class="info__value">
+                                    <select name="household_breeder_id" class="info__select">
+                                        <option value="">-- Выбрать заводчика --</option>
+                                        @foreach ($households as $household)
+                                            <option value="{{ $household->id }}"
+                                                {{ old('household_breeder_id', $animal->household_breeder_id) == $household->id ? 'selected' : '' }}>
+                                                {{ $household->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            @error('household_breeder_id')
+                                <div class="info__error info__error--shifted">{{ $message }}</div>
+                            @enderror
+
+                            <!-- Owner -->
+                            <div class="info__item">
+                                <div class="info__property">Владелец</div>
+                                <div class="info__value">
+                                    <select name="household_owner_id" class="info__select">
+                                        <option value="">-- Выбрать владельца --</option>
+                                        @foreach ($households as $household)
+                                            <option value="{{ $household->id }}"
+                                                {{ old('household_owner_id', $animal->household_owner_id) == $household->id ? 'selected' : '' }}>
+                                                {{ $household->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            @error('household_owner_id')
+                                <div class="info__error info__error--shifted">{{ $message }}</div>
+                            @enderror
+                        @endisset
 
                         <!-- Status -->
                         <x-form-input label="Статус" name="status" value="{{ old('status', $animal->status) }}" />

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Animal;
+use App\Models\Household;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AnimalController extends Controller
 {
@@ -14,7 +16,7 @@ class AnimalController extends Controller
     {
         $gender = $request->query('gender');
         $breed = $request->query('breed');
-        $name = $request->query('name');
+        $name = Str::title($request->query('name'));
         $char = $request->query('char');
 
         $animals = Animal::with(['father', 'mother'])
@@ -33,8 +35,9 @@ class AnimalController extends Controller
     {
         $maleAnimals = Animal::where('isMale', true)->get();
         $femaleAnimals = Animal::where('isMale', false)->get();
+        $households = Household::all();
         $allAnimals = Animal::all();
-        return view('admin.animals.create', compact('maleAnimals', 'femaleAnimals', 'allAnimals'));
+        return view('admin.animals.create', compact('maleAnimals', 'femaleAnimals', 'allAnimals', 'households'));
     }
 
     public function store(Request $request)
@@ -61,6 +64,8 @@ class AnimalController extends Controller
             'showOnMain' => 'nullable|boolean',
             'mother_id' => 'nullable|exists:animals,id',
             'father_id' => 'nullable|exists:animals,id',
+            'household_breeder_id' => 'nullable|exists:households,id',
+            'household_owner_id' => 'nullable|exists:households,id',
             'children' => 'nullable|array',
             'children.*' => 'exists:animals,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
@@ -151,6 +156,7 @@ class AnimalController extends Controller
     {
         $maleAnimals = Animal::where('isMale', true)->where('id', '!=', $animal->id)->get();
         $femaleAnimals = Animal::where('isMale', false)->where('id', '!=', $animal->id)->get();
+        $households = Household::all();
 
         $allAnimals = Animal::where('id', '!=', $animal->id)
             ->when(
@@ -161,7 +167,7 @@ class AnimalController extends Controller
                 })
             )
             ->get();
-        return view('admin.animals.edit', compact('animal', 'maleAnimals', 'femaleAnimals', 'allAnimals'));
+        return view('admin.animals.edit', compact('animal', 'maleAnimals', 'femaleAnimals', 'allAnimals', 'households'));
     }
 
     public function update(Request $request, Animal $animal)
@@ -188,6 +194,8 @@ class AnimalController extends Controller
             'showOnMain' => 'nullable|boolean',
             'mother_id' => 'nullable|exists:animals,id',
             'father_id' => 'nullable|exists:animals,id',
+            'household_breeder_id' => 'nullable|exists:households,id',
+            'household_owner_id' => 'nullable|exists:households,id',
             'children' => 'nullable|array',
             'children.*' => 'exists:animals,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',

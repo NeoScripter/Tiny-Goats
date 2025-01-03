@@ -77,4 +77,19 @@ class Animal extends Model
 
         return $childrenAsMother->union($childrenAsFather);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(Household::class, 'household_owner_id');
+    }
+
+    public function breeder()
+    {
+        return $this->belongsTo(Household::class, 'household_breeder_id');
+    }
+
+    public function logEntries()
+    {
+        return $this->hasMany(LogEntry::class);
+    }
 }

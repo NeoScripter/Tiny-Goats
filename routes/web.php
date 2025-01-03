@@ -14,6 +14,7 @@ use App\Models\Specialist;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,7 +72,7 @@ Route::get('/households/1', function () {
 });
 
 Route::get('/specialists', function (Request $request) {
-    $name = $request->query('name');
+    $name = Str::title($request->query('name'));
     $char = $request->query('char');
 
     $specialists = Specialist::when($name, fn($query) => $query->where('name', 'like', "%$name%"))

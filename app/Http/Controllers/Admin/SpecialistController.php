@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Specialist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SpecialistController extends Controller
 {
     public function index(Request $request)
     {
-        $name = $request->query('name');
+        $name = Str::title($request->query('name'));
         $char = $request->query('char');
 
         $specialists = Specialist::when($name, fn($query) => $query->where('name', 'like', "%$name%"))

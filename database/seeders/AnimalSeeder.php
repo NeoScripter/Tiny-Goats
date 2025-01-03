@@ -17,7 +17,7 @@ class AnimalSeeder extends Seeder
         $faker = FakerFactory::create();
 
         // Generate the youngest generation (leaves of the tree)
-        $youngestGeneration = $this->generateYoungestGeneration($faker, 1); // 10 animals in youngest generation
+        $youngestGeneration = $this->generateYoungestGeneration($faker, 1); // 1 animal in youngest generation
 
         // Build the tree upwards to the oldest generation
         foreach ($youngestGeneration as $animal) {

@@ -69,7 +69,7 @@ it('shows a specific specialist', function () {
         ->assertViewIs('admin.specialists.show')
         ->assertViewHas('specialist', $specialist)
         ->assertSee($specialist->name)
-        ->assertSee($specialist->image_path_path)
+        ->assertSee($specialist->image_path)
         ->assertSee($specialist->speciality);
 
 });
