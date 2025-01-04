@@ -14,10 +14,10 @@
             <img src="{{ asset('images/partials/logo-header.webp') }}" alt="Реестр карликовых коз, логотип">
         </a>
 
-        <div class="header__search">
-            <input type="search" placeholder="Поиск по сайту">
-            <button class="header__search-btn">Найти</button>
-        </div>
+        <form method="GET" action="{{ route('users.search') }}" class="header__search">
+            <input type="search" name="query" placeholder="Поиск по сайту">
+            <button type="submit" class="header__search-btn">Найти</button>
+        </form>
 
     </div>
 

@@ -7,7 +7,7 @@
         <section class="results">
 
             <form method="GET" action="{{ route('users.search') }}" class="results__search">
-                <input type="search" name="query" placeholder="Поиск по животным">
+                <input type="search" name="query" placeholder="Поиск по сайту">
                 <button type="submit" class="results__search-btn">Найти</button>
             </form>
 

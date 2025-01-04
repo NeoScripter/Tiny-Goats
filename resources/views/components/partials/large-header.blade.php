@@ -10,10 +10,10 @@
             </div>
         </div>
 
-        <div class="lg-header__search">
-            <input type="search" placeholder="Поиск по сайту">
-            <button class="lg-header__search-btn">Найти</button>
-        </div>
+        <form method="GET" action="{{ route('users.search') }}" class="header__search">
+            <input type="search" name="query" placeholder="Поиск по сайту">
+            <button type="submit" class="header__search-btn">Найти</button>
+        </form>
 
     </div>
 
