@@ -41,10 +41,44 @@ class AnimalController extends Controller
 
         $flatGenealogy = $genealogy->flatten(1);
 
+        $repeatedIds = $flatGenealogy->pluck('id')
+            ->countBy()
+            ->filter(fn($count) => $count > 1)
+            ->keys();
+
+        $colors = [
+            '#32CD32',
+            '#9ACD32',
+            '#6B8E23',
+            '#556B2F',
+            '#8FBC8F',
+            '#7CFC00',
+            '#BDB76B',
+            '#228B22',
+            '#F0E68C',
+            '#DAA520',
+            '#8B4513',
+            '#98FB98',
+            '#FFDEAD',
+            '#DEB887',
+            '#006400',
+            '#00FF00',
+            '#008080',
+            '#7FFFD4',
+            '#4682B4',
+        ];
+
+        $repeatedAnimalColors = [];
+        $colorCount = count($colors);
+
+        foreach ($repeatedIds as $index => $id) {
+            $repeatedAnimalColors[$id] = $colors[$index % $colorCount];
+        }
+
         $mother = $flatGenealogy->firstWhere('id', $animal->mother_id);
         $father = $flatGenealogy->firstWhere('id', $animal->father_id);
 
-        return view('users.animal-card', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy'));
+        return view('users.animal-card', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'repeatedAnimalColors'));
     }
 
 
@@ -53,17 +87,20 @@ class AnimalController extends Controller
         $query = <<<SQL
             WITH RECURSIVE genealogy_tree AS (
                 SELECT
-                    id, name, "isMale", father_id, mother_id, "birthDate", "images", breed, 1 AS generation
+                    id, name, "isMale", father_id, mother_id, "birthDate", "images", breed, 1 AS generation, CAST(1 AS BIGINT) AS position
                 FROM animals
                 WHERE id = :animalId
                 UNION ALL
                 SELECT
-                    a.id, a.name, a."isMale", a.father_id, a.mother_id, a."birthDate", a."images", a.breed, gt.generation + 1
+                    a.id, a.name, a."isMale", a.father_id, a.mother_id, a."birthDate", a."images", a.breed, gt.generation + 1,
+                    CAST(
+                        gt.position * 2 + (a.id = gt.father_id)::int AS BIGINT
+                    ) AS position
                 FROM animals a
                 INNER JOIN genealogy_tree gt ON (a.id = gt.father_id OR a.id = gt.mother_id)
                 WHERE gt.generation < :maxGenerations
             )
-            SELECT * FROM genealogy_tree ORDER BY generation, id;
+            SELECT * FROM genealogy_tree ORDER BY generation, position;
         SQL;
 
         $results = collect(DB::select($query, [
@@ -98,6 +135,44 @@ class AnimalController extends Controller
         $motherGenealogy = $mother_id ? $this->fetchGenealogy($mother_id, $gens) : collect([]);
         $fatherGenealogy = $father_id ? $this->fetchGenealogy($father_id, $gens) : collect([]);
 
+        $flatMotherGenealogy = $motherGenealogy->flatten(1);
+        $flatFatherGenealogy = $fatherGenealogy->flatten(1);
+
+        $allGenealogy = $flatMotherGenealogy->merge($flatFatherGenealogy);
+        $repeatedIds = $allGenealogy->pluck('id')
+            ->countBy()
+            ->filter(fn($count) => $count > 1)
+            ->keys();
+
+        $colors = [
+            '#32CD32',
+            '#228B22',
+            '#006400',
+            '#9ACD32',
+            '#6B8E23',
+            '#556B2F',
+            '#8FBC8F',
+            '#7CFC00',
+            '#BDB76B',
+            '#F0E68C',
+            '#DAA520',
+            '#8B4513',
+            '#98FB98',
+            '#FFDEAD',
+            '#DEB887',
+            '#00FF00',
+            '#008080',
+            '#7FFFD4',
+            '#4682B4'
+        ];
+
+        $repeatedAnimalColors = [];
+        $colorCount = count($colors);
+
+        foreach ($repeatedIds as $index => $id) {
+            $repeatedAnimalColors[$id] = $colors[$index % $colorCount];
+        }
+
 
         return view('users.coupling', compact(
             'gens',
@@ -107,7 +182,8 @@ class AnimalController extends Controller
             'maleAnimals',
             'femaleAnimals',
             'mother',
-            'father'
+            'father',
+            'repeatedAnimalColors'
         ));
     }
 }

@@ -116,7 +116,11 @@
                         @endphp
                         <div class="gens__column">
                             @foreach ($fatherGenealogy[$generationIndex]->reverse() as $parent)
-                                <div class="gens__item">
+                                @if (isset($repeatedAnimalColors[$parent->id]))
+                                    <div class="gens__item" style="background-color: {{ $repeatedAnimalColors[$parent->id] }};">
+                                @else
+                                    <div class="gens__item">
+                                @endif
                                     @if ($parent)
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)
@@ -139,7 +143,11 @@
                                 </div>
                             @endforeach
                             @foreach ($motherGenealogy[$generationIndex]->reverse() as $parent)
-                                <div class="gens__item">
+                                @if (isset($repeatedAnimalColors[$parent->id]))
+                                    <div class="gens__item" style="background-color: {{ $repeatedAnimalColors[$parent->id] }};">
+                                @else
+                                    <div class="gens__item">
+                                @endif
                                     @if ($parent)
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)

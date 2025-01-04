@@ -33,8 +33,8 @@ class AnimalController extends Controller
 
     public function create()
     {
-        $maleAnimals = Animal::where('isMale', true)->get();
-        $femaleAnimals = Animal::where('isMale', false)->get();
+        $maleAnimals = Animal::where('isMale', true)->orderBy('name', 'asc')->get();
+        $femaleAnimals = Animal::where('isMale', false)->orderBy('name', 'asc')->get();
         $households = Household::all();
         $allAnimals = Animal::all();
         return view('admin.animals.create', compact('maleAnimals', 'femaleAnimals', 'allAnimals', 'households'));
@@ -114,6 +114,41 @@ class AnimalController extends Controller
 
         $flatGenealogy = $genealogy->flatten(1);
 
+
+        $repeatedIds = $flatGenealogy->pluck('id')
+            ->countBy()
+            ->filter(fn($count) => $count > 1)
+            ->keys();
+
+        $colors = [
+            '#32CD32',
+            '#9ACD32',
+            '#6B8E23',
+            '#556B2F',
+            '#8FBC8F',
+            '#7CFC00',
+            '#BDB76B',
+            '#228B22',
+            '#F0E68C',
+            '#DAA520',
+            '#8B4513',
+            '#98FB98',
+            '#FFDEAD',
+            '#DEB887',
+            '#006400',
+            '#00FF00',
+            '#008080',
+            '#7FFFD4',
+            '#4682B4',
+        ];
+
+        $repeatedAnimalColors = [];
+        $colorCount = count($colors);
+
+        foreach ($repeatedIds as $index => $id) {
+            $repeatedAnimalColors[$id] = $colors[$index % $colorCount];
+        }
+
         $mother = $flatGenealogy->firstWhere('id', $animal->mother_id);
         $father = $flatGenealogy->firstWhere('id', $animal->father_id);
 
@@ -121,7 +156,7 @@ class AnimalController extends Controller
         $breeder = Household::findOrFail($animal->household_breeder_id);
 
 
-        return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'breeder', 'owner'));
+        return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'breeder', 'owner', 'repeatedAnimalColors'));
     }
 
 
@@ -130,17 +165,20 @@ class AnimalController extends Controller
         $query = <<<SQL
             WITH RECURSIVE genealogy_tree AS (
                 SELECT
-                    id, name, "isMale", father_id, mother_id, "birthDate", "images", breed, 1 AS generation
+                    id, name, "isMale", father_id, mother_id, "birthDate", "images", breed, 1 AS generation, CAST(1 AS BIGINT) AS position
                 FROM animals
                 WHERE id = :animalId
                 UNION ALL
                 SELECT
-                    a.id, a.name, a."isMale", a.father_id, a.mother_id, a."birthDate", a."images", a.breed, gt.generation + 1
+                    a.id, a.name, a."isMale", a.father_id, a.mother_id, a."birthDate", a."images", a.breed, gt.generation + 1,
+                    CAST(
+                        gt.position * 2 + (a.id = gt.father_id)::int AS BIGINT
+                    ) AS position
                 FROM animals a
                 INNER JOIN genealogy_tree gt ON (a.id = gt.father_id OR a.id = gt.mother_id)
                 WHERE gt.generation < :maxGenerations
             )
-            SELECT * FROM genealogy_tree ORDER BY generation, id;
+            SELECT * FROM genealogy_tree ORDER BY generation, position;
         SQL;
 
         $results = collect(DB::select($query, [
@@ -158,8 +196,9 @@ class AnimalController extends Controller
 
     public function edit(Animal $animal)
     {
-        $maleAnimals = Animal::where('isMale', true)->where('id', '!=', $animal->id)->get();
-        $femaleAnimals = Animal::where('isMale', false)->where('id', '!=', $animal->id)->get();
+
+        $maleAnimals = Animal::where('isMale', true)->where('id', '!=', $animal->id)->orderBy('name', 'asc')->get();
+        $femaleAnimals = Animal::where('isMale', false)->where('id', '!=', $animal->id)->orderBy('name', 'asc')->get();
         $households = Household::all();
 
         $allAnimals = Animal::where('id', '!=', $animal->id)

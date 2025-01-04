@@ -136,34 +136,38 @@
                     @foreach ($genealogy as $generationIndex => $generation)
                         <div class="gens__column">
                             @foreach ($generation->reverse() as $parent)
-                                <div class="gens__item">
-                                    @if ($parent)
-                                        <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
-                                            @if ($photo)
-                                                <img src="{{ $photo && $parent->images[0] ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                                    alt="Фото козла">
-                                            @else
-                                                <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
-                                            @endif
-                                        </a>
-                                        <h3 class="gens__name">{{ $parent->name }}</h3>
-                                        <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
-                                    @else
-                                        <div class="gens__image">
-                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="Нет фотографии">
-                                        </div>
-                                        <h3 class="gens__name">?</h3>
-                                    @endif
-                                </div>
-                            @endforeach
+                                @if (isset($repeatedAnimalColors[$parent->id]))
+                                    <div class="gens__item" style="background-color: {{ $repeatedAnimalColors[$parent->id] }};">
+                                @else
+                                    <div class="gens__item">
+                                @endif
+                                @if ($parent)
+                                    <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
+                                        @if ($photo)
+                                            <img src="{{ $photo && $parent->images[0] ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                alt="Фото козла">
+                                        @else
+                                            <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
+                                        @endif
+                                    </a>
+                                    <h3 class="gens__name">{{ $parent->name }}</h3>
+                                    <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
+                                @else
+                                    <div class="gens__image">
+                                        <img src="{{ asset('images/partials/placeholder.webp') }}" alt="Нет фотографии">
+                                    </div>
+                                    <h3 class="gens__name">?</h3>
+                                @endif
                         </div>
                     @endforeach
-
                 </div>
+                @endforeach
 
-            </form>
+        </div>
 
-        @endisset
+        </form>
+
+    @endisset
 
 
     </div>
