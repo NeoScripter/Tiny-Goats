@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SpecialistController;
 use App\Http\Controllers\User\NewsController as UserNewsController;
 use App\Http\Controllers\User\AnimalController as UserAnimalController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\SearchController;
 use App\Models\Animal;
 use App\Models\Household;
 use App\Models\News;
@@ -134,9 +135,7 @@ Route::get('/contacts', function () {
     return view('users.contacts');
 });
 
-Route::get('/search', function () {
-    return view('users.search');
-});
+Route::get('/search', [SearchController::class, 'search'])->name('users.search');
 
 Route::get('/login', function () {
     return view('auth.login');
