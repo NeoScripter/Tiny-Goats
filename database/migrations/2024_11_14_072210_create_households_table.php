@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('owner')->nullable();
             $table->text('extraInfo')->nullable();
             $table->text('breeds')->nullable();
+            $table->string('region')->nullable();
+            $table->string('country')->nullable();
             $table->string('contacts')->nullable();
             $table->string('website')->nullable();
             $table->boolean('showOnMain')->default(false)->nullable();

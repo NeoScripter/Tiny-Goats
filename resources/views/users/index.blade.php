@@ -150,6 +150,7 @@
                 <a href="/households" class="farm__btn">Смотреть все</a>
             </div>
 
+            @isset($households)
             <div class="farm__wrapper" x-data="{ currentSlide: 0, totalSlides: 6 }">
                 <button class="farm__controller farm__btn--prev" x-show="currentSlide !== 0"
                     @click="currentSlide = currentSlide - 1">
@@ -157,16 +158,19 @@
                 </button>
                 <div class="farm__carousel">
                     <div class="farm__viewport" :style="{ transform: `translateX(${currentSlide * -33}%)` }">
-                        @for ($i = 1; $i < 7; $i++)
+                        @foreach ($households as $household)
                             <div class="farm__item">
                                 <div class="farm__image">
-                                    <img src="{{ asset("images/pages/user/home/farm/farm-$i.webp") }}" alt="Фото хозяйства">
+                                    <img src="{{ isset($household->image) && $household->image
+                                    ? asset('storage/' . $household->image)
+                                    : asset('images/partials/placeholder.webp') }}"
+                                            alt="Фото хозяйства">
                                 </div>
-                                <h4 class="farm__name">Хозяйство 3</h4>
-                                <p class="farm__place">Регион</p>
-                                <p class="farm__description">Описание</p>
+                                <a href="{{ route('user.household.show', $household->id) }}" class="farm__name">{{ $household->name }}</a>
+                                <p class="farm__place">{{ $household->region }}</p>
+                                <p class="farm__description">{{ $household->breeds }}</p>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                 </div>
                 <button class="farm__controller farm__btn--next" x-show="currentSlide !== (totalSlides - 3)"
@@ -174,6 +178,7 @@
                     {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
                 </button>
             </div>
+            @endisset
 
         </section>
 

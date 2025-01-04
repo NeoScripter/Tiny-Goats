@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Animal;
+use App\Models\Household;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -34,6 +35,10 @@ class AnimalFactory extends Factory
 
         $image = $availableImages->pop();
 
+        $household_owner = Household::inRandomOrder()->first() ?? Household::factory()->create();
+        $household_breeder = Household::inRandomOrder()->first() ?? Household::factory()->create();
+
+
         return [
             'name' => $this->faker->firstName($gender_bool ? 'male' :'female'),
             'isMale' => $gender_bool,
@@ -57,6 +62,8 @@ class AnimalFactory extends Factory
             'images' => [$image, $image, $image],
             'mother_id' => null,
             'father_id' => null,
+            'household_owner_id' => $household_owner->id,
+            'household_breeder_id' => $household_breeder->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];

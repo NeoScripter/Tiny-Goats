@@ -12,6 +12,10 @@ class Household extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'showOnMain' => 'boolean',
+    ];
+
     public function animalOwner()
     {
         return $this->hasMany(Animal::class, 'household_owner_id');

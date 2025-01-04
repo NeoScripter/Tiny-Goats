@@ -1,9 +1,10 @@
 <x-layouts.app>
 
-    <x-partials.header />
+    <x-admin.header />
 
-    <div class="user-household-card">
+    <div class="admin-animal-card">
         @isset($household)
+
             <section class="info">
 
                 <div class="info__visual">
@@ -12,7 +13,6 @@
                         <img src="{{ $household->image ? asset('storage/' . $household->image) : asset('images/partials/placeholder.webp') }}"
                             alt="{{ $household->name }}">
                     </div>
-
                 </div>
 
                 <div class="info__data">
@@ -74,11 +74,15 @@
                         @endforeach
                     </tbody>
                 </table>
-
             </section>
 
-        </div>
-    @endisset
+            <a href="{{ route('household.edit', $household->id) }}" class="gens__button">Редактировать</a>
+
+
+        @endisset
+
+    </div>
+
 
     <x-partials.footer />
 

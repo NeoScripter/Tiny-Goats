@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Animal;
+use App\Models\Household;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,10 +18,15 @@ class LogEntryFactory extends Factory
      */
     public function definition(): array
     {
+        $male = Animal::inRandomOrder()->first() ?? Animal::factory()->create(['isMale' => true]);
+        $female = Animal::inRandomOrder()->first() ?? Animal::factory()->create(['isMale' => false]);
+        $household = Household::inRandomOrder()->first() ?? Household::factory()->create();
+
         return [
             'number' => $this->faker->randomDigit(),
-            'male_id' => null,
-            'female_id' => null,
+            'household_id' => $household->id,
+            'male_id' => $male->id,
+            'female_id' => $female->id,
             'coverage' => $this->faker->word(),
             'lambing' => $this->faker->word(),
             'status' => $this->faker->words(3, true),

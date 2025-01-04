@@ -1,0 +1,46 @@
+.admin-household-show {
+    .list__title {
+        text-align: center;
+        margin-bottom: vw(55px);
+        @include fs32();
+    }
+
+    .list__table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        width: 100%;
+
+        thead {
+            background-color: color('green', 'light');
+
+        }
+
+
+        th {
+            border: vw(1px) solid color('gray');
+            text-transform: uppercase;
+            padding: 0.2em;
+            @include fs20('Bold');
+        }
+
+        td {
+            border: vw(1px) solid color('gray');
+            max-width: vw(314px);
+            padding: 0.2em;
+            text-align: center;
+
+            @include fs20('Regular');
+        }
+
+        tbody {
+            th {
+                width: vw(30px);
+                height: vw(30px);
+
+                img {
+                    @include image();
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Animal;
 use App\Models\Household;
+use App\Models\LogEntry;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,7 +20,7 @@ it('shows the list of households', function () {
         ->assertViewIs('admin.households.index')
         ->assertViewHas('households', fn($households) => $households->count() === 5);
 
-    $response->assertSee('Специалисты');
+    $response->assertSee('Хозяйства');
 });
 
 it('shows the create household form', function () {
@@ -29,7 +31,7 @@ it('shows the create household form', function () {
     $response->assertStatus(200)
         ->assertViewIs('admin.households.create');
 
-    $response->assertSee('Фамилия, имя специалиста');
+    $response->assertSee('название хозяйства');
 });
 
 it('stores a new household with an image', function () {
@@ -39,16 +41,16 @@ it('stores a new household with an image', function () {
 
     $response = $this->post(route('household.store'), [
         'name' => 'Test household name',
-        'speciality' => 'Test speciality for the household.',
+        'extraInfo' => 'Test extraInfo for the household.',
         'image' => UploadedFile::fake()->image('household.jpg'),
     ]);
 
     $response->assertRedirect(route('households.index'))
-        ->assertSessionHas('success', 'Специалист успешно создан!');
+        ->assertSessionHas('success', 'Хозяйство успешно создан!');
 
     $this->assertTrue(
         Household::where('name', 'Test household name')
-            ->where('speciality', 'Test speciality for the household.')
+            ->where('extraInfo', 'Test extraInfo for the household.')
             ->exists()
     );
 
@@ -63,6 +65,8 @@ it('shows a specific household', function () {
 
     $household = Household::factory()->create();
 
+    LogEntry::factory()->count(10)->create();
+
     $response = $this->get(route('household.show', $household));
 
     $response->assertStatus(200)
@@ -70,21 +74,35 @@ it('shows a specific household', function () {
         ->assertViewHas('household', $household)
         ->assertSee($household->name)
         ->assertSee($household->image)
-        ->assertSee($household->speciality);
+        ->assertSee($household->extraInfo);
 
+
+    LogEntry::all()->each(function ($entry) use ($response) {
+        $response->assertSee($entry->number);
+        $response->assertSee($entry->coverage);
+    });
 });
 
 it('shows the edit form for a household', function () {
     actingAsAdmin();
 
     $household = Household::factory()->create();
+    Animal::factory()->create(['isMale' => true]);
+    Animal::factory()->create(['isMale' => false]);
+
+    LogEntry::factory()->count(10)->create();
 
     $response = $this->get(route('household.edit', $household));
 
     $response->assertStatus(200)
         ->assertViewIs('admin.households.edit')
         ->assertViewHas('household', $household)
-        ->assertSee($household->speciality);
+        ->assertSee($household->extraInfo);
+
+    LogEntry::all()->each(function ($entry) use ($response) {
+        $response->assertSee($entry->number);
+        $response->assertSee($entry->coverage);
+    });
 });
 
 it('updates a household', function () {
@@ -104,17 +122,17 @@ it('updates a household', function () {
 
     $response = $this->put(route('household.update', $household), [
         'name' => 'Updated Title',
-        'speciality' => 'Updated content for the household.',
+        'extraInfo' => 'Updated content for the household.',
         'image' => $new_image,
     ]);
 
     $response->assertRedirect(route('households.index'))
-        ->assertSessionHas('success', 'Специалист успешно обновлен!');
+        ->assertSessionHas('success', 'Хозяйство успешно обновлено!');
 
     $this->assertTrue(
         Household::where('name', 'Updated Title')
             ->where('id', $household->id)
-            ->where('speciality', 'Updated content for the household.')
+            ->where('extraInfo', 'Updated content for the household.')
             ->exists()
     );
 
@@ -140,7 +158,7 @@ it('deletes a household and removes the image', function () {
     $response = $this->delete(route('household.destroy', $household));
 
     $response->assertRedirect(route('households.index'))
-        ->assertSessionHas('success', 'Специалист успешно удален!');
+        ->assertSessionHas('success', 'Хозяйство успешно удалено!');
 
     $this->assertDatabaseMissing('households', ['id' => $household->id]);
 
@@ -165,7 +183,7 @@ it('correctly displays the households to the admin', function () {
 
     Household::all()->each(function ($household) use ($response) {
         $response->assertSee($household->name);
-        $response->assertSee($household->speciality);
+        $response->assertSee($household->owner);
     });
 
     // Make a name query
@@ -176,12 +194,12 @@ it('correctly displays the households to the admin', function () {
 
     Household::where('name', 'not like', "%Matilda%")->get()->each(function ($household) use ($response) {
         $response->assertDontSee($household->name);
-        $response->assertDontSee($household->speciality);
+        $response->assertDontSee($household->owner);
     });
 
     Household::where('name', 'like', "%Matilda%")->get()->each(function ($household) use ($response) {
         $response->assertSee($household->name);
-        $response->assertSee($household->speciality);
+        $response->assertSee($household->owner);
     });
 
     // Make a character query
@@ -192,11 +210,60 @@ it('correctly displays the households to the admin', function () {
 
     Household::where('name', 'not like', "B%")->get()->each(function ($household) use ($response) {
         $response->assertDontSee($household->name);
-        $response->assertDontSee($household->speciality);
+        $response->assertDontSee($household->owner);
     });
 
     Household::where('name', 'like', "B%")->get()->each(function ($household) use ($response) {
         $response->assertSee($household->name);
-        $response->assertSee($household->speciality);
+        $response->assertSee($household->owner);
     });
+});
+
+
+it('stores a new household entry', function () {
+    actingAsAdmin();
+
+    $household = Household::factory()->create();
+    $male = Animal::factory()->create(['isMale' => true]);
+    $female = Animal::factory()->create(['isMale' => false]);
+
+    $response = $this->get(route('household.edit', $household->id));
+
+    $response = $this->post(route('log_entry.store'), [
+        'number' => 'A024',
+        'household_id' => $household->id,
+        'male_id' => $male->id,
+        'female_id' => $female->id,
+        'coverage' => 'Test coverage',
+        'lambing' => 'Test lambing',
+        'status' => 'Test status',
+    ]);
+
+    $response->assertRedirect(route('household.edit', $household))
+        ->assertSessionHas('success', 'Запись успешно создана!');
+
+    $this->assertTrue(
+        LogEntry::where('number', 'A024')
+            ->where('coverage', 'Test coverage')
+            ->exists()
+    );
+});
+
+it('deletes a household entry', function () {
+    actingAsAdmin();
+
+    $household = Household::factory()->create();
+    Animal::factory()->create(['isMale' => true]);
+    Animal::factory()->create(['isMale' => false]);
+
+    $logEntry = LogEntry::factory()->create();
+
+    $response = $this->get(route('household.edit', $household->id));
+
+    $response = $this->delete(route('log_entry.destroy', $logEntry->id));
+
+    $response->assertRedirect(route('household.edit', $household))
+        ->assertSessionHas('success', 'Запись успешно удалена!');
+
+    $this->assertDatabaseMissing('log_entries', ['id' => $logEntry->id]);
 });

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AnimalController;
+use App\Http\Controllers\Admin\HouseholdController;
+use App\Http\Controllers\Admin\LogEntryController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\SpecialistController;
@@ -8,6 +10,7 @@ use App\Http\Controllers\User\NewsController as UserNewsController;
 use App\Http\Controllers\User\AnimalController as UserAnimalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Animal;
+use App\Models\Household;
 use App\Models\News;
 use App\Models\Partner;
 use App\Models\Specialist;
@@ -30,7 +33,8 @@ use Illuminate\Support\Str;
 Route::get('/', function () {
     $latest_news = News::inRandomOrder()->take(4)->get();
     $animals = Animal::where('showOnMain', true)->latest()->get();
-    return view('users.index', compact('latest_news', 'animals'));
+    $households = Household::where('showOnMain', true)->latest()->get();
+    return view('users.index', compact('latest_news', 'animals', 'households'));
 });
 
 Route::get('/agenda', function () {
@@ -63,13 +67,22 @@ Route::get('/animals/{animal}/{gens?}/{photo?}', [UserAnimalController::class, '
 
 Route::get('/coupling', [UserAnimalController::class, 'coupling'])->name('user.coupling');
 
-Route::get('/households', function () {
-    return view('users.households');
-});
+Route::get('/households', function (Request $request) {
+    $name = Str::title($request->query('name'));
+    $char = $request->query('char');
 
-Route::get('/households/1', function () {
-    return view('users.household-card');
-});
+    $households = Household::when($name, fn($query) => $query->where('name', 'like', "%$name%"))
+        ->when($char, fn($query) => $query->where('name', 'like', "$char%"))
+        ->latest()
+        ->paginate(20)
+        ->appends($request->query());
+
+    return view('users.households', compact('households'));
+})->name('user.households.index');
+
+Route::get('/households/{household}', function (Household $household) {
+    return view('users.household-card', compact('household'));
+})->name('user.household.show');
 
 Route::get('/specialists', function (Request $request) {
     $name = Str::title($request->query('name'));
@@ -181,6 +194,28 @@ Route::prefix('admin')
         Route::put('/partners/{partner}', [PartnerController::class, 'update'])->name('partner.update');
 
         Route::delete('/partners/{partner}', [PartnerController::class, 'destroy'])->name('partner.destroy');
+
+        // Households
+
+        Route::get('/households', [HouseholdController::class, 'index'])->name('households.index');
+
+        Route::get('/households/create', [HouseholdController::class, 'create'])->name('household.create');
+
+        Route::post('/households', [HouseholdController::class, 'store'])->name('household.store');
+
+        Route::get('/households/{household}/edit', [HouseholdController::class, 'edit'])->name('household.edit');
+
+        Route::get('/households/{household}', [HouseholdController::class, 'show'])->name('household.show');
+
+        Route::put('/households/{household}', [HouseholdController::class, 'update'])->name('household.update');
+
+        Route::delete('/households/{household}', [HouseholdController::class, 'destroy'])->name('household.destroy');
+
+        // Log Entries
+
+        Route::post('/log_entries', [LogEntryController::class, 'store'])->name('log_entry.store');
+
+        Route::delete('/log_entries/{logEntry}', [LogEntryController::class, 'destroy'])->name('log_entry.destroy');
     });
 
 Route::middleware('auth')->group(function () {

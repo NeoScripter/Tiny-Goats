@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Animal;
+use App\Models\Household;
 use App\Models\News;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,6 +17,8 @@ it('correctly displays the home page', function () {
 
     News::factory()->count(4)->create();
 
+    Household::factory()->count(4)->create();
+
     $response = $this->get('/');
 
     $response->assertStatus(200);
@@ -28,6 +31,10 @@ it('correctly displays the home page', function () {
 
     News::all()->each(function ($news) use ($response) {
         $response->assertSee($news->title);
+    });
+
+    Household::all()->each(function ($household) use ($response) {
+        $response->assertSee($household->name);
     });
 });
 
