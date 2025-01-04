@@ -74,7 +74,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($animals as $index => $animal)
+                        @forelse ($animals as $index => $animal)
                             <tr>
                                 <th scope="row">
                                     @if (in_array(null, [
@@ -120,7 +120,9 @@
                                 <td>{{ $animal->birthDate ? \Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y') : '?' }}
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <p style="text-align: center;">По вашему запросу не найдено ни одного результата</p>
+                        @endforelse
                     </tbody>
                 </table>
 
@@ -130,7 +132,8 @@
 
                     <div class="list__note">
                         <div class="list__icon">
-                            <img src="{{ asset('images/pages/user/search-animal/green.png') }}" alt="Зеленая фигурка оленя">
+                            <img src="{{ asset('images/pages/user/search-animal/green.png') }}"
+                                alt="Зеленая фигурка оленя">
                         </div>
                         Основные данные присутствуют.
                     </div>

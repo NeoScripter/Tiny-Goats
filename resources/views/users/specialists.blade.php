@@ -46,7 +46,7 @@
 
                 @isset($specialists)
                     <tbody>
-                        @foreach ($specialists as $index => $specialist)
+                        @forelse ($specialists as $index => $specialist)
                             <tr>
                                 <td>
                                     <a href="{{ route('user.specialist.show', $specialist->id) }}"
@@ -55,7 +55,9 @@
                                 <td>{{ $specialist->speciality ? $specialist->speciality : '?' }}
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <p style="text-align: center;">По вашему запросу не найдено ни одного результата</p>
+                        @endforelse
                     </tbody>
                 @endisset
             </table>

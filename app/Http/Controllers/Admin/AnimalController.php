@@ -117,7 +117,11 @@ class AnimalController extends Controller
         $mother = $flatGenealogy->firstWhere('id', $animal->mother_id);
         $father = $flatGenealogy->firstWhere('id', $animal->father_id);
 
-        return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy'));
+        $owner = Household::findOrFail($animal->household_owner_id);
+        $breeder = Household::findOrFail($animal->household_breeder_id);
+
+
+        return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'breeder', 'owner'));
     }
 
 
@@ -201,6 +205,7 @@ class AnimalController extends Controller
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
         ]);
 
+
         $validated['forSale'] = $request->has('forSale');
         $validated['showOnMain'] = $request->has('showOnMain');
 
@@ -251,8 +256,7 @@ class AnimalController extends Controller
             }
         }
 
-
-        return redirect()->route('animals.index')->with('success', 'Животное успешно обновлено!');
+        return redirect()->route('animals.show', $animal->id)->with('success', 'Животное успешно обновлено!');
     }
 
 

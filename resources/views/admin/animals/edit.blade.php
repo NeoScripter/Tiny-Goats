@@ -299,6 +299,12 @@
         </form>
     @endisset
 
+    @if (session('success'))
+        <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="notification-popup">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <x-partials.footer />
 
     <script>
@@ -417,4 +423,5 @@
             };
         }
     </script>
+
 </x-layouts.app>

@@ -1,4 +1,9 @@
 .admin-household-show {
+
+    .list {
+        margin-top: vw(50px);
+    }
+
     .list__title {
         text-align: center;
         margin-bottom: vw(55px);
@@ -42,5 +47,26 @@
                 }
             }
         }
+    }
+
+    .gens__button {
+        margin-top: vw(40px);
+    }
+
+    .info__error--household {
+        margin-top: vw(10px);
+
+        ul {
+            display: grid;
+            gap: vw(5px);
+        }
+    }
+
+    .add-entry-btn {
+        @include btn-primary();
+    }
+
+    .delete-entry-btn {
+        @include btn-primary($bg: color('red'), $color: color('white'));
     }
 }

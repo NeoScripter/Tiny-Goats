@@ -11,13 +11,13 @@ class LogEntryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'number' => 'nullable|string|max:100',
-            'household_id' => 'nullable|exists:households,id',
-            'male_id' => 'nullable|exists:animals,id',
-            'female_id' => 'nullable|exists:animals,id',
-            'coverage' => 'nullable|string|max:300',
-            'lambing' => 'nullable|string|max:300',
-            'status' => 'nullable|string|max:300',
+            'number' => 'required|string|max:100',
+            'household_id' => 'required|exists:households,id',
+            'male_id' => 'required|exists:animals,id',
+            'female_id' => 'required|exists:animals,id',
+            'coverage' => 'required|string|max:300',
+            'lambing' => 'required|string|max:300',
+            'status' => 'required|string|max:300',
         ]);
 
         LogEntry::create($validated);

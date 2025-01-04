@@ -2,7 +2,7 @@
 
     <x-admin.header />
 
-    <div class="admin-animal-card">
+    <div class="admin-animal-card admin-household-show">
         @isset($household)
 
             <section class="info">
@@ -65,8 +65,8 @@
                         @foreach ($household->logEntries as $logEntry)
                             <tr>
                                 <td>{{ $logEntry->number }}</td>
-                                <td>{{ $logEntry->male->name }}</td>
-                                <td>{{ $logEntry->female->name }}</td>
+                                <td>{{ $logEntry->male ? $logEntry->male->name : '' }}</td>
+                                <td>{{ $logEntry->female ? $logEntry->female->name : '' }}</td>
                                 <td>{{ $logEntry->coverage }} </td>
                                 <td>{{ $logEntry->lambing }}</td>
                                 <td>{{ $logEntry->status }}</td>

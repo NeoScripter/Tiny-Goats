@@ -76,105 +76,125 @@
                     <button type="submit" form="delete-household-form" class="edit-animals__delete-btn">Удалить</button>
                 </div>
             </form>
+            <section class="list">
 
+                <h2 class="list__title">Журнал покрытий, окотов, статуса будущих козлят на текущий год</h2>
+
+                <table class="list__table">
+                    <thead>
+                        <tr>
+                            <th scope="col">номер п/п</th>
+                            <th scope="col">Козел</th>
+                            <th scope="col">Коза</th>
+                            <th scope="col">Покрытие</th>
+                            <th scope="col">Окот</th>
+                            <th scope="col">Статус козлят</th>
+                            <th scope="col">Удалить</th>
+                        </tr>
+                    </thead>
+                    @isset($household->logEntries)
+                        <tbody>
+                            @foreach ($household->logEntries as $logEntry)
+                                <tr>
+                                    <td>{{ $logEntry->number }}</td>
+                                    <td>{{ $logEntry->male ? $logEntry->male->name : '' }}</td>
+                                    <td>{{ $logEntry->female ? $logEntry->female->name : '' }}</td>
+                                    <td>{{ $logEntry->coverage }} </td>
+                                    <td>{{ $logEntry->lambing }}</td>
+                                    <td>{{ $logEntry->status }}</td>
+                                    <!-- Delete Form -->
+                                    <td>
+                                        <form class="block ml-auto" action="{{ route('log_entry.destroy', $logEntry->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="delete-entry-btn">
+                                                Удалить запись
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <form id="add-entry-form" action="{{ route('log_entry.store') }}" method="POST">
+                                @csrf
+
+                                <input type="hidden" name="household_id" value="{{ $household->id }}">
+                                <tr>
+                                    <td>
+                                        <input type="text" name="number" value="{{ old('number') }}" class="info__input">
+                                    </td>
+                                    <td>
+                                        <div class="info__item">
+                                            <div class="info__value">
+                                                <select name="male_id" class="info__select">
+                                                    <option value="">-- Выбрать козла --</option>
+                                                    @foreach ($maleAnimals as $male)
+                                                        <option value="{{ $male->id }}"
+                                                            {{ old('male_id') == $male->id ? 'selected' : '' }}>
+                                                            {{ $male->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="info__item">
+                                            <div class="info__value">
+                                                <select name="female_id" class="info__select">
+                                                    <option value="">-- Выбрать козу --</option>
+                                                    @foreach ($femaleAnimals as $female)
+                                                        <option value="{{ $female->id }}"
+                                                            {{ old('female_id') == $female->id ? 'selected' : '' }}>
+                                                            {{ $female->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="coverage" value="{{ old('coverage') }}"
+                                            class="info__input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="lambing" value="{{ old('lambing') }}"
+                                            class="info__input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="status" value="{{ old('status') }}"
+                                            class="info__input">
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="add-entry-btn">
+                                            Добавить запись
+                                        </button>
+                                    </td>
+                                </tr>
+                            </form>
+                        </tbody>
+                    @endisset
+                </table>
+            </section>
+            @if ($errors->any())
+                <div class="info__error info__error--household">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
         <form id="delete-household-form" method="POST" action="{{ route('household.destroy', $household->id) }}">
             @csrf
             @method('DELETE')
         </form>
-
-        <section class="list">
-
-            <h1 class="list__title">Журнал покрытий, окотов, статуса будущих козлят на текущий год</h1>
-
-            <table class="list__table">
-                <thead>
-                    <tr>
-                        <th scope="col">номер п/п</th>
-                        <th scope="col">Козел</th>
-                        <th scope="col">Коза</th>
-                        <th scope="col">Покрытие</th>
-                        <th scope="col">Окот</th>
-                        <th scope="col">Статус козлят</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($household->logEntries as $logEntry)
-                        <tr>
-                            <td>{{ $logEntry->number }}</td>
-                            <td>{{ $logEntry->male->name }}</td>
-                            <td>{{ $logEntry->female->name }}</td>
-                            <td>{{ $logEntry->coverage }} </td>
-                            <td>{{ $logEntry->lambing }}</td>
-                            <td>{{ $logEntry->status }}</td>
-                            <!-- Delete Form -->
-                            <form class="block ml-auto" action="{{ route('log_entry.destroy', $logEntry->id) }}"
-                                method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">
-                                    &times;
-                                </button>
-                            </form>
-                        </tr>
-                    @endforeach
-                    <form id="add-entry-form" action="{{ route('log_entry.store', $logEntry->id) }}" method="POST">
-                        @csrf
-                        <tr>
-                            <td>{{ $logEntry->number }}</td>
-                            <td>
-                                <div class="info__item">
-                                    <div class="info__property">Козел</div>
-                                    <div class="info__value">
-                                        <select name="father_id" class="info__select">
-                                            <option value="">-- Выбрать козла --</option>
-                                            @foreach ($maleAnimals as $male)
-                                                <option value="{{ $male->id }}"
-                                                    {{ old('male_id') == $male->id ? 'selected' : '' }}>
-                                                    {{ $male->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                @error('male_id')
-                                    <div class="info__error info__error--shifted">{{ $message }}</div>
-                                @enderror
-                            </td>
-                            <td>
-                                <div class="info__item">
-                                    <div class="info__property">Коза</div>
-                                    <div class="info__value">
-                                        <select name="father_id" class="info__select">
-                                            <option value="">-- Выбрать козу --</option>
-                                            @foreach ($femaleAnimals as $female)
-                                                <option value="{{ $female->id }}"
-                                                    {{ old('female_id') == $female->id ? 'selected' : '' }}>
-                                                    {{ $female->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                @error('female_id')
-                                    <div class="info__error info__error--shifted">{{ $message }}</div>
-                                @enderror
-                            </td>
-                            <td>
-                                <x-form-input label="" name="coverage" value="{{ old('coverage') }}" />
-                            </td>
-                            <td><x-form-input label="" name="lambing" value="{{ old('lambing') }}" /></td>
-                            <td><x-form-input label="" name="status" value="{{ old('status') }}" /></td>
-                            <button type="submit">
-                                Добавить запись
-                            </button>
-                        </tr>
-                    </form>
-                </tbody>
-            </table>
-        </section>
     @endisset
 
+    @if (session('success'))
+        <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="notification-popup">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <x-partials.footer />
 

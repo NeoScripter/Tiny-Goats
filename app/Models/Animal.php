@@ -9,29 +9,8 @@ class Animal extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'isMale',
-        'breed',
-        'forSale',
-        'color',
-        'eyeColor',
-        'birthDate',
-        'direction',
-        'siblings',
-        'hornedness',
-        'birthCountry',
-        'residenceCountry',
-        'status',
-        'labelNumber',
-        'height',
-        'rudiment',
-        'extraInfo',
-        'certificates',
-        'showOnMain',
-        'images',
-        'mother_id',
-        'father_id'
+    protected $guarded = [
+        'id'
     ];
 
     protected $casts = [

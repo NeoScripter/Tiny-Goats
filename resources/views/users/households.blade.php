@@ -38,23 +38,25 @@
                     </tr>
                 </thead>
                 @isset($households)
-                <tbody>
-                    @foreach ($households as $index => $household)
-                        <tr>
-                            <td>
-                                <a href="{{ route('user.household.show', $household->id) }}"
-                                    class="list__link">{{ $household->name }}</a>
-                            </td>
-                            <td>{{ $household->owner ? $household->owner : '?' }}
-                            </td>
-                            <td>{{ $household->region ? $household->region : '?' }}
-                            </td>
-                            <td>{{ $household->country ? $household->country : '?' }}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            @endisset
+                    <tbody>
+                        @forelse ($households as $index => $household)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('user.household.show', $household->id) }}"
+                                        class="list__link">{{ $household->name }}</a>
+                                </td>
+                                <td>{{ $household->owner ? $household->owner : '?' }}
+                                </td>
+                                <td>{{ $household->region ? $household->region : '?' }}
+                                </td>
+                                <td>{{ $household->country ? $household->country : '?' }}
+                                </td>
+                            </tr>
+                        @empty
+                            <p style="text-align: center;">По вашему запросу не найдено ни одного результата</p>
+                        @endforelse
+                    </tbody>
+                @endisset
             </table>
 
             {{ $households->links('vendor.pagination.default') }}

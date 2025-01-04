@@ -70,6 +70,7 @@
 
     .info__data {
         flex-basis: vw(639px);
+        max-width: vw(639px);
         display: grid;
         gap: vw(10px);
     }

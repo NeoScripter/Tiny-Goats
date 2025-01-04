@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\LogEntry;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class LogEntrySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        LogEntry::factory()->count(90)->create();
     }
 }

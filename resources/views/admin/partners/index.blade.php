@@ -3,8 +3,8 @@
     <x-admin.header />
 
 
-        <div class="user-partners">
-            @isset($partners)
+    <div class="user-partners">
+        @isset($partners)
 
             <section class="news">
 
@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="news__grid">
-                    @foreach ($partners as $partner)
+                    @forelse ($partners as $partner)
                         <div class="news__item">
                             <form method="POST" action="{{ route('partner.destroy', $partner->id) }}"
                                 onsubmit="return confirm('Вы уверены что хотите удалить данного партнера?');">
@@ -31,10 +31,8 @@
                             </a>
 
                             <a href="{{ route('partner.show', $partner->id) }}" class="news__image">
-                                <img src="{{ isset($partner->image)
-                                ? asset('storage/' . $partner->image)
-                                : asset('images/partials/placeholder.webp') }}"
-                                alt="{{ $partner->name }}">
+                                <img src="{{ isset($partner->image) ? asset('storage/' . $partner->image) : asset('images/partials/placeholder.webp') }}"
+                                    alt="{{ $partner->name }}">
                             </a>
                             <div class="news__content">
                                 <h4 class="news__heading">{{ $partner->name }}</h4>
@@ -43,14 +41,16 @@
                                 <a href="" class="news__description">{{ $partner->website }}</a>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <p style="text-align: center;">По вашему запросу не найдено ни одного результата</p>
+                    @endforelse
                 </div>
 
                 {{ $partners->links('vendor.pagination.default') }}
 
             </section>
-            @endisset
-        </div>
+        @endisset
+    </div>
 
     @if (session('success'))
         <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="notification-popup">

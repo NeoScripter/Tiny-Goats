@@ -54,7 +54,7 @@ class HouseholdController extends Controller
 
         Household::create($validated);
 
-        return redirect()->route('households.index')->with('success', 'Хозяйство успешно создан!');
+        return redirect()->route('households.index')->with('success', 'Хозяйство успешно создано!');
     }
 
 
@@ -68,12 +68,12 @@ class HouseholdController extends Controller
         ->where('household_owner_id', $household->id)
         ->where('forSale', true)
         ->pluck('name')
-        ->implode(',');
+        ->implode(', ');
 
         $all_animals = Animal::select('name')
         ->where('household_owner_id', $household->id)
         ->pluck('name')
-        ->implode(',');
+        ->implode(', ');
 
         return view('admin.households.show', compact('household', 'maleAnimals', 'femaleAnimals', 'animals_for_sale', 'all_animals'));
     }

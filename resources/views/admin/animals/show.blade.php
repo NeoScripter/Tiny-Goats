@@ -75,6 +75,22 @@
                         </div>
                     @endisset
 
+                    @isset($owner)
+                        <div class="info__item">
+                            <div class="info__property">Владелец</div>
+                            <a href="{{ route('household.show', $owner->id) }}" class="info__value info__value--link">
+                                {{ $owner->name }}</a>
+                        </div>
+                    @endisset
+
+                    @isset($breeder)
+                        <div class="info__item">
+                            <div class="info__property">Заводчик</div>
+                            <a href="{{ route('household.show', $breeder->id) }}" class="info__value info__value--link">
+                                {{ $breeder->name }}</a>
+                        </div>
+                    @endisset
+
                     <x-admin.info-item :property="$animal->birthCountry" label="Страна рождения" />
 
                     <x-admin.info-item :property="$animal->residenceCountry" label="Страна проживания" />

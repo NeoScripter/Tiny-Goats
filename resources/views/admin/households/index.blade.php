@@ -8,12 +8,12 @@
 
             <section class="list">
 
-                <h1 class="list__title">Специалисты</h1>
+                <h1 class="list__title">Хозяйства</h1>
 
                 <form method="GET" action="{{ route('households.index') }}" class="list__seach-bar">
                     <input type="search" name="name" placeholder="Поиск по специалистам">
                     <button type="submit" class="list__search-btn">Найти</button>
-                    <a href="{{ route('household.create') }}" class="list__add-btn">Добавить специалиста</a>
+                    <a href="{{ route('household.create') }}" class="list__add-btn">Добавить хозяйство</a>
                 </form>
 
                 <div class="list__categories">
@@ -41,21 +41,29 @@
                 <table class="list__table">
                     <thead>
                         <tr>
-                            <th scope="col">Имя</th>
-                            <th scope="col">Специальность</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Владелец</th>
+                            <th scope="col">Область</th>
+                            <th scope="col">Страна</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($households as $index => $household)
+                        @forelse ($households as $index => $household)
                             <tr>
                                 <td>
                                     <a href="{{ route('household.show', $household->id) }}"
                                         class="list__link">{{ $household->name }}</a>
                                 </td>
-                                <td>{{ $household->speciality ? $household->speciality : '?' }}
+                                <td>{{ $household->owner ? $household->owner : '?' }}
+                                </td>
+                                <td>{{ $household->region ? $household->region : '?' }}
+                                </td>
+                                <td>{{ $household->country ? $household->country : '?' }}
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <p style="text-align: center;">По вашему запросу не найдено ни одного результата</p>
+                        @endforelse
                     </tbody>
                 </table>
 

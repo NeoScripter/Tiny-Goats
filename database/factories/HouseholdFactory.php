@@ -28,9 +28,10 @@ class HouseholdFactory extends Factory
 
 
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->company(),
             'image' => $image,
-            'address' => $this->faker->words(10, true),
+            'address' => $this->faker->address(),
+            'owner' => $this->faker->name(),
             'country' => $this->faker->country(),
             'region' => $this->faker->state(),
             'extraInfo' => $this->faker->words(20, true),
