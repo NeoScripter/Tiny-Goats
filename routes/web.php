@@ -145,7 +145,7 @@ Route::get('/login', function () {
 
 Route::get('/login', [LoginController::class, 'showLogin'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.submit');
-Route::post('/logout', [LoginController::class, 'signOut'])->middleware('auth')->name('logout');
+Route::get('/logout', [LoginController::class, 'signOut'])->middleware('auth')->name('logout');
 
 Route::prefix('admin')
     ->middleware('auth')

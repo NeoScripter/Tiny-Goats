@@ -60,6 +60,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('status', 'Выход из аккаунта выполнен!');
+        return redirect('/')->with('status', 'Выход из аккаунта выполнен!');
     }
 }
