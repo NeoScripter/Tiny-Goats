@@ -5,9 +5,9 @@
         <div class="header__signup">
             <a href="/register" class="header__signup-link">Регистрация</a>
 
-            <div class="header__user-icon">
+            <a href="{{ route('admin.index')}}" class="header__user-icon">
                 <img src="{{ asset('images/svgs/user.svg') }}" alt="Иконка пользователя">
-            </div>
+            </a>
         </div>
 
         <a href="/" class="header__logo">

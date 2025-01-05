@@ -53,6 +53,7 @@
 }
 
 .lg-header__user-icon {
+    display: block;
     border-radius: vw(8px);
     background-color: color('white', 'dark');
     width: vw(38px);
@@ -179,6 +180,7 @@
 }
 
 .header__user-icon {
+    display: block;
     border-radius: vw(8px);
     background-color: color('white', 'dark');
     width: vw(38px);

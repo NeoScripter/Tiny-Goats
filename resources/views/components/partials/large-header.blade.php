@@ -5,9 +5,9 @@
         <div class="lg-header__signup">
             <a href="/register" class="lg-header__signup-link">Регистрация</a>
 
-            <div class="lg-header__user-icon">
+            <a href="{{ route('admin.index')}}" class="lg-header__user-icon">
                 <img src="{{ asset('images/svgs/user.svg') }}" alt="Иконка пользователя">
-            </div>
+            </a>
         </div>
 
         <form method="GET" action="{{ route('users.search') }}" class="header__search">

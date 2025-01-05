@@ -232,6 +232,7 @@
     .farm__image {
         overflow: hidden;
         margin-bottom: vw(16px);
+        height: vw(252px);
         img {
             @include image();
         }
@@ -240,6 +241,7 @@
     .farm__name {
         text-decoration: underline;
         text-align: center;
+        display: block;
         @include fs16(400);
     }
 
