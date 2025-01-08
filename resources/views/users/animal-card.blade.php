@@ -77,6 +77,22 @@
                         </div>
                     @endisset
 
+                    @isset($owner)
+                        <div class="info__item">
+                            <div class="info__property">Владелец</div>
+                            <a href="{{ route('household.show', $owner->id) }}" class="info__value info__value--link">
+                                {{ $owner->name }}</a>
+                        </div>
+                    @endisset
+
+                    @isset($breeder)
+                        <div class="info__item">
+                            <div class="info__property">Заводчик</div>
+                            <a href="{{ route('household.show', $breeder->id) }}" class="info__value info__value--link">
+                                {{ $breeder->name }}</a>
+                        </div>
+                    @endisset
+
                     <x-admin.info-item :property="$animal->birthCountry" label="Страна рождения" />
 
                     <x-admin.info-item :property="$animal->residenceCountry" label="Страна проживания" />
@@ -137,9 +153,10 @@
                         <div class="gens__column">
                             @foreach ($generation->reverse() as $parent)
                                 @if (isset($repeatedAnimalColors[$parent->id]))
-                                    <div class="gens__item" style="background-color: {{ $repeatedAnimalColors[$parent->id] }};">
-                                @else
-                                    <div class="gens__item">
+                                    <div class="gens__item"
+                                        style="background-color: {{ $repeatedAnimalColors[$parent->id] }};">
+                                    @else
+                                        <div class="gens__item">
                                 @endif
                                 @if ($parent)
                                     <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Animal;
+use App\Models\Household;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -78,7 +79,10 @@ class AnimalController extends Controller
         $mother = $flatGenealogy->firstWhere('id', $animal->mother_id);
         $father = $flatGenealogy->firstWhere('id', $animal->father_id);
 
-        return view('users.animal-card', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'repeatedAnimalColors'));
+        $owner = Household::find($animal->household_owner_id);
+        $breeder = Household::find($animal->household_breeder_id);
+
+        return view('users.animal-card', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'repeatedAnimalColors', 'owner', 'breeder'));
     }
 
 
