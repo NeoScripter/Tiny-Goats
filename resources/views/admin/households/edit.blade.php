@@ -40,7 +40,7 @@
                         <x-form-textarea label="Доп. сведения о владельце" name="extraInfo"
                             value="{{ old('extraInfo', $household->extraInfo) }}" rows="3" />
 
-                        <x-form-textarea label="Породы, породовые направления" name="breeds"
+                        <x-form-textarea label="Породы, породные направления" name="breeds"
                             value="{{ old('breeds', $household->breeds) }}" rows="3" />
 
                         <x-form-input label="Страна" name="country" value="{{ old('country', $household->country) }}" />
@@ -184,7 +184,8 @@
                 </div>
             @endif
         </div>
-        <form id="delete-household-form" method="POST" action="{{ route('household.destroy', $household->id) }}">
+        <form id="delete-household-form" method="POST" action="{{ route('household.destroy', $household->id) }}"
+            onsubmit="return confirm('Вы уверены что хотите удалить данное хозяйство из базы данных?');">
             @csrf
             @method('DELETE')
         </form>

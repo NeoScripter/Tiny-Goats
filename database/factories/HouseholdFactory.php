@@ -33,7 +33,7 @@ class HouseholdFactory extends Factory
             'address' => $this->faker->address(),
             'owner' => $this->faker->name(),
             'country' => $this->faker->country(),
-            'region' => $this->faker->state(),
+            'region' => $this->faker->word(),
             'extraInfo' => $this->faker->words(20, true),
             'breeds' => $this->faker->words(20, true),
             'contacts' => $this->faker->words(10, true),

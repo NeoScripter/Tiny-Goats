@@ -23,6 +23,16 @@
                     <div class="info__gallery" id="galleryPreview">
                     </div>
 
+                    @error('images')
+                        <span class="edit-news__error info__error">{{ $message }}</span>
+                    @enderror
+
+                    @foreach ($errors->get('images.*') as $index => $fileErrors)
+                        @foreach ($fileErrors as $error)
+                            <span class="edit-news__error info__error">{{ $error }}</span>
+                        @endforeach
+                    @endforeach
+
 
                     <div class="info__children" x-data="animalSearch()">
                         <h3 class="info__label">Потомство</h3>

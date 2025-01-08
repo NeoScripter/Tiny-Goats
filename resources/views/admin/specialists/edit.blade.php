@@ -63,7 +63,8 @@
             </form>
 
         </div>
-        <form id="delete-specialist-form" method="POST" action="{{ route('specialist.destroy', $specialist->id) }}">
+        <form id="delete-specialist-form" method="POST" action="{{ route('specialist.destroy', $specialist->id) }}"
+            onsubmit="return confirm('Вы уверены что хотите удалить данного специалиста из базы данных?');">
             @csrf
             @method('DELETE')
         </form>

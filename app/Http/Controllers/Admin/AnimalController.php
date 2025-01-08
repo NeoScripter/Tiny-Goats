@@ -152,8 +152,8 @@ class AnimalController extends Controller
         $mother = $flatGenealogy->firstWhere('id', $animal->mother_id);
         $father = $flatGenealogy->firstWhere('id', $animal->father_id);
 
-        $owner = Household::findOrFail($animal->household_owner_id);
-        $breeder = Household::findOrFail($animal->household_breeder_id);
+        $owner = Household::find($animal->household_owner_id);
+        $breeder = Household::find($animal->household_breeder_id);
 
 
         return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'breeder', 'owner', 'repeatedAnimalColors'));

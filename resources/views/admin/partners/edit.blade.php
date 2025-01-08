@@ -55,7 +55,8 @@
             </form>
 
         </div>
-        <form id="delete-partner-form" method="POST" action="{{ route('partner.destroy', $partner->id) }}">
+        <form id="delete-partner-form" method="POST" action="{{ route('partner.destroy', $partner->id) }}"
+            onsubmit="return confirm('Вы уверены что хотите удалить данного партнера из базы данных?');">
             @csrf
             @method('DELETE')
         </form>

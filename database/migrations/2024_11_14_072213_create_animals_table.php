@@ -36,12 +36,12 @@ return new class extends Migration
             $table->foreignId('household_owner_id')
                 ->nullable()
                 ->constrained('households')
-                ->onDelete('restrict');
+                ->nullOnDelete();
 
             $table->foreignId('household_breeder_id')
                 ->nullable()
                 ->constrained('households')
-                ->onDelete('restrict');
+                ->nullOnDelete();
 
             $table->foreignId('mother_id')->nullable()->constrained('animals')->nullOnDelete();
             $table->foreignId('father_id')->nullable()->constrained('animals')->nullOnDelete();

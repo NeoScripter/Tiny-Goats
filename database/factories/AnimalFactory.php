@@ -52,7 +52,7 @@ class AnimalFactory extends Factory
             'hornedness' => $this->faker->randomElement(['Horned', 'Polled']),
             'birthCountry' => $this->faker->country,
             'residenceCountry' => $this->faker->country,
-            'status' => $this->faker->randomElement(['Active', 'Inactive']),
+            'status' => $this->faker->randomElement(['Активный', 'Не очень активный']),
             'labelNumber' => Str::random(8),
             'height' => $this->faker->numberBetween(120, 180) . ' cm',
             'rudiment' => $this->faker->word,

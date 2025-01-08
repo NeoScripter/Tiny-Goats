@@ -74,7 +74,8 @@
             </form>
         </div>
 
-        <form id="delete-news-form" method="POST" action="{{ route('news.destroy', $news->id) }}">
+        <form id="delete-news-form" method="POST" action="{{ route('news.destroy', $news->id) }}"
+            onsubmit="return confirm('Вы уверены что хотите удалить данную новость из базы данных?');">
             @csrf
             @method('DELETE')
         </form>

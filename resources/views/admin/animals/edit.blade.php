@@ -34,6 +34,16 @@
                             @endforeach
                         </div>
 
+                        @error('images')
+                            <span class="edit-news__error info__error">{{ $message }}</span>
+                        @enderror
+
+                        @foreach ($errors->get('images.*') as $index => $fileErrors)
+                            @foreach ($fileErrors as $error)
+                                <span class="edit-news__error info__error">{{ $error }}</span>
+                            @endforeach
+                        @endforeach
+
                         <!-- Hidden input to store the reordered image paths -->
                         <input type="hidden" name="sortedImages" id="sortedImages"
                             value="{{ json_encode($animal->images) }}">

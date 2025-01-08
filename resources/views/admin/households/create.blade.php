@@ -37,7 +37,7 @@
                     <x-form-textarea label="Доп. сведения о владельце" name="extraInfo" value="{{ old('extraInfo') }}"
                     rows="3" />
 
-                    <x-form-textarea label="Породы, породовые направления" name="breeds" value="{{ old('breeds') }}"
+                    <x-form-textarea label="Породы, породные направления" name="breeds" value="{{ old('breeds') }}"
                     rows="3" />
 
                     <x-form-input label="Страна" name="country" value="{{ old('country') }}" />
