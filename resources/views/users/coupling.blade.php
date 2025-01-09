@@ -124,7 +124,7 @@
                                     @if ($parent)
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)
-                                                <img src="{{ $photo && !empty($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
                                                     alt="Ancestor Photo">
                                             @else
                                                 <img src="{{ asset('images/partials/nophoto.png') }}"
@@ -151,7 +151,7 @@
                                     @if ($parent)
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)
-                                                <img src="{{ $photo && !empty($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
                                                     alt="Ancestor Photo">
                                             @else
                                                 <img src="{{ asset('images/partials/nophoto.png') }}"
