@@ -19,7 +19,7 @@
                         <div class="info__snapshot">
                             <label for="images">
                                 <img id="mainImagePreview"
-                                    src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                    src="{{ isset($animal->images[0]) ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
                                     alt="Main Image">
                             </label>
                             <input type="file" name="images[]" id="images" accept="image/*" multiple
