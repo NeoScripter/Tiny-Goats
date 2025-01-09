@@ -11,7 +11,7 @@
                 <div class="info__visual">
 
                     <div class="info__snapshot">
-                        <img src="{{ $animal->images[0] ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
+                        <img src="{{ isset($animal->images[0]) ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
                             alt="">
                     </div>
 
