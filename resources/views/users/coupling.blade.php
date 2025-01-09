@@ -109,45 +109,42 @@
                     </div>
                 </div>
 
-                @if (isset($fatherGenealogy) && isset($motherGenealogy))
-                    @isset($fatherGenealogy[$generationIndex])
-                        @foreach ($fatherGenealogy as $generationIndex => $generation)
-                            @php
-                                if ($generationIndex === 1) {
-                                    continue;
-                                }
-                            @endphp
-                            <div class="gens__column">
-                                @foreach ($fatherGenealogy[$generationIndex]->reverse() as $parent)
-                                    @if (isset($repeatedAnimalColors[$parent->id]))
-                                        <div class="gens__item"
-                                            style="background-color: {{ $repeatedAnimalColors[$parent->id] }};">
-                                        @else
-                                            <div class="gens__item">
-                                    @endif
-                                    @if ($parent)
-                                        <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
-                                            @if ($photo)
-                                                <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                                    alt="Ancestor Photo">
-                                            @else
-                                                <img src="{{ asset('images/partials/nophoto.png') }}"
-                                                    alt="No Photo Available">
-                                            @endif
-                                        </a>
-                                        <h3 class="gens__name">{{ $parent->name }}</h3>
-                                        <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
+                @isset($fatherGenealogy)
+                    @foreach ($fatherGenealogy as $generationIndex => $generation)
+                        @php
+                            if ($generationIndex === 1) {
+                                continue;
+                            }
+                        @endphp
+                        <div class="gens__column">
+                            @foreach ($fatherGenealogy[$generationIndex]->reverse() as $parent)
+                                @if (isset($repeatedAnimalColors[$parent->id]))
+                                    <div class="gens__item"
+                                        style="background-color: {{ $repeatedAnimalColors[$parent->id] }};">
                                     @else
-                                        <div class="gens__image">
-                                            <img src="{{ asset('images/partials/placeholder.webp') }}"
-                                                alt="No Photo Available">
-                                        </div>
-                                        <h3 class="gens__name">?</h3>
-                                    @endif
-                            </div>
-                        @endforeach
-                    @endisset
-                    @isset($motherGenealogy[$generationIndex])
+                                        <div class="gens__item">
+                                @endif
+                                @if ($parent)
+                                    <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
+                                        @if ($photo)
+                                            <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                alt="Ancestor Photo">
+                                        @else
+                                            <img src="{{ asset('images/partials/nophoto.png') }}" alt="No Photo Available">
+                                        @endif
+                                    </a>
+                                    <h3 class="gens__name">{{ $parent->name }}</h3>
+                                    <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
+                                @else
+                                    <div class="gens__image">
+                                        <img src="{{ asset('images/partials/placeholder.webp') }}"
+                                            alt="No Photo Available">
+                                    </div>
+                                    <h3 class="gens__name">?</h3>
+                                @endif
+                        </div>
+                    @endforeach
+                    @if (isset($motherGenealogy[$generationIndex]) && $motherGenealogy[$generationIndex]->isNotEmpty())
                         @foreach ($motherGenealogy[$generationIndex]->reverse() as $parent)
                             @if (isset($repeatedAnimalColors[$parent->id]))
                                 <div class="gens__item"
@@ -172,12 +169,12 @@
                                 </div>
                                 <h3 class="gens__name">?</h3>
                             @endif
-                </div>
-                @endforeach
-            @endisset
-    </div>
-    @endforeach
-    @endif
+                                </div>
+                        @endforeach
+                    @endif
+            </div>
+        @endforeach
+    @endisset
 
     </div>
 
