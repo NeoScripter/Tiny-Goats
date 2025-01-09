@@ -109,7 +109,7 @@
                     </div>
                 </div>
 
-                @isset($fatherGenealogy)
+                @if(isset($fatherGenealogy) && isset($motherGenealogy))
                     @foreach ($fatherGenealogy as $generationIndex => $generation)
                         @php
                             if ($generationIndex === 1) continue;
@@ -171,7 +171,7 @@
                             @endforeach
                         </div>
                     @endforeach
-                @endisset
+                @endif
 
             </div>
 
