@@ -175,7 +175,7 @@
                                     @if ($parent)
                                         <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
                                             @if ($photo)
-                                                <img src="{{ $photo && $parent->images[0] ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
                                                     alt="">
                                             @else
                                                 <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
