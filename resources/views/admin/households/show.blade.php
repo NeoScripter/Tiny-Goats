@@ -48,7 +48,7 @@
 
             <section class="list">
 
-                <h1 class="list__title">Журнал покрытий, окотов, статуса будущих козлят на текущий год</h1>
+                <h1 class="list__title">Журнал покрытий, окотов, статуса козлят</h1>
 
                 <table class="list__table">
                     <thead>

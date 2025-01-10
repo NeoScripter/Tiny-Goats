@@ -78,7 +78,7 @@
             </form>
             <section class="list">
 
-                <h2 class="list__title">Журнал покрытий, окотов, статуса будущих козлят на текущий год</h2>
+                <h2 class="list__title">Журнал покрытий, окотов, статуса козлят</h2>
 
                 <table class="list__table">
                     <thead>
