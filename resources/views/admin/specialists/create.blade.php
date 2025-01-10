@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="edit-animals__btns">
-                <button type="submit" class="edit-animals__publish-btn">Опубликовать</button>
+                <button type="submit" class="edit-animals__publish-btn" onclick="this.disabled = true; this.form.submit();">Опубликовать</button>
                 <!-- Delete Button -->
                 <a href="{{ route('specialists.index') }}" class="edit-animals__delete-btn">Отмена</a>
             </div>

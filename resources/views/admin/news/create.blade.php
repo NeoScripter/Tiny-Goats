@@ -64,7 +64,7 @@
 
             <!-- Action Buttons -->
             <div class="edit-news__btns">
-                <button type="submit" class="edit-news__publish-btn">Опубликовать</button>
+                <button type="submit" class="edit-news__publish-btn" onclick="this.disabled = true; this.form.submit();">Опубликовать</button>
                 <!-- Delete Button -->
                 <a href="{{ route('news.index') }}" class="edit-news__delete-btn">Отмена</a>
             </div>
