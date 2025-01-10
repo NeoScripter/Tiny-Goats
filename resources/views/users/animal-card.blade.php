@@ -44,7 +44,7 @@
                 <div class="info__data">
                     <x-admin.info-item :property="$animal->name" label="Кличка" />
 
-                    <x-admin.info-item :property="$animal->isMale ? 'Коза' : 'Козел'" label="Пол" />
+                    <x-admin.info-item :property="$animal->isMale ? 'Козел' : 'Коза'" label="Пол" />
 
                     <x-admin.info-item :property="$animal->breed" label="Порода, помесь пород" />
 
@@ -159,7 +159,7 @@
                                         <div class="gens__item">
                                 @endif
                                 @if ($parent)
-                                    <a href="{{ route('animals.show', $parent->id) }}" class="gens__image">
+                                    <a href="{{ route('user.animals.show', $parent->id) }}" class="gens__image">
                                         @if ($photo)
                                             <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
                                                 alt="Фото козла">
