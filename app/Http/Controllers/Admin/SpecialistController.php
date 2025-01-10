@@ -42,7 +42,9 @@ class SpecialistController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
         ]);
 
-        $imagePath = $request->file('image')?->store('specialists', 'public');
+        $imagePath = $request->file('image')
+        ? $request->file('image')->store('specialists', 'public')
+        : null;
 
 
         Specialist::create([

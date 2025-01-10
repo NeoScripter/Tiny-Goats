@@ -33,7 +33,9 @@ class PartnerController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500',
         ]);
 
-        $imagePath = $request->file('image')?->store('partners', 'public');
+        $imagePath = $request->file('image')
+        ? $request->file('image')->store('partners', 'public')
+        : null;
 
 
         Partner::create([

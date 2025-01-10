@@ -48,7 +48,9 @@ class HouseholdController extends Controller
 
         $validated['showOnMain'] = $request->has('showOnMain');
 
-        $image = $request->file('image')?->store('households', 'public');
+        $image = $request->file('image')
+        ? $request->file('image')->store('households', 'public')
+        : null;
 
         $validated['image'] = $image;
 

@@ -79,7 +79,7 @@ class AnimalController extends Controller
                 $imagePaths[] = $path;
             }
         }
-        $validated['images'] = $imagePaths;
+        $validated['images'] = count($imagePaths) > 0 ? $imagePaths : null;
 
         $animal = Animal::create($validated);
 
@@ -301,7 +301,7 @@ class AnimalController extends Controller
 
     public function destroy(Animal $animal)
     {
-        if ($animal->images && is_array($animal->images)) {
+        if ($animal->images && is_array($animal->images) && $animal->images[0] !== 'null') {
             foreach ($animal->images as $imagePath) {
                 if (Storage::disk('public')->exists($imagePath)) {
                     Storage::disk('public')->delete($imagePath);

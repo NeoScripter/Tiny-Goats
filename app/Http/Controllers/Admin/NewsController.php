@@ -40,7 +40,9 @@ class NewsController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:1024'
         ]);
 
-        $imagePath = $request->file('image')?->store('news_images', 'public');
+        $imagePath = $request->file('image')
+        ? $request->file('image')->store('news_images', 'public')
+        : null;
 
         News::create([
             'title' => $validatedData['title'],
