@@ -301,9 +301,9 @@ class AnimalController extends Controller
 
     public function destroy(Animal $animal)
     {
-        if ($animal->images && is_array($animal->images) && $animal->images[0] !== 'null') {
+        if (is_array($animal->images)) {
             foreach ($animal->images as $imagePath) {
-                if (Storage::disk('public')->exists($imagePath)) {
+                if (is_string($imagePath) && !empty($imagePath) && Storage::disk('public')->exists($imagePath)) {
                     Storage::disk('public')->delete($imagePath);
                 }
             }
