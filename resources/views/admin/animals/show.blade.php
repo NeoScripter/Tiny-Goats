@@ -16,11 +16,13 @@
 
                     <div class="info__gallery">
 
-                        @foreach ($animal->images as $image)
-                            <div class="info__image">
-                                <img src="{{ asset('storage/' . $image) }}" alt="Goat image">
-                            </div>
-                        @endforeach
+                        @isset($animal->images[0])
+                            @foreach ($animal->images as $image)
+                                <div class="info__image">
+                                    <img src="{{ asset('storage/' . $image) }}" alt="Goat image">
+                                </div>
+                            @endforeach
+                        @endisset
                     </div>
 
                     <div class="info__children">

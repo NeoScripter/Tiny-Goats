@@ -27,11 +27,13 @@
                         </div>
 
                         <div class="info__gallery" id="galleryPreview">
-                            @foreach ($animal->images as $index => $image)
-                                <div class="info__image" onclick="moveExistingImageToFront({{ $index }})">
-                                    <img src="{{ asset('storage/' . $image) }}" alt="Gallery Image">
-                                </div>
-                            @endforeach
+                            @isset($animal->images[0])
+                                @foreach ($animal->images as $index => $image)
+                                    <div class="info__image" onclick="moveExistingImageToFront({{ $index }})">
+                                        <img src="{{ asset('storage/' . $image) }}" alt="Gallery Image">
+                                    </div>
+                                @endforeach
+                            @endisset
                         </div>
 
                         @error('images')
