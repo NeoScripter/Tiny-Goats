@@ -44,7 +44,7 @@
                 <div class="info__data">
                     <x-admin.info-item :property="$animal->name" label="Кличка" />
 
-                    <x-admin.info-item :property="$animal->isMale ? 'Самец' : 'Самка'" label="Пол" />
+                    <x-admin.info-item :property="$animal->isMale ? 'Коза' : 'Козел'" label="Пол" />
 
                     <x-admin.info-item :property="$animal->breed" label="Порода, помесь пород" />
 
