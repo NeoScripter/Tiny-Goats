@@ -110,87 +110,74 @@ class AnimalController extends Controller
 
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
-        $genealogy = $this->fetchGenealogy($animal->id, $gens);
 
-        $flatGenealogy = $genealogy->flatten(1);
+        $genealogy = [];
+        $this->fetchGenerations($animal, 1, $gens, $genealogy);
 
+        $repeatedIds = $this->getRepeatedIdsFromGenerations($genealogy);
 
-        $repeatedIds = $flatGenealogy->pluck('id')
-            ->countBy()
-            ->filter(fn($count) => $count > 1)
-            ->keys();
+        $colors = Animal::REPEATED_BG_COLORS;
 
-        $colors = [
-            '#32CD32',
-            '#9ACD32',
-            '#6B8E23',
-            '#556B2F',
-            '#8FBC8F',
-            '#7CFC00',
-            '#BDB76B',
-            '#228B22',
-            '#F0E68C',
-            '#DAA520',
-            '#8B4513',
-            '#98FB98',
-            '#FFDEAD',
-            '#DEB887',
-            '#006400',
-            '#00FF00',
-            '#008080',
-            '#7FFFD4',
-            '#4682B4',
-        ];
-
-        $repeatedAnimalColors = [];
+        $repeatedColors = [];
         $colorCount = count($colors);
 
+
         foreach ($repeatedIds as $index => $id) {
-            $repeatedAnimalColors[$id] = $colors[$index % $colorCount];
+            $repeatedColors[$id] = $colors[$index % $colorCount];
         }
 
-        $mother = $flatGenealogy->firstWhere('id', $animal->mother_id);
-        $father = $flatGenealogy->firstWhere('id', $animal->father_id);
+        $mother = Animal::find($animal->mother_id);
+        $father = Animal::find($animal->father_id);
 
         $owner = Household::find($animal->household_owner_id);
         $breeder = Household::find($animal->household_breeder_id);
 
-
-        return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'breeder', 'owner', 'repeatedAnimalColors'));
+        return view('admin.animals.show', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'repeatedColors', 'owner', 'breeder'));
     }
 
 
-    private function fetchGenealogy($animalId, $maxGenerations)
+    private function fetchGenerations($animal, $currentGen, $maxGen, &$memo)
     {
-        $query = <<<SQL
-            WITH RECURSIVE genealogy_tree AS (
-                SELECT
-                    id, name, "isMale", father_id, mother_id, "birthDate", "images", breed, 1 AS generation, CAST(1 AS BIGINT) AS position
-                FROM animals
-                WHERE id = :animalId
-                UNION ALL
-                SELECT
-                    a.id, a.name, a."isMale", a.father_id, a.mother_id, a."birthDate", a."images", a.breed, gt.generation + 1,
-                    CAST(
-                        gt.position * 2 + (a.id = gt.father_id)::int AS BIGINT
-                    ) AS position
-                FROM animals a
-                INNER JOIN genealogy_tree gt ON (a.id = gt.father_id OR a.id = gt.mother_id)
-                WHERE gt.generation < :maxGenerations
-            )
-            SELECT * FROM genealogy_tree ORDER BY generation, position;
-        SQL;
+        if ($currentGen > $maxGen) {
+            return;
+        }
+        if (!$animal) {
+            $memo[$currentGen - 1][] = null;
+            $memo[$currentGen - 1][] = null;
 
-        $results = collect(DB::select($query, [
-            'animalId' => $animalId,
-            'maxGenerations' => $maxGenerations,
-        ]));
+            $this->fetchGenerations(null, $currentGen + 1, $maxGen, $memo);
+            $this->fetchGenerations(null, $currentGen + 1, $maxGen, $memo);
+            return;
+        }
 
-        return $results->map(function ($row) {
-            $row->images = $row->images ? json_decode($row->images, true) : [];
-            $row->breed = $row->breed ?? 'Unknown';
-            return $row;
-        })->groupBy('generation');
+        if (!isset($memo[$currentGen - 1])) {
+            $memo[$currentGen - 1] = [];
+        }
+
+        $father = Animal::find($animal->father_id);
+        $mother = Animal::find($animal->mother_id);
+
+        $memo[$currentGen - 1][] = $father;
+        $memo[$currentGen - 1][] = $mother;
+
+        $this->fetchGenerations($father, $currentGen + 1, $maxGen, $memo);
+        $this->fetchGenerations($mother, $currentGen + 1, $maxGen, $memo);
+    }
+
+    private function getRepeatedIdsFromGenerations(array $memo)
+    {
+        $allIds = [];
+        foreach ($memo as $generation) {
+            foreach ($generation as $animal) {
+                if ($animal) {
+                    $allIds[] = $animal->id;
+                }
+            }
+        }
+
+        $idCounts = array_count_values($allIds);
+
+        return array_keys(array_filter($idCounts, fn($count) => $count > 1));
     }
 
 

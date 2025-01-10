@@ -197,10 +197,20 @@
         @include fs16();
     }
 
+    .gens__name--link {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+    }
+
     .gens__breed {
         text-align: center;
         text-align: balance;
         @include fs16(400);
+    }
+
+
+    .gens__breed--hidden {
+        color: transparent;
     }
 
     @include nth-flex(8);

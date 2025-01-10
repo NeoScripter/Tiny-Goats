@@ -71,4 +71,26 @@ class Animal extends Model
     {
         return $this->hasMany(LogEntry::class);
     }
+
+    public const REPEATED_BG_COLORS = [
+        '#32CD32',
+        '#9ACD32',
+        '#6B8E23',
+        '#556B2F',
+        '#8FBC8F',
+        '#7CFC00',
+        '#BDB76B',
+        '#228B22',
+        '#F0E68C',
+        '#DAA520',
+        '#8B4513',
+        '#98FB98',
+        '#FFDEAD',
+        '#DEB887',
+        '#006400',
+        '#00FF00',
+        '#008080',
+        '#7FFFD4',
+        '#4682B4',
+    ];
 }

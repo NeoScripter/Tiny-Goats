@@ -116,7 +116,7 @@
                                         ?
                                     @endif
                                 </td>
-                                <td>{{ $animal->isMale ? 'Коза' : 'Козел' }}</td>
+                                <td>{{ $animal->isMale ? 'Козел' : 'Коза' }}</td>
                                 <td>{{ $animal->birthDate ? \Carbon\Carbon::parse($animal->birthDate)->format('d.m.Y') : '?' }}
                                 </td>
                             </tr>
