@@ -208,6 +208,8 @@
     .gens__name {
         margin-top: 0.3em;
         text-transform: uppercase;
+        text-align: balance;
+        text-align: center;
         @include fs16();
     }
 
@@ -217,8 +219,8 @@
     }
 
     .gens__breed {
-        text-align: center;
         text-align: balance;
+        text-align: center;
         height: vw(45px);
         @include fs16(400);
     }
