@@ -17,11 +17,13 @@
 
                     <div class="info__gallery">
 
-                        @foreach ($animal->images as $image)
-                            <div class="info__image">
-                                <img src="{{ asset('storage/' . $image) }}" alt="Goat image">
-                            </div>
-                        @endforeach
+                        @isset($animal->images)
+                            @foreach ($animal->images as $image)
+                                <div class="info__image">
+                                    <img src="{{ asset('storage/' . $image) }}" alt="Goat image">
+                                </div>
+                            @endforeach
+                        @endisset
                     </div>
 
                     <div class="info__children">
@@ -142,6 +144,10 @@
                         <button type="button" id="copyUrlButton" class="gens__select">Копировать</button>
                         <span class="gens__copy-message">Скопировано!</span>
                     </div>
+                </div>
+
+                <div class="gens__warning">
+                    После изменения количества поколений и/или версии для печати, <br> <span class="gens__underline">повторно нажмите кнопку "Сгенерировать"</span>
                 </div>
 
                 <button type="submit" class="gens__button">Сгенерировать</button>

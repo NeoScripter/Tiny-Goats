@@ -146,6 +146,10 @@
                     </div>
                 </div>
 
+                <div class="gens__warning">
+                    После изменения количества поколений и/или версии для печати, <br> <span class="gens__underline">повторно нажмите кнопку "Сгенерировать"</span>
+                </div>
+
                 <button type="submit" class="gens__button">Сгенерировать</button>
 
                 <div class="gens__table">

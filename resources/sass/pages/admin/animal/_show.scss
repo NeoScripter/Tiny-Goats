@@ -171,6 +171,7 @@
 
     .gens__column {
         display: flex;
+
         flex-direction: column;
         justify-content: center;
 
@@ -184,7 +185,7 @@
         height: max-content;
         display: grid;
         place-content: center;
-        padding: 10%;
+        padding: vw(10px);
         border: vw(1px) solid color('gray');
         background-color: color('green', 'extra-light');
 
@@ -215,11 +216,27 @@
     .gens__breed {
         text-align: center;
         text-align: balance;
+        height: vw(45px);
         @include fs16(400);
     }
 
     .gens__breed--hidden {
         color: transparent;
+    }
+
+
+    .gens__warning {
+        font-size: vw(20px);
+        color: color('green');
+        font-weight: 600;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: vw(46px);
+    }
+
+    .gens__underline {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
     }
 
 
