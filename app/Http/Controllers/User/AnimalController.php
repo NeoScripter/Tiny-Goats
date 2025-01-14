@@ -40,7 +40,7 @@ class AnimalController extends Controller
 
 
         $genealogy = [];
-        $this->fetchGenerations($animal, 1, $gens, $genealogy);
+        $this->fetchGenerations($animal, 1, $gens - 1, $genealogy);
 
         $repeatedIds = $this->getRepeatedIdsFromGenerations($genealogy);
 
@@ -126,8 +126,8 @@ class AnimalController extends Controller
         $mother = Animal::find($mother_id) ?? null;
         $father = Animal::find($father_id) ?? null;
 
-        $this->fetchGenerations($father, 2, $gens, $genealogy);
-        $this->fetchGenerations($mother, 2, $gens, $genealogy);
+        $this->fetchGenerations($father, 2, $gens - 1, $genealogy);
+        $this->fetchGenerations($mother, 2, $gens - 1, $genealogy);
 
         $repeatedIds = $this->getRepeatedIdsFromGenerations($genealogy);
 

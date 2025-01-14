@@ -112,7 +112,7 @@ class AnimalController extends Controller
 
 
         $genealogy = [];
-        $this->fetchGenerations($animal, 1, $gens, $genealogy);
+        $this->fetchGenerations($animal, 1, $gens - 1, $genealogy);
 
         $repeatedIds = $this->getRepeatedIdsFromGenerations($genealogy);
 
