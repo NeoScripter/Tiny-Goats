@@ -70,7 +70,7 @@
 
                         @if (isset($father))
                             <div class="gens__image">
-                                <img src="{{ $father->images[0] ? asset('storage/' . $father->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                <img src="{{ isset($father->images[0]) ? asset('storage/' . $father->images[0]) : asset('images/partials/placeholder.webp') }}"
                                     alt="Фото козла">
                             </div>
 
@@ -99,7 +99,7 @@
 
                         @if (isset($mother))
                             <div class="gens__image">
-                                <img src="{{ $mother->images[0] ? asset('storage/' . $mother->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                <img src="{{ isset($mother->images[0]) ? asset('storage/' . $mother->images[0]) : asset('images/partials/placeholder.webp') }}"
                                     alt="Фото козла">
                             </div>
 
