@@ -31,7 +31,7 @@
 
                             <a href="{{ route('animals.show', $animal->id) }}" class="animals__image">
 
-                                <img src="{{ isset($animal->images) && is_array($animal->images) && !empty($animal->images) && $animal->images[0]
+                                <img src="{{ isset($animal->images[0]) && is_array($animal->images) && !empty($animal->images) && $animal->images[0]
                                     ? asset('storage/' . $animal->images[0])
                                     : asset('images/partials/placeholder.webp') }}"
                                     alt="Animal Image">

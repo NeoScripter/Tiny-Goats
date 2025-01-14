@@ -14,7 +14,7 @@
                 @foreach($animals as $animal)
                     <div class="news__item">
                         <a href="{{ route('user.animals.show', $animal->id) }}" class="news__image">
-                            <img src="{{ isset($animal->images) && $animal->images[0]
+                            <img src="{{ isset($animal->images[0]) && $animal->images[0]
                                     ? asset('storage/' . $animal->images[0])
                                     : asset('images/partials/placeholder.webp') }}" alt="image">
                         </a>

@@ -24,7 +24,7 @@
 
                     <x-admin.info-item :property="$household->extraInfo" label="Доп. сведения о владельце" />
 
-                    <x-admin.info-item :property="$household->breeds" label="Породы, породовые направления" />
+                    <x-admin.info-item :property="$household->breeds" label="Породы, породные направления" />
 
                     @isset($all_animals)
                         <x-admin.info-item :property="$all_animals" label="Животные" />
