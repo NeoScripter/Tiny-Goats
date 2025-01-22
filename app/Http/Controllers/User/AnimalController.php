@@ -63,6 +63,40 @@ class AnimalController extends Controller
         return view('users.animal-card', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'repeatedColors', 'owner', 'breeder'));
     }
 
+    public function showGenealogy(Animal $animal, Request $request)
+    {
+        $gens = $request->query('gens', 3);
+        $photo = $request->query('photo', true);
+
+        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 7 ? (int) $gens : 3;
+
+        $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
+
+
+        $genealogy = [];
+        $this->fetchGenerations($animal, 1, $gens - 1, $genealogy);
+
+        $repeatedIds = $this->getRepeatedIdsFromGenerations($genealogy);
+
+        $colors = Animal::REPEATED_BG_COLORS;
+
+        $repeatedColors = [];
+        $colorCount = count($colors);
+
+
+        foreach ($repeatedIds as $index => $id) {
+            $repeatedColors[$id] = $colors[$index % $colorCount];
+        }
+
+        $mother = Animal::find($animal->mother_id);
+        $father = Animal::find($animal->father_id);
+
+        $owner = Household::find($animal->household_owner_id);
+        $breeder = Household::find($animal->household_breeder_id);
+
+        return view('users.animal-gens', compact('animal', 'mother', 'father', 'gens', 'photo', 'genealogy', 'repeatedColors', 'owner', 'breeder'));
+    }
+
 
     private function fetchGenerations($animal, $currentGen, $maxGen, &$memo)
     {
@@ -116,7 +150,7 @@ class AnimalController extends Controller
         $mother_id = $request->query('mother_id');
         $father_id = $request->query('father_id');
 
-        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 7 ? (int) $gens : 3;
+        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 8 ? (int) $gens : 3;
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
         $maleAnimals = Animal::where('isMale', true)->orderBy('name', 'asc')->get();

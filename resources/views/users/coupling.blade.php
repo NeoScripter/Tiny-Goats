@@ -13,7 +13,7 @@
                 <div class="gens__param">
                     <p class="gens__param-label">Количество поколений</p>
                     <select name="gens" class="gens__select">
-                        @for ($i = 2; $i < 8; $i++)
+                        @for ($i = 2; $i < 9; $i++)
                             <option value="{{ $i }}" {{ request('gens', $gens) == $i ? 'selected' : '' }}>
                                 {{ $i }}</option>
                         @endfor

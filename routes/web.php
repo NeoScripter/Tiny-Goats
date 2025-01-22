@@ -66,6 +66,9 @@ Route::get('/register', function () {
 
 Route::get('/animals/{animal}/{gens?}/{photo?}', [UserAnimalController::class, 'show'])->name('user.animals.show');
 
+Route::get('/animals-gens/{animal}/{gens?}/{photo?}', [UserAnimalController::class, 'showGenealogy'])->name('user.animals.showGenealogy');
+
+
 Route::get('/coupling', [UserAnimalController::class, 'coupling'])->name('user.coupling');
 
 Route::get('/households', function (Request $request) {
