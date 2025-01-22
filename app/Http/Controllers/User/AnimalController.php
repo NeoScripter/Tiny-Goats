@@ -153,8 +153,8 @@ class AnimalController extends Controller
         $gens = is_numeric($gens) && $gens >= 1 && $gens <= 8 ? (int) $gens : 3;
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
-        $maleAnimals = Animal::where('isMale', true)->orderBy('name', 'asc')->get();
-        $femaleAnimals = Animal::where('isMale', false)->orderBy('name', 'asc')->get();
+        $maleAnimals = Animal::where('isMale', true)->orderBy('name', 'asc')->get(['id', 'name', 'images', 'breed']);
+        $femaleAnimals = Animal::where('isMale', false)->orderBy('name', 'asc')->get(['id', 'name', 'images', 'breed']);
 
         $genealogy = [];
         $mother = Animal::find($mother_id) ?? null;

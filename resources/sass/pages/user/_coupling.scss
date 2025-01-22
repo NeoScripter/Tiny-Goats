@@ -63,9 +63,9 @@
 
     .gens__select-wrapper {
         width: 100%;
-        border: vw(1px) solid color('gray');
+       /*  border: vw(1px) solid color('gray'); */
         border-radius: 0.3em;
-        background-color: color('white');
+       /*  background-color: color('white'); */
         padding: 0.3em 0.75em;
         display: inline-flex;
         align-items: center;
@@ -143,12 +143,97 @@
         }
     }
 
+    .select-parent-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-content: center;
+    }
+
+    .select-parent-popup {
+
+        width: vw(515px);
+        padding: vw(5px);
+        padding-bottom: vw(20px);
+        border-radius: 0.4em;
+        border: vw(1px) solid color('green');
+        background-color: white;
+
+        .close-btn-overlay {
+            background-color: color('green');
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: auto;
+            border-radius: 0.3em;
+            padding: vw(3px);
+        }
+    }
+
+    .coupling__popup--body {
+        margin-top: vw(10px);
+        margin-inline: auto;
+        width: 90%;
+        @include fs16();
+    }
+
+    .coupling__popup--title {
+        text-align: center;
+        text-wrap: balance;
+        margin-bottom: vw(20px);
+    }
+
+    .coupling__popup--input {
+        padding: vw(5px);
+        width: vw(387px);
+        margin-inline: auto;
+        border-radius: 0.4em;
+        border: vw(1px) solid color('green', 'dark');
+        margin-bottom: vw(20px);
+
+
+        &:focus {
+            outline: vw(1px) solid color('green');
+        }
+
+        @include fs16(400);
+    }
+
+    .gens__list--coupling {
+        max-height: vw(500px);
+        overflow-y: scroll;
+    }
+
+    .gens__list-item {
+        user-select: none;
+        cursor: pointer;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+        text-underline-offset: 0.2em;
+        @include fs16(400);
+
+        @include hover() {
+            color: color('green');
+        }
+    }
+
     .gens__image {
         aspect-ratio: 1/1;
         max-width: 80%;
         img {
             @include image();
         }
+    }
+
+    .gens__image--coupling {
+        width: vw(100px);
+    }
+
+    .gens__coupling-btn {
+        margin-inline: auto;
+        @include btn-primary();
     }
 
     .gens__name {
