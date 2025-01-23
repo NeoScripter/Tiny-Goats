@@ -142,6 +142,11 @@
         @include btn-primary();
     }
 
+    .gens__button--print {
+        margin-bottom: 0;
+        text-transform: capitalize;
+    }
+
     .gens__param {
         width: max-content;
         display: flex;

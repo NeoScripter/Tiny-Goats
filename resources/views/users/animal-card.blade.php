@@ -149,7 +149,7 @@
                 <div class="gens__params">
 
                     <div class="gens__param gens__param--popup">
-                        <a href="{{ route('user.animals.showGenealogy', $animal->id) . '?gens=' . request('gens') . '&photo=' . request('photo') }}" class="gens__select">Версия для печати</a>
+                        <a href="{{ route('user.animals.showGenealogy', $animal->id) . '?gens=' . request('gens') . '&photo=' . request('photo') }}" class="gens__button gens__button--print">Печать</a>
                     </div>
                 </div>
 

@@ -246,7 +246,7 @@
     }
 
     .farm__place {
-        text-transform: lowercase;
+        text-transform: capitalize;
         text-align: center;
         @include fs16(400);
     }
