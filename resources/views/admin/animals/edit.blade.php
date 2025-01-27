@@ -86,7 +86,7 @@
 
                     <!-- Form Data Section -->
                     <div class="info__data">
-                        <x-form-input label="Кличка" name="name" value="{{ old('name', $animal->name) }}" />
+                        <x-form-input label="Кличка" name="name" value="{!! old('name', $animal->name) !!}" />
 
                         <!-- Gender -->
                         <div class="info__item">
