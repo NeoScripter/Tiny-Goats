@@ -35,7 +35,7 @@
                                     @php
                                         $suffix = $index < count($all_animals) - 1 ? ',' : '';
                                     @endphp
-                                    <a href="{{ route('animals.show', $animal->id) }}"
+                                    <a href="{{ route('user.animals.show', $animal->id) }}"
                                         class="info__value info__value--link">{{ $animal->name . $suffix }}</a>
                                 @endforeach
                             </div>
@@ -51,7 +51,7 @@
                                     @php
                                         $suffix = $index < count($all_animals) - 1 ? ',' : '';
                                     @endphp
-                                    <a href="{{ route('animals.show', $animal->id) }}"
+                                    <a href="{{ route('user.animals.show', $animal->id) }}"
                                         class="info__value info__value--link">{{ $animal->name . $suffix }}</a>
                                 @endforeach
                             </div>
