@@ -54,8 +54,8 @@ class AnimalController extends Controller
             $repeatedColors[$id] = $colors[$index % $colorCount];
         }
 
-        $mother = Animal::find($animal->mother_id);
-        $father = Animal::find($animal->father_id);
+        $father = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->father_id);
+        $mother = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->mother_id);
 
         $owner = Household::find($animal->household_owner_id);
         $breeder = Household::find($animal->household_breeder_id);
@@ -88,8 +88,9 @@ class AnimalController extends Controller
             $repeatedColors[$id] = $colors[$index % $colorCount];
         }
 
-        $mother = Animal::find($animal->mother_id);
-        $father = Animal::find($animal->father_id);
+        $father = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->father_id);
+        $mother = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->mother_id);
+
 
         $owner = Household::find($animal->household_owner_id);
         $breeder = Household::find($animal->household_breeder_id);
@@ -116,8 +117,8 @@ class AnimalController extends Controller
             $memo[$currentGen - 1] = [];
         }
 
-        $father = Animal::find($animal->father_id);
-        $mother = Animal::find($animal->mother_id);
+        $father = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->father_id);
+        $mother = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->mother_id);
 
         $memo[$currentGen - 1][] = $father;
         $memo[$currentGen - 1][] = $mother;

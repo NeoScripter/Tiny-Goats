@@ -43,7 +43,7 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:animals,name',
             'isMale' => 'required|boolean',
             'breed' => 'nullable|string|max:100',
             'forSale' => 'nullable|boolean',
@@ -126,8 +126,9 @@ class AnimalController extends Controller
             $repeatedColors[$id] = $colors[$index % $colorCount];
         }
 
-        $mother = Animal::find($animal->mother_id);
-        $father = Animal::find($animal->father_id);
+        $mother = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->mother_id);
+        $father = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->father_id);
+
 
         $owner = Household::find($animal->household_owner_id);
         $breeder = Household::find($animal->household_breeder_id);
@@ -154,8 +155,8 @@ class AnimalController extends Controller
             $memo[$currentGen - 1] = [];
         }
 
-        $father = Animal::find($animal->father_id);
-        $mother = Animal::find($animal->mother_id);
+        $father = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->father_id);
+        $mother = Animal::select('id', 'name', 'mother_id', 'father_id', 'breed', 'images', 'isMale')->find($animal->mother_id);
 
         $memo[$currentGen - 1][] = $father;
         $memo[$currentGen - 1][] = $mother;
@@ -203,7 +204,7 @@ class AnimalController extends Controller
     public function update(Request $request, Animal $animal)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:animals,name',
             'isMale' => 'required|boolean',
             'breed' => 'nullable|string|max:100',
             'forSale' => 'nullable|boolean',

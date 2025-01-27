@@ -85,16 +85,14 @@ Route::get('/households', function (Request $request) {
 })->name('user.households.index');
 
 Route::get('/households/{household}', function (Household $household) {
-    $animals_for_sale = Animal::select('name')
+    $animals_for_sale = Animal::select('id', 'name')
     ->where('household_owner_id', $household->id)
     ->where('forSale', true)
-    ->pluck('name')
-    ->implode(', ');
+    ->get();
 
-    $all_animals = Animal::select('name')
+    $all_animals = Animal::select('id', 'name')
     ->where('household_owner_id', $household->id)
-    ->pluck('name')
-    ->implode(', ');
+    ->get();
 
     return view('users.household-card', compact('household', 'animals_for_sale', 'all_animals'));
 })->name('user.household.show');

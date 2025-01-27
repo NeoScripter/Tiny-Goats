@@ -46,6 +46,16 @@
         @include fs16(400);
     }
 
+    .info__value--link {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+        transition: color 0.3s ease;
+
+        @include hover() {
+            color: color('green');
+        }
+    }
+
     .list__title {
         text-align: center;
         margin-bottom: vw(55px);

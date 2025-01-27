@@ -33,7 +33,7 @@ class HouseholdController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:households,name',
             'speciality' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'owner' => 'nullable|string|max:255',
@@ -66,16 +66,12 @@ class HouseholdController extends Controller
         $maleAnimals = Animal::where('isMale', true)->get();
         $femaleAnimals = Animal::where('isMale', false)->get();
 
-        $animals_for_sale = Animal::select('name')
+        $animals_for_sale = Animal::select('id', 'name')
         ->where('household_owner_id', $household->id)
-        ->where('forSale', true)
-        ->pluck('name')
-        ->implode(', ');
+        ->where('forSale', true)->get();
 
-        $all_animals = Animal::select('name')
-        ->where('household_owner_id', $household->id)
-        ->pluck('name')
-        ->implode(', ');
+        $all_animals = Animal::select('id', 'name')
+        ->where('household_owner_id', $household->id)->get();
 
         return view('admin.households.show', compact('household', 'maleAnimals', 'femaleAnimals', 'animals_for_sale', 'all_animals'));
     }
@@ -92,7 +88,7 @@ class HouseholdController extends Controller
     public function update(Request $request, Household $household)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:households,name',
             'speciality' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'owner' => 'nullable|string|max:255',

@@ -27,11 +27,35 @@
                     <x-admin.info-item :property="$household->breeds" label="Породы, породные направления" />
 
                     @isset($all_animals)
-                        <x-admin.info-item :property="$all_animals" label="Животные" />
+
+                        <div class="info__item">
+                            <div class="info__property">Животные</div>
+                            <div>
+                                @foreach ($all_animals as $index => $animal)
+                                    @php
+                                        $suffix = $index < count($all_animals) - 1 ? ',' : '';
+                                    @endphp
+                                    <a href="{{ route('animals.show', $animal->id) }}"
+                                        class="info__value info__value--link">{{ $animal->name . $suffix }}</a>
+                                @endforeach
+                            </div>
+                        </div>
                     @endisset
 
                     @isset($animals_for_sale)
-                        <x-admin.info-item :property="$animals_for_sale" label="Животные на продажу" />
+
+                        <div class="info__item">
+                            <div class="info__property">Животные на продажу</div>
+                            <div>
+                                @foreach ($animals_for_sale as $index => $animal)
+                                    @php
+                                        $suffix = $index < count($all_animals) - 1 ? ',' : '';
+                                    @endphp
+                                    <a href="{{ route('animals.show', $animal->id) }}"
+                                        class="info__value info__value--link">{{ $animal->name . $suffix }}</a>
+                                @endforeach
+                            </div>
+                        </div>
                     @endisset
 
                     <x-admin.info-item :property="$household->country" label="Страна" />
