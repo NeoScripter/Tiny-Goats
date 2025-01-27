@@ -204,7 +204,7 @@ class AnimalController extends Controller
     public function update(Request $request, Animal $animal)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:animals,name',
+            'name' => 'required|string|max:255',
             'isMale' => 'required|boolean',
             'breed' => 'nullable|string|max:100',
             'forSale' => 'nullable|boolean',

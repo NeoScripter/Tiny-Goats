@@ -88,7 +88,7 @@ class HouseholdController extends Controller
     public function update(Request $request, Household $household)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:households,name',
+            'name' => 'required|string|max:255',
             'speciality' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'owner' => 'nullable|string|max:255',
