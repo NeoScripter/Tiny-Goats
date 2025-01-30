@@ -122,7 +122,7 @@
                             @foreach ($animals as $animal)
                                 <div class="animals__item">
                                     <div class="animals__image">
-                                        <img src="{{ isset($animal->images) && $animal->images[0]
+                                        <img src="{{ isset($animal->images) && isset($animal->images[0])
                                     ? asset('storage/' . $animal->images[0])
                                     : asset('images/partials/placeholder.webp') }}"
                                             alt="Фото козла">
