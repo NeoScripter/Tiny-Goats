@@ -246,8 +246,9 @@ class AnimalController extends Controller
 
 
         $newImages = [];
+        $oldImages = $animal->images ?? [];
 
-        foreach ($animal->images as $index => $img) {
+        foreach ($oldImages as $index => $img) {
             if (!in_array($index, $indicesToDelete)) {
                 $newImages[] = $img;
             } else {
@@ -255,7 +256,6 @@ class AnimalController extends Controller
             }
         }
 
-        // If new images are uploaded, add them to the list
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 if (count($newImages) >= 4) break;
@@ -264,7 +264,6 @@ class AnimalController extends Controller
             }
         }
 
-        // Ensure images are always updated, even if no new ones are uploaded
         $validated['images'] = $newImages;
 
         $animal->update($validated);
