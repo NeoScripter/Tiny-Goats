@@ -133,7 +133,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <button class="animals__controller animals__btn--next" x-show="currentSlide !== (totalSlides - 4)"
+                    <button class="animals__controller animals__btn--next" x-show="currentSlide < (totalSlides - 4)"
                         @click="currentSlide = currentSlide + 1">
                         {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
                     </button>
@@ -173,7 +173,7 @@
                         @endforeach
                     </div>
                 </div>
-                <button class="farm__controller farm__btn--next" x-show="currentSlide !== (totalSlides - 3)"
+                <button class="farm__controller farm__btn--next" x-show="currentSlide < (totalSlides - 3)"
                     @click="currentSlide = currentSlide + 1">
                     {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
                 </button>
