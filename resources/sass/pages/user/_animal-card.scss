@@ -29,6 +29,7 @@
 
     .info__image {
         aspect-ratio: 1/1;
+        cursor: pointer;
         img {
             @include image();
         }

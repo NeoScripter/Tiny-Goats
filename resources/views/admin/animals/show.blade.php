@@ -7,11 +7,10 @@
 
             <section class="info">
 
-                <div class="info__visual">
+                <div class="info__visual" x-data="{ img: '' }">
 
                     <div class="info__snapshot">
-                        <img src="{{ isset($animal->images[0]) ? Storage::url($animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                            alt="{{ $animal->name }}">
+                        <img :src="img || '{{ isset($animal->images[0]) ? Storage::url($animal->images[0]) : asset('images/partials/placeholder.webp') }}'" alt="{{ $animal->name }}">
                     </div>
 
                     <div class="info__gallery">
@@ -19,7 +18,7 @@
                         @isset($animal->images[0])
                             @foreach ($animal->images as $image)
                                 <div class="info__image">
-                                    <img src="{{ asset('storage/' . $image) }}" alt="Goat image">
+                                    <img @click="img = $el.src" src="{{ asset('storage/' . $image) }}" alt="Goat image">
                                 </div>
                             @endforeach
                         @endisset
