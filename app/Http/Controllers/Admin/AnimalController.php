@@ -106,7 +106,7 @@ class AnimalController extends Controller
         $gens = $request->query('gens', 3);
         $photo = $request->query('photo', true);
 
-        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 7 ? (int) $gens : 3;
+        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 8 ? (int) $gens : 3;
 
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
@@ -236,19 +236,36 @@ class AnimalController extends Controller
         $validated['forSale'] = $request->has('forSale');
         $validated['showOnMain'] = $request->has('showOnMain');
 
-        $sortedImages = json_decode($request->input('sortedImages'), true);
+        $deletedImages = $request->input('deletedImages');
 
+        $indicesToDelete = [];
+
+        for ($i = 0; $i < strlen($deletedImages); $i++) {
+            $indicesToDelete[] = (int) $deletedImages[$i];
+        }
+
+
+        $newImages = [];
+
+        foreach ($animal->images as $index => $img) {
+            if (!in_array($index, $indicesToDelete)) {
+                $newImages[] = $img;
+            } else {
+                Storage::delete("public/{$img}");
+            }
+        }
+
+        // If new images are uploaded, add them to the list
         if ($request->hasFile('images')) {
-            $newImages = [];
             foreach ($request->file('images') as $index => $image) {
-                if ($index >= 4) break;
+                if (count($newImages) >= 4) break;
                 $path = $image->store('animals_images', 'public');
                 $newImages[] = $path;
             }
-            $validated['images'] = $newImages;
-        } else {
-            $validated['images'] = $sortedImages;
         }
+
+        // Ensure images are always updated, even if no new ones are uploaded
+        $validated['images'] = $newImages;
 
         $animal->update($validated);
 

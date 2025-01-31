@@ -87,7 +87,8 @@
                             </div>
 
                             <div class="gens__select-wrapper">
-                                <input type="hidden" name="father_id" :value="selectedId !== '' ? selectedId :
+                                <input type="hidden" name="father_id"
+                                    :value="selectedId !== '' ? selectedId :
                                         '{{ request('father_id') ? request('father_id') : '' }}'">
                                 <button @click="showPopup = true" type="button" class="gens__coupling-btn">Выбрать
                                     отца</button>
@@ -146,7 +147,8 @@
                             </div>
 
                             <div class="gens__select-wrapper">
-                                <input type="hidden" name="mother_id" :value="selectedId !== '' ? selectedId :
+                                <input type="hidden" name="mother_id"
+                                    :value="selectedId !== '' ? selectedId :
                                         '{{ request('mother_id') ? request('mother_id') : '' }}'">
                                 <button @click="showPopup = true" type="button" class="gens__coupling-btn">Выбрать
                                     мать</button>
@@ -192,9 +194,6 @@
                                             @if ($photo)
                                                 <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
                                                     alt="">
-                                            @else
-                                                <img src="{{ asset('images/partials/nophoto.png') }}"
-                                                    alt="Нет фотографии">
                                             @endif
                                         </a>
                                         <a href="{{ route('user.animals.show', $parent->id) }}"
@@ -202,8 +201,12 @@
                                         <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
                                     @else
                                         <div class="gens__image">
-                                            <img src="{{ asset('images/partials/placeholder.webp') }}"
-                                                alt="">
+                                            @if ($photo)
+                                                <div class="gens__image">
+                                                    <img src="{{ asset('images/partials/placeholder.webp') }}"
+                                                        alt="">
+                                                </div>
+                                            @endif
                                         </div>
                                         <h3 class="gens__name">?</h3>
                                         <p class="gens__breed gens__breed--hidden">Неизвестно</p>

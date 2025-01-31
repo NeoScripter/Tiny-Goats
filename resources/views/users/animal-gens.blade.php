@@ -29,56 +29,56 @@
 
         @isset($animal)
 
-                <div class="gens__table">
+            <div class="gens__table">
 
-                    <div class="gens__column">
+                <div class="gens__column">
 
-                        <div class="gens__item">
-                            <div class="gens__image">
-                                <img src="{{ isset($animal->images[0]) ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                    alt="{{ $animal->name }}">
-                            </div>
-                            <h3 class="gens__name">{{ $animal->name }}</h3>
-                            <p class="gens__breed">{{ $animal->breed }}</p>
+                    <div class="gens__item">
+                        <div class="gens__image">
+                            <img src="{{ isset($animal->images[0]) ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                alt="{{ $animal->name }}">
                         </div>
+                        <h3 class="gens__name">{{ $animal->name }}</h3>
+                        <p class="gens__breed">{{ $animal->breed }}</p>
                     </div>
+                </div>
 
 
-                    @foreach ($genealogy as $generationIndex => $generation)
-                        <div class="gens__column">
-                            @foreach ($generation as $parent)
-                                @php
-                                    $style =
-                                        $parent && isset($repeatedColors[$parent->id])
-                                            ? "background-color: {$repeatedColors[$parent->id]};"
-                                            : '';
-                                @endphp
-                                <div class="gens__item" style="{{ $style }}">
-                                    @if ($parent)
+                @foreach ($genealogy as $generationIndex => $generation)
+                    <div class="gens__column">
+                        @foreach ($generation as $parent)
+                            @php
+                                $style =
+                                    $parent && isset($repeatedColors[$parent->id])
+                                        ? "background-color: {$repeatedColors[$parent->id]};"
+                                        : '';
+                            @endphp
+                            <div class="gens__item" style="{{ $style }}">
+                                @if ($parent)
+                                    @if ($photo)
                                         <a href="{{ route('user.animals.show', $parent->id) }}" class="gens__image">
-                                            @if ($photo)
-                                                <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
-                                                    alt="">
-                                            @else
-                                                <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
-                                            @endif
+                                            <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
+                                                alt="">
                                         </a>
-                                        <a href="{{ route('user.animals.show', $parent->id) }}"
-                                            class="gens__name gens__name--link">{{ $parent->name }}</a>
-                                        <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
-                                    @else
+                                    @endif
+                                    <a href="{{ route('user.animals.show', $parent->id) }}"
+                                        class="gens__name gens__name--link">{{ $parent->name }}</a>
+                                    <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
+                                @else
+                                    @if ($photo)
                                         <div class="gens__image">
                                             <img src="{{ asset('images/partials/placeholder.webp') }}" alt="">
                                         </div>
-                                        <h3 class="gens__name">?</h3>
-                                        <p class="gens__breed gens__breed--hidden">Неизвестно</p>
                                     @endif
-                                </div>
-                            @endforeach
+                                    <h3 class="gens__name">?</h3>
+                                    <p class="gens__breed gens__breed--hidden">Неизвестно</p>
+                                @endif
+                            </div>
+                        @endforeach
 
-                        </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
+            </div>
             </form>
 
         @endisset
@@ -86,4 +86,5 @@
 
     </div>
 </body>
+
 </html>

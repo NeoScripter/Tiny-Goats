@@ -124,7 +124,7 @@
                     <div class="gens__param">
                         <p class="gens__param-label">Количество поколений</p>
                         <select name="gens" class="gens__select">
-                            @for ($i = 2; $i < 8; $i++)
+                            @for ($i = 2; $i < 9; $i++)
                                 <option value="{{ $i }}" {{ request('gens', $gens) == $i ? 'selected' : '' }}>
                                     {{ $i }}</option>
                             @endfor
@@ -149,12 +149,14 @@
                 <div class="gens__params">
 
                     <div class="gens__param gens__param--popup">
-                        <a href="{{ route('user.animals.showGenealogy', $animal->id) . '?gens=' . request('gens') . '&photo=' . request('photo') }}" class="gens__button gens__button--print">Печать</a>
+                        <a href="{{ route('user.animals.showGenealogy', $animal->id) . '?gens=' . request('gens') . '&photo=' . request('photo') }}"
+                            class="gens__button gens__button--print">Печать</a>
                     </div>
                 </div>
 
                 <div class="gens__warning">
-                    После изменения количества поколений и/или версии для печати, <br> <span class="gens__underline">повторно нажмите кнопку "Сгенерировать"</span>
+                    После изменения количества поколений и/или версии для печати, <br> <span
+                        class="gens__underline">повторно нажмите кнопку "Сгенерировать"</span>
                 </div>
 
                 <button type="submit" class="gens__button">Сгенерировать</button>
@@ -185,21 +187,22 @@
                                 @endphp
                                 <div class="gens__item" style="{{ $style }}">
                                     @if ($parent)
-                                        <a href="{{ route('user.animals.show', $parent->id) }}" class="gens__image">
-                                            @if ($photo)
+                                        @if ($photo)
+                                            <a href="{{ route('user.animals.show', $parent->id) }}" class="gens__image">
                                                 <img src="{{ $photo && isset($parent->images[0]) ? asset('storage/' . $parent->images[0]) : asset('images/partials/placeholder.webp') }}"
                                                     alt="">
-                                            @else
-                                                <img src="{{ asset('images/partials/nophoto.png') }}" alt="Нет фотографии">
-                                            @endif
-                                        </a>
+                                            </a>
+                                        @endif
                                         <a href="{{ route('user.animals.show', $parent->id) }}"
                                             class="gens__name gens__name--link">{{ $parent->name }}</a>
                                         <p class="gens__breed">{{ $parent->breed ?? 'Unknown' }}</p>
                                     @else
-                                        <div class="gens__image">
-                                            <img src="{{ asset('images/partials/placeholder.webp') }}" alt="">
-                                        </div>
+                                        @if ($photo)
+                                            <div class="gens__image">
+                                                <img src="{{ asset('images/partials/placeholder.webp') }}" alt="">
+                                            </div>
+                                        @endif
+
                                         <h3 class="gens__name">?</h3>
                                         <p class="gens__breed gens__breed--hidden">Неизвестно</p>
                                     @endif

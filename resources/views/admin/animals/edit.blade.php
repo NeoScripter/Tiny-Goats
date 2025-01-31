@@ -13,15 +13,11 @@
 
                 <div class="info">
 
-                    <!-- Main Visual Section -->
                     <div class="info__visual">
-                        <!-- Main Image Preview -->
                         <div class="info__snapshot">
-                            <label for="images">
                                 <img id="mainImagePreview"
                                     src="{{ isset($animal->images[0]) ? asset('storage/' . $animal->images[0]) : asset('images/partials/placeholder.webp') }}"
                                     alt="Main Image">
-                            </label>
                             <input type="file" name="images[]" id="images" accept="image/*" multiple
                                 onchange="previewImages(event)">
                         </div>
@@ -29,7 +25,11 @@
                         <div class="info__gallery" id="galleryPreview">
                             @isset($animal->images[0])
                                 @foreach ($animal->images as $index => $image)
-                                    <div class="info__image" onclick="moveExistingImageToFront({{ $index }})">
+                                    <div class="info__image info__image-edit">
+                                        <button onclick="deleteExistingImage({{ $index }})" class="delete-img-button"
+                                            type="button">
+                                            <img src="{{ asset('images/svgs/cross.svg') }}" alt="Удалить">
+                                        </button>
                                         <img src="{{ asset('storage/' . $image) }}" alt="Gallery Image">
                                     </div>
                                 @endforeach
@@ -46,9 +46,7 @@
                             @endforeach
                         @endforeach
 
-                        <!-- Hidden input to store the reordered image paths -->
-                        <input type="hidden" name="sortedImages" id="sortedImages"
-                            value="{{ json_encode($animal->images) }}">
+                        <input type="hidden" name="deletedImages" id="deletedImages">
 
                         <!-- Children Selection Section -->
                         <div class="info__children">
@@ -322,7 +320,8 @@
     <script>
         let existingImages = @json($animal->images ?? []);
         let uploadedFiles = [];
-        const maxImages = 5;
+        let deleted = [0, 1, 2, 3];
+        const maxImages = 4;
 
         function renderGallery() {
             const galleryPreview = document.getElementById('galleryPreview');
@@ -330,45 +329,99 @@
 
             existingImages.forEach((image, index) => {
                 if (index >= maxImages) return;
+
                 const galleryImage = document.createElement('div');
                 galleryImage.classList.add('info__image');
-                galleryImage.innerHTML = `<img src="/storage/${image}" alt="Gallery Image">`;
-                galleryImage.addEventListener('click', () => moveExistingImageToFront(index));
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.type = 'button';
+                deleteBtn.classList.add('delete-img-button');
+                deleteBtn.innerHTML =
+                    `<img src="{{ asset('images/svgs/cross.svg') }}" alt="Удалить">`;
+
+                deleteBtn.addEventListener('click', () => deleteExistingImage(index));
+
+                const imgElement = document.createElement('img');
+                imgElement.src = `/storage/${image}`;
+                imgElement.alt = "Gallery Image";
+
+                galleryImage.appendChild(deleteBtn);
+                galleryImage.appendChild(imgElement);
+
                 galleryPreview.appendChild(galleryImage);
+
             });
+
 
             uploadedFiles.forEach((file, index) => {
                 if (index >= maxImages) return;
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const galleryImage = document.createElement('div');
                     galleryImage.classList.add('info__image');
-                    galleryImage.innerHTML = `<img src="${e.target.result}" alt="Gallery Image">`;
-                    galleryImage.addEventListener('click', () => moveUploadedFileToFront(index));
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.type = 'button';
+                    deleteBtn.classList.add('delete-img-button');
+                    deleteBtn.innerHTML =
+                        `<img src="{{ asset('images/svgs/cross.svg') }}" alt="Удалить">`;
+
+                    deleteBtn.addEventListener('click', () => deleteUploadedImage(index));
+
+                    const imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.alt = "Gallery Image";
+
+                    galleryImage.appendChild(deleteBtn);
+                    galleryImage.appendChild(imgElement);
+
                     galleryPreview.appendChild(galleryImage);
+
                 };
+
                 reader.readAsDataURL(file);
             });
 
+
+            if ((existingImages.length + uploadedFiles.length) < 4) {
+                setTimeout(() => {
+                    const galleryLabel = document.createElement('label');
+                    galleryLabel.classList.add('info__image-label');
+                    galleryLabel.setAttribute('for', 'images');
+                    galleryLabel.innerText = '+';
+                    galleryPreview.appendChild(galleryLabel);
+                }, 10);
+            }
+
+
             updateMainImage();
-            updateHiddenInput();
         }
 
         function previewImages(event) {
-            uploadedFiles = Array.from(event.target.files).slice(0, maxImages);
-            existingImages = [];
+            uploadedFiles = Array.from(event.target.files).slice(0, maxImages - existingImages.length);
             renderGallery();
         }
 
-        function moveExistingImageToFront(index) {
-            const [selectedImage] = existingImages.splice(index, 1);
-            existingImages.unshift(selectedImage);
+        function deleteExistingImage(index) {
+            existingImages.splice(index, 1);
+
+            let currentIndex = index;
+            while (!deleted.includes(currentIndex)) {
+                currentIndex++;
+
+                if (currentIndex > 10) return;
+            }
+
+            deleted = deleted.filter(item => item !== currentIndex);
+
+            const deletedImagesInput = document.getElementById('deletedImages');
+            deletedImagesInput.value += currentIndex.toString();
             renderGallery();
         }
 
-        function moveUploadedFileToFront(index) {
-            const [selectedFile] = uploadedFiles.splice(index, 1);
-            uploadedFiles.unshift(selectedFile);
+        function deleteUploadedImage(index) {
+            uploadedFiles.splice(index, 1);
             renderGallery();
         }
 
@@ -385,12 +438,6 @@
             } else {
                 mainImagePreview.src = '{{ asset('images/partials/placeholder.webp') }}';
             }
-        }
-
-        function updateHiddenInput() {
-            const sortedImagesInput = document.getElementById('sortedImages');
-            const allImages = [...existingImages, ...uploadedFiles.map(file => URL.createObjectURL(file))];
-            sortedImagesInput.value = JSON.stringify(allImages);
         }
 
         window.onload = renderGallery;

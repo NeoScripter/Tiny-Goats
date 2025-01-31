@@ -203,7 +203,7 @@
         height: max-content;
         display: grid;
         place-content: center;
-        padding: vw(10px);
+        padding: vw(5px);
         border: vw(1px) solid color('gray');
         background-color: color('green', 'extra-light');
 
@@ -214,7 +214,7 @@
 
     .gens__image {
         aspect-ratio: 1/1;
-        max-width: 80%;
+        width: vw(100px);
         img {
             @include image();
         }
@@ -223,9 +223,12 @@
     .gens__name {
         margin-top: 0.3em;
         text-transform: uppercase;
-        text-align: balance;
         text-align: center;
-        @include fs16();
+        word-wrap: break-word;
+        max-width: vw(120px);
+        min-height: vw(20px);
+        margin-bottom: 0.2em;
+        @include fs10();
     }
 
     .gens__name--link {
@@ -234,11 +237,12 @@
     }
 
     .gens__breed {
-        text-align: balance;
         text-align: center;
-        height: vw(45px);
-        @include fs16(400);
+        text-align: balance;
+        min-height: vw(10px);
+        @include fs8();
     }
+
 
 
     .gens__breed--hidden {

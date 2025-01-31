@@ -34,7 +34,7 @@ class AnimalController extends Controller
         $gens = $request->query('gens', 3);
         $photo = $request->query('photo', true);
 
-        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 7 ? (int) $gens : 3;
+        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 8 ? (int) $gens : 3;
 
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
@@ -68,7 +68,7 @@ class AnimalController extends Controller
         $gens = $request->query('gens', 3);
         $photo = $request->query('photo', true);
 
-        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 7 ? (int) $gens : 3;
+        $gens = is_numeric($gens) && $gens >= 1 && $gens <= 8 ? (int) $gens : 3;
 
         $photo = filter_var($photo, FILTER_VALIDATE_BOOLEAN);
 
