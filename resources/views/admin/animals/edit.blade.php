@@ -194,11 +194,11 @@
 
                         <!-- birthCountry -->
                         <x-form-input label="Страна рождения" name="birthCountry"
-                            value="{{ old('birthCountry', $animal->birthCountry) }}" />
+                            value="{!! old('birthCountry', $animal->birthCountry) !!}" />
 
                         <!-- residenceCountry -->
                         <x-form-input label="Страна проживания" name="residenceCountry"
-                            value="{{ old('residenceCountry', $animal->residenceCountry) }}" />
+                            value="{!! old('residenceCountry', $animal->residenceCountry) !!}" />
 
 
                         @isset($households)
@@ -231,7 +231,7 @@
                                         @foreach ($households as $household)
                                             <option value="{{ $household->id }}"
                                                 {{ old('household_owner_id', $animal->household_owner_id) == $household->id ? 'selected' : '' }}>
-                                                {{ $household->name }}
+                                                {!! $household->name !!}
                                             </option>
                                         @endforeach
                                     </select>
@@ -244,27 +244,27 @@
                         @endisset
 
                         <!-- Status -->
-                        <x-form-input label="Статус" name="status" value="{{ old('status', $animal->status) }}" />
+                        <x-form-input label="Статус" name="status" value="{!! old('status', $animal->status) !!}" />
 
                         <!-- labelNumber -->
                         <x-form-input label="Номер чипа/бирки" name="labelNumber"
-                            value="{{ old('labelNumber', $animal->labelNumber) }}" />
+                            value="{!! old('labelNumber', $animal->labelNumber) !!}" />
 
                         <!-- height -->
                         <x-form-input label="Рост в 1; 2; 3 года" name="height"
-                            value="{{ old('height', $animal->height) }}" />
+                            value="{!! old('height', $animal->height) !!}" />
 
                         <!-- rudiment -->
                         <x-form-input label="Рудименты" name="rudiment"
-                            value="{{ old('rudiment', $animal->rudiment) }}" />
+                            value="{!! old('rudiment', $animal->rudiment) !!}" />
 
                         <!-- extraInfo -->
                         <x-form-textarea label="Дополнительная информация" name="extraInfo"
-                            value="{{ old('extraInfo', $animal->extraInfo) }}" rows="3" />
+                            value="{!! old('extraInfo', $animal->extraInfo) !!}" rows="3" />
 
                         <!-- Certificates -->
                         <x-form-textarea label="Тесты и сертификаты" name="certificates"
-                            value="{{ old('certificates', $animal->certificates) }}" rows="3" />
+                            value="{!! old('certificates', $animal->certificates) !!}" rows="3" />
 
                         <!-- For Sale -->
                         <div class="info__item">

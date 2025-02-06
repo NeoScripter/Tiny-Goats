@@ -8,9 +8,9 @@
     <div class="info__item">
         <div class="info__property">{{ $label }}</div>
         @if ($isLink)
-            <a href="{{ $displayValue }}" target="_blank" class="info__value info__value--link">{{ $displayValue }}</a>
+            <a href="{{ $displayValue }}" target="_blank" class="info__value info__value--link">{!! $displayValue !!}</a>
         @else
-            <div class="info__value">{{ $displayValue }}</div>
+            <div class="info__value">{!! $displayValue !!}</div>
         @endif
     </div>
 @endisset

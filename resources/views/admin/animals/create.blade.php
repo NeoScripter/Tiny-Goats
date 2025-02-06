@@ -227,24 +227,24 @@
                     @endisset
 
                     <!-- Status -->
-                    <x-form-input label="Статус" name="status" value="{{ old('status') }}" />
+                    <x-form-input label="Статус" name="status" value="{!! old('status') !!}" />
 
                     <!-- labelNumber -->
-                    <x-form-input label="Номер чипа/бирки" name="labelNumber" value="{{ old('labelNumber') }}" />
+                    <x-form-input label="Номер чипа/бирки" name="labelNumber" value="{!! old('labelNumber') !!}" />
 
                     <!-- height -->
-                    <x-form-input label="Рост в 1; 2; 3 года" name="height" value="{{ old('height') }}" />
+                    <x-form-input label="Рост в 1; 2; 3 года" name="height" value="{!! old('height') !!}" />
 
                     <!-- rudiment -->
-                    <x-form-input label="Рудименты" name="rudiment" value="{{ old('rudiment') }}" />
+                    <x-form-input label="Рудименты" name="rudiment" value="{!! old('rudiment') !!}" />
 
                     <!-- extraInfo -->
                     <x-form-textarea label="Дополнительная информация" name="extraInfo"
-                        value="{{ old('extraInfo') }}" rows="3" />
+                        value="{!! old('extraInfo') !!}" rows="3" />
 
                     <!-- Certificates -->
                     <x-form-textarea label="Тесты и сертификаты" name="certificates"
-                        value="{{ old('certificates') }}" rows="3" />
+                        value="{!! old('certificates') !!}" rows="3" />
 
                     <!-- For Sale -->
                     <div class="info__item">
