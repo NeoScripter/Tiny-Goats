@@ -30,7 +30,7 @@
                     <x-form-input label="название хозяйства" name="name" value="{{ old('name') }}" />
 
                     <x-form-input label="Адрес" name="address"
-                        value="{{ old('address') }}" />
+                        value="{!! old('address') !!}" />
 
                     <x-form-input label="Владелец" name="owner" value="{{ old('owner') }}" />
 
