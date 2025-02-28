@@ -88,7 +88,6 @@
     font-weight: 600;
     font-family: 'Medium';
     line-height: 110%;
-    letter-spacing: vw(0.096px);
 }
 
 @mixin fs10() {
@@ -97,7 +96,6 @@
     font-weight: 600;
     font-family: 'Medium';
     line-height: 110%;
-    letter-spacing: vw(0.096px);
 }
 
 
@@ -107,7 +105,6 @@
     font-weight: 600;
     font-family: 'Medium';
     line-height: 110%;
-    letter-spacing: vw(0.096px);
 }
 
 
@@ -145,7 +142,6 @@
     font-size: vw(24px);
     font-style: normal;
     line-height: 120%;
-    letter-spacing: vw(0.12px);
 
     @if ($font-weight == bold) {
         font-family: 'Bold';
@@ -171,7 +167,6 @@
     font-style: normal;
     font-family: 'ExtraBold';
     line-height: 120%;
-    letter-spacing: vw(0.18px);
 
     @if ($font-weight == 800) {
         font-family: 'ExtraBold';
