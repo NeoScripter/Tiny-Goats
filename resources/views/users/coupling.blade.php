@@ -22,13 +22,13 @@
                         </select>
                     </div>
 
-                    <div class="gens__param">
+                    {{-- <div class="gens__param">
                         <p class="gens__param-label">Версия для печати</p>
                         <select name="photo" class="gens__select">
                             <option value="1" {{ $photo ? 'selected' : '' }}>С фото</option>
                             <option value="0" {{ !$photo ? 'selected' : '' }}>Без фото</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="gens__param gens__param--popup">
                         <p class="gens__param-label">HTML код родословной</p>
