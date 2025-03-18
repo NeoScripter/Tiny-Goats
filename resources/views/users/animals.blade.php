@@ -27,16 +27,16 @@
                     </a>
 
                     @foreach ($categories as $category)
-                        <a href="{{ route('user.animals.index', array_merge(request()->query(), ['breed' => $category])) }}"
+                        <a href="{{ route('user.animals.index', array_merge(request()->query(), ['breed' => $category], ['name' => ''])) }}"
                             class="list__category {{ strtolower(request('breed')) == strtolower($category) ? 'list__key--active' : '' }}">
                             {{ $category }}
                         </a>
                     @endforeach
-                    <a href="{{ route('user.animals.index', array_merge(request()->query(), ['gender' => 'male'])) }}"
+                    <a href="{{ route('user.animals.index', array_merge(request()->query(), ['gender' => 'male'], ['name' => ''])) }}"
                         class="list__key {{ request('gender') == 'male' ? 'list__key--active' : '' }}">
                         М
                     </a>
-                    <a href="{{ route('user.animals.index', array_merge(request()->query(), ['gender' => 'female'])) }}"
+                    <a href="{{ route('user.animals.index', array_merge(request()->query(), ['gender' => 'female'], ['name' => ''])) }}"
                         class="list__key {{ request('gender') == 'female' ? 'list__key--active' : '' }}">
                         Ж
                     </a>

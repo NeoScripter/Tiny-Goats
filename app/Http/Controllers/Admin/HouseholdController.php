@@ -16,8 +16,8 @@ class HouseholdController extends Controller
         $name = Str::title($request->query('name'));
         $char = $request->query('char');
 
-        $households = Household::when($name, fn($query) => $query->where('name', 'like', "%$name%"))
-            ->when($char, fn($query) => $query->where('name', 'like', "$char%"))
+        $households = Household::when($name, fn($query) => $query->where('name', 'ILIKE', "%$name%"))
+            ->when($char, fn($query) => $query->where('name', 'ILIKE', "$char%"))
             ->latest()
             ->paginate(20)
             ->appends($request->query());

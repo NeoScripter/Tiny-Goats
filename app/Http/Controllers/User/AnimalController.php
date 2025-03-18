@@ -20,8 +20,8 @@ class AnimalController extends Controller
         $animals = Animal::with(['father', 'mother'])
             ->when($gender, fn($query) => $query->where('isMale', $gender === 'male'))
             ->when($breed, fn($query) => $query->where('breed', $breed))
-            ->when($name, fn($query) => $query->where('name', 'like', "%$name%"))
-            ->when($char, fn($query) => $query->where('name', 'like', "$char%"))
+            ->when($name, fn($query) => $query->where('name', 'ILIKE', "%$name%"))
+            ->when($char, fn($query) => $query->where('name', 'ILIKE', "$char%"))
             ->latest()
             ->paginate(20)
             ->appends($request->query());

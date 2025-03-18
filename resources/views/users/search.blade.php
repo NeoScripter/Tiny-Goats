@@ -53,7 +53,7 @@
                                 <a
                                     href="{{ route('user.news.show', $result['data']->id) }}">{{ $result['data']->title }}</a>
                                 @isset($result['data']->content)
-                                    <p>{{ $result['data']->content }}</p>
+                                    <p>{!! \Illuminate\Support\Str::limit($result['data']->content, 50) !!}</p>
                                 @endisset
                             @elseif ($result['type'] === 'partner')
                                 <h3>Партнеры</h3>

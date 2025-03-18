@@ -15,8 +15,8 @@ class SpecialistController extends Controller
         $name = Str::title($request->query('name'));
         $char = $request->query('char');
 
-        $specialists = Specialist::when($name, fn($query) => $query->where('name', 'like', "%$name%"))
-            ->when($char, fn($query) => $query->where('name', 'like', "$char%"))
+        $specialists = Specialist::when($name, fn($query) => $query->where('name', 'ILIKE', "%$name%"))
+            ->when($char, fn($query) => $query->where('name', 'ILIKE', "$char%"))
             ->latest()
             ->paginate(20)
             ->appends($request->query());
