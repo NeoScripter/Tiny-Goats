@@ -190,13 +190,13 @@ class AnimalController extends Controller
         $households = Household::all();
 
         $allAnimals = Animal::where('id', '!=', $animal->id)
-            ->when(
+        /*     ->when(
                 $animal->birthDate,
                 fn($query) => $query->where(function ($q) use ($animal) {
                     $q->where('birthDate', '<', $animal->birthDate)
                         ->orWhereNull('birthDate');
                 })
-            )
+            ) */
             ->get();
         return view('admin.animals.edit', compact('animal', 'maleAnimals', 'femaleAnimals', 'allAnimals', 'households'));
     }
