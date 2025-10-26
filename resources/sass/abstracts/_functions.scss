@@ -29,17 +29,25 @@
 }
 
 // Определяет значение clamp для адаптивного размера элемента на странице.
+/* @function vw( */
+/*     $initial-size, */
+/*     $initial-screen-width: $screen-width, */
+/*     $small-screen-size: $small-screen, */
+/*     $large-screen-size: $wrapper-width */
+/* ) { */
+/*     @return clamp( */
+/*         define-limits($initial-screen-width, $initial-size, $small-screen-size), // Минимальное значение размера. */
+/*         px-to-vw($initial-screen-width, $initial-size), // Адаптивное значение размера в vw. */
+/*         define-limits($initial-screen-width, $initial-size, $large-screen-size) // Максимальное значение размера. */
+/*     ); */
+/* } */
 @function vw(
     $initial-size,
     $initial-screen-width: $screen-width,
     $small-screen-size: $small-screen,
     $large-screen-size: $wrapper-width
 ) {
-    @return clamp(
-        define-limits($initial-screen-width, $initial-size, $small-screen-size), // Минимальное значение размера.
-        px-to-vw($initial-screen-width, $initial-size), // Адаптивное значение размера в vw.
-        define-limits($initial-screen-width, $initial-size, $large-screen-size) // Максимальное значение размера.
-    );
+    @return px-to-vw($initial-screen-width, $initial-size),
 }
 
 @function calculate-flex($n) {
