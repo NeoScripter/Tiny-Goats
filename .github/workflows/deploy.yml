@@ -15,20 +15,21 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: 85.142.89.188
+          host: 144.31.68.92
           port: 22
           username: ilya
           key: ${{ secrets.PRIVATE_KEY }}
           script_stop: true
           script: |
-            cd /www/lab1 && \
+            cd www/lab1 && \
             git pull origin main && \
-            # pnpm install && \
-            pnpm run build && \
+            pnpm install && \
+            npm run build && \
             php artisan config:clear && \
             php artisan view:clear && \
             php artisan route:clear && \
             php artisan config:cache && \
             php artisan route:cache && \
             php artisan view:cache && \
-			      sudo service php8.3-fpm reload
+            sudo service php8.3-fpm reload
+
