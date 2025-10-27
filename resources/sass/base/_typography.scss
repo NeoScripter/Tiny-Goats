@@ -1,84 +1,81 @@
 
 @font-face {
     font-family: 'Bold';
-    src: url('/resources/fonts/Mulish-Bold.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-Bold.woff') format('woff');
+    src: url('/resources/fonts/Mulish-Bold.woff2') format('woff2');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'ExtraBold';
-    src: url('/resources/fonts/Mulish-ExtraBold.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-ExtraBold.woff') format('woff');
-    font-weight: 800;
-    font-style: normal;
-    font-display: swap;
-}
+/* @font-face { */
+/*     font-family: 'ExtraBold'; */
+/*     src: url('/resources/fonts/Mulish-ExtraBold.woff2') format('woff2'), */
+/*         url('/resources/fonts/Mulish-ExtraBold.woff') format('woff'); */
+/*     font-weight: 800; */
+/*     font-style: normal; */
+/*     font-display: swap; */
+/* } */
 
-@font-face {
-    font-family: 'Light';
-    src: url('/resources/fonts/Mulish-Light.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
+/* @font-face { */
+/*     font-family: 'Light'; */
+/*     src: url('/resources/fonts/Mulish-Light.woff2') format('woff2'), */
+/*         url('/resources/fonts/Mulish-Light.woff') format('woff'); */
+/*     font-weight: 300; */
+/*     font-style: normal; */
+/*     font-display: swap; */
+/* } */
+/**/
 @font-face {
     font-family: 'Regular';
-    src: url('/resources/fonts/Mulish-Regular.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-Regular.woff') format('woff');
+    src: url('/resources/fonts/Mulish-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'Medium';
-    src: url('/resources/fonts/Mulish-Medium.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
+/* @font-face { */
+/*     font-family: 'Medium'; */
+/*     src: url('/resources/fonts/Mulish-Medium.woff2') format('woff2'), */
+/*         url('/resources/fonts/Mulish-Medium.woff') format('woff'); */
+/*     font-weight: 500; */
+/*     font-style: normal; */
+/*     font-display: swap; */
+/* } */
 
 @font-face {
     font-family: 'SemiBold';
-    src: url('/resources/fonts/Mulish-SemiBold.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-SemiBold.woff') format('woff');
+    src: url('/resources/fonts/Mulish-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
-
-@font-face {
-    font-family: 'Italic';
-    src: url('/resources/fonts/Mulish-Italic.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-Italic.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'MediumItalic';
-    src: url('/resources/fonts/Mulish-MediumItalic.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-MediumItalic.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'BoldItalic';
-    src: url('/resources/fonts/Mulish-BoldItalic.woff2') format('woff2'),
-        url('/resources/fonts/Mulish-BoldItalic.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
+/**/
+/* @font-face { */
+/*     font-family: 'Italic'; */
+/*     src: url('/resources/fonts/Mulish-Italic.woff2') format('woff2'), */
+/*         url('/resources/fonts/Mulish-Italic.woff') format('woff'); */
+/*     font-weight: 600; */
+/*     font-style: normal; */
+/*     font-display: swap; */
+/* } */
+/**/
+/* @font-face { */
+/*     font-family: 'MediumItalic'; */
+/*     src: url('/resources/fonts/Mulish-MediumItalic.woff2') format('woff2'), */
+/*         url('/resources/fonts/Mulish-MediumItalic.woff') format('woff'); */
+/*     font-weight: 600; */
+/*     font-style: normal; */
+/*     font-display: swap; */
+/* } */
+/**/
+/* @font-face { */
+/*     font-family: 'BoldItalic'; */
+/*     src: url('/resources/fonts/Mulish-BoldItalic.woff2') format('woff2'), */
+/*         url('/resources/fonts/Mulish-BoldItalic.woff') format('woff'); */
+/*     font-weight: 600; */
+/*     font-style: normal; */
+/*     font-display: swap; */
+/* } */
 
 // Font Sizes
 
