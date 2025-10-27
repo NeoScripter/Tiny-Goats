@@ -23,8 +23,8 @@ jobs:
           script: |
             cd www/lab1 && \
             git pull origin main && \
-            pnpm install && \
-            pnpm run build && \
+            /home/ilya/.local/share/pnpm/pnpm install && \
+            /home/ilya/.local/share/pnpm/pnpm run build && \
             php artisan config:clear && \
             php artisan view:clear && \
             php artisan route:clear && \
