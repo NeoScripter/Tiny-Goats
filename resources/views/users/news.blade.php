@@ -41,7 +41,7 @@
                         <div class="news__content">
                             <h4 class="news__heading">{{ $item->title }}</h4>
                             <x-partials.news-description>
-                                {{ $news->content }}
+                                {{ $item->content }}
                             </x-partials.news-description>
 
                         </div>
