@@ -48,7 +48,8 @@
                 <div class="preview__images">
 
                     <div class="preview__image">
-                        <img src="{{ asset('images/pages/user/agenda/agenda-1.webp') }}" alt="Девочка, гладящая козленка">
+                        <img src="{{ asset('images/pages/user/agenda/agenda-1.webp') }}"
+                            alt="Девочка, гладящая козленка">
                     </div>
 
                     <div class="preview__image">
@@ -72,13 +73,18 @@
                 @foreach ($latest_news as $news)
                     <div class="news__item">
                         <a href="{{ route('user.news.show', $news->id) }}" class="news__image">
-                            <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="Фото новости">
+                            <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}"
+                                alt="Фото новости">
                             <span class="news__label">Раздел
                                 {{ \Illuminate\Support\Str::lower($news->categories[0]) }}</span>
                         </a>
                         <div class="news__content">
                             <h4 class="news__heading">{{ $news->title }}</h4>
-                            <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
+
+                            <x-partials.news-description>
+                                {{ $news->content }}
+                            </x-partials.news-description>
+
                         </div>
                     </div>
                 @endforeach

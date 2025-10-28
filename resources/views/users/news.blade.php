@@ -9,17 +9,21 @@
             <h2 class="news__title">Новости и статьи</h2>
 
             <div class="news__categories">
-                <a href="{{ route('user.news.index') }}" class="news__category {{ request('category') ? '' : 'news__category--active' }}">
+                <a href="{{ route('user.news.index') }}"
+                    class="news__category {{ request('category') ? '' : 'news__category--active' }}">
                     Все
                 </a>
                 <!-- Links for specific categories -->
-                <a href="{{ route('user.news.index', ['category' => 'Новости']) }}" class="news__category {{ request('category') === 'Новости' ? 'news__category--active' : '' }}">
+                <a href="{{ route('user.news.index', ['category' => 'Новости']) }}"
+                    class="news__category {{ request('category') === 'Новости' ? 'news__category--active' : '' }}">
                     Новости
                 </a>
-                <a href="{{ route('user.news.index', ['category' => 'Статьи']) }}" class="news__category {{ request('category') === 'Статьи' ? 'news__category--active' : '' }}">
+                <a href="{{ route('user.news.index', ['category' => 'Статьи']) }}"
+                    class="news__category {{ request('category') === 'Статьи' ? 'news__category--active' : '' }}">
                     Статьи
                 </a>
-                <a href="{{ route('user.news.index', ['category' => 'События']) }}" class="news__category {{ request('category') === 'События' ? 'news__category--active' : '' }}">
+                <a href="{{ route('user.news.index', ['category' => 'События']) }}"
+                    class="news__category {{ request('category') === 'События' ? 'news__category--active' : '' }}">
                     События
                 </a>
             </div>
@@ -36,7 +40,10 @@
 
                         <div class="news__content">
                             <h4 class="news__heading">{{ $item->title }}</h4>
-                            <div class="news__description">{!! Str::limit($item->content, 50) !!}</div>
+                            <x-partials.news-description>
+                                {{ $news->content }}
+                            </x-partials.news-description>
+
                         </div>
                     </div>
                 @endforeach

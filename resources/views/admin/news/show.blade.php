@@ -14,9 +14,9 @@
 
                 <h1 class="piece__title">{{ $news->title }}</h1>
 
-                {!! $news->content !!}
-
-
+                <div class='markdown__description'>
+                    {!! $news->content_html !!}
+                </div>
 
             </section>
 
@@ -42,7 +42,9 @@
                             </a>
                             <div class="news__content">
                                 <h4 class="news__heading">{{ $news->title }}</h4>
-                                <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
+                                <x-partials.news-description>
+                                    {{ $news->content }}
+                                </x-partials.news-description>
                             </div>
                         </div>
                     @endforeach

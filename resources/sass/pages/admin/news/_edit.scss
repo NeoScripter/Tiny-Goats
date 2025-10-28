@@ -1,3 +1,9 @@
+.news__textarea.editor {
+    border: vw(1px) solid color("gray", "extra-light");
+    min-height: vw(300px);
+    font-size: vw(16px);
+}
+
 .admin-edit-news {
     padding: vw(58px) vw(92px) vw(59px);
 
@@ -33,7 +39,7 @@
         }
 
         &::after {
-            content: 'загрузить фото';
+            content: "загрузить фото";
             position: absolute;
             left: 50%;
             top: 50%;
@@ -122,7 +128,7 @@
                 color: currentColor;
                 width: 1.5em;
                 height: 1.5em;
-                border: 0.1em solid color('gray');
+                border: 0.1em solid color("gray");
                 border-radius: 0.15em;
                 display: grid;
                 place-content: center;

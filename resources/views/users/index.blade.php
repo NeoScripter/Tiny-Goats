@@ -1,47 +1,45 @@
 @php
-                $faqs = [
-                    [
-                        'heading' =>
-                            'Как я могу зарегистрировать/перерегистрировать, обновить карточку животного, или сменить владельца?',
-                        'content' =>
-                            'Для регистрации/перерегистрации, смены владельца и обновления карточки животного вам нужно отправить запрос Администратору по указанным на сайте контактам.',
-                    ],
-                    [
-                        'heading' => 'Какая цена регистрации животных в Реестре?',
-                        'content' =>
-                            'Животные регистрируются бесплатно. Возможно добровольное пожертвование в виде доната.',
-                    ],
-                    [
-                        'heading' => 'На каком языке осуществляется регистрация животных?',
-                        'content' =>
-                            'Регистрация животных, рождённых в России, осуществляется на русском языке (кириллицей). Регистрация импортных животных осуществляется на английском языке (латинницей).',
-                    ],
-                    [
-                        'heading' => 'На какой срок можно зарегистрировать животное в каталоге?',
-                        'content' =>
-                            'Животное в Реестре регистрируется единожды и остаётся в нём на постоянной основе.',
-                    ],
-                    [
-                        'heading' => 'Как зарегистрировать хозяйство?',
-                        'content' =>
-                            'Для регистрации или обновления карточки хозяйства нужно отправить запрос Администратору по указанным на сайте контактам.',
-                    ],
-                    [
-                        'heading' => 'Какая цена регистрации хозяйства в Реестре?',
-                        'content' =>
-                            'Регистрация хозяйств осуществляется бесплатно. Возможно добровольное пожертвование в виде доната.',
-                    ],
-                    [
-                        'heading' => 'На каком языке регистрируются хозяйства в Реестре?',
-                        'content' => 'Регистрация хозяйств осуществляется на русском языке.',
-                    ],
-                    [
-                        'heading' => 'Какие дополнительные сведения о владельце можно внести в карточку хозяйства?',
-                        'content' =>
-                            'Любые, которые могут дать больше информации о владельце. Например, наличие профильного образования или с какого года ведётся работа с козами в хозяйстве и т.п.',
-                    ],
-                ];
-            @endphp
+    $faqs = [
+        [
+            'heading' =>
+                'Как я могу зарегистрировать/перерегистрировать, обновить карточку животного, или сменить владельца?',
+            'content' =>
+                'Для регистрации/перерегистрации, смены владельца и обновления карточки животного вам нужно отправить запрос Администратору по указанным на сайте контактам.',
+        ],
+        [
+            'heading' => 'Какая цена регистрации животных в Реестре?',
+            'content' => 'Животные регистрируются бесплатно. Возможно добровольное пожертвование в виде доната.',
+        ],
+        [
+            'heading' => 'На каком языке осуществляется регистрация животных?',
+            'content' =>
+                'Регистрация животных, рождённых в России, осуществляется на русском языке (кириллицей). Регистрация импортных животных осуществляется на английском языке (латинницей).',
+        ],
+        [
+            'heading' => 'На какой срок можно зарегистрировать животное в каталоге?',
+            'content' => 'Животное в Реестре регистрируется единожды и остаётся в нём на постоянной основе.',
+        ],
+        [
+            'heading' => 'Как зарегистрировать хозяйство?',
+            'content' =>
+                'Для регистрации или обновления карточки хозяйства нужно отправить запрос Администратору по указанным на сайте контактам.',
+        ],
+        [
+            'heading' => 'Какая цена регистрации хозяйства в Реестре?',
+            'content' =>
+                'Регистрация хозяйств осуществляется бесплатно. Возможно добровольное пожертвование в виде доната.',
+        ],
+        [
+            'heading' => 'На каком языке регистрируются хозяйства в Реестре?',
+            'content' => 'Регистрация хозяйств осуществляется на русском языке.',
+        ],
+        [
+            'heading' => 'Какие дополнительные сведения о владельце можно внести в карточку хозяйства?',
+            'content' =>
+                'Любые, которые могут дать больше информации о владельце. Например, наличие профильного образования или с какого года ведётся работа с козами в хозяйстве и т.п.',
+        ],
+    ];
+@endphp
 
 <x-layouts.app>
 
@@ -123,11 +121,12 @@
                                 <div class="animals__item">
                                     <div class="animals__image">
                                         <img src="{{ isset($animal->images) && isset($animal->images[0])
-                                    ? asset('storage/' . $animal->images[0])
-                                    : asset('images/partials/placeholder.webp') }}"
+                                            ? asset('storage/' . $animal->images[0])
+                                            : asset('images/partials/placeholder.webp') }}"
                                             alt="Фото козла">
                                     </div>
-                                    <a href="{{ route('user.animals.show', $animal->id) }}" class="animals__name">{{ $animal->name }}</a>
+                                    <a href="{{ route('user.animals.show', $animal->id) }}"
+                                        class="animals__name">{{ $animal->name }}</a>
                                     <p class="animals__breed">{{ $animal->breed }}</p>
                                 </div>
                             @endforeach
@@ -151,33 +150,34 @@
             </div>
 
             @isset($households)
-            <div class="farm__wrapper" x-data="{ currentSlide: 0, totalSlides: 6 }">
-                <button class="farm__controller farm__btn--prev" x-show="currentSlide !== 0"
-                    @click="currentSlide = currentSlide - 1">
-                    {!! file_get_contents(public_path('images/svgs/prev-btn-dark.svg')) !!}
-                </button>
-                <div class="farm__carousel">
-                    <div class="farm__viewport" :style="{ transform: `translateX(${currentSlide * -33}%)` }">
-                        @foreach ($households as $household)
-                            <div class="farm__item">
-                                <div class="farm__image">
-                                    <img src="{{ isset($household->image) && $household->image
-                                    ? asset('storage/' . $household->image)
-                                    : asset('images/partials/placeholder.webp') }}"
+                <div class="farm__wrapper" x-data="{ currentSlide: 0, totalSlides: 6 }">
+                    <button class="farm__controller farm__btn--prev" x-show="currentSlide !== 0"
+                        @click="currentSlide = currentSlide - 1">
+                        {!! file_get_contents(public_path('images/svgs/prev-btn-dark.svg')) !!}
+                    </button>
+                    <div class="farm__carousel">
+                        <div class="farm__viewport" :style="{ transform: `translateX(${currentSlide * -33}%)` }">
+                            @foreach ($households as $household)
+                                <div class="farm__item">
+                                    <div class="farm__image">
+                                        <img src="{{ isset($household->image) && $household->image
+                                            ? asset('storage/' . $household->image)
+                                            : asset('images/partials/placeholder.webp') }}"
                                             alt="Фото хозяйства">
+                                    </div>
+                                    <a href="{{ route('user.household.show', $household->id) }}"
+                                        class="farm__name">{{ $household->name }}</a>
+                                    <p class="farm__place">{{ $household->region }}</p>
+                                    <p class="farm__description">{{ $household->breeds }}</p>
                                 </div>
-                                <a href="{{ route('user.household.show', $household->id) }}" class="farm__name">{{ $household->name }}</a>
-                                <p class="farm__place">{{ $household->region }}</p>
-                                <p class="farm__description">{{ $household->breeds }}</p>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
+                    <button class="farm__controller farm__btn--next" x-show="currentSlide < (totalSlides - 3)"
+                        @click="currentSlide = currentSlide + 1">
+                        {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
+                    </button>
                 </div>
-                <button class="farm__controller farm__btn--next" x-show="currentSlide < (totalSlides - 3)"
-                    @click="currentSlide = currentSlide + 1">
-                    {!! file_get_contents(public_path('images/svgs/next-btn-dark.svg')) !!}
-                </button>
-            </div>
             @endisset
 
         </section>
@@ -196,13 +196,18 @@
                     @foreach ($latest_news as $news)
                         <div class="news__item">
                             <a href="{{ route('user.news.show', $news->id) }}" class="news__image">
-                                <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}" alt="Фото новости">
+                                <img src="{{ $news->image ? asset('storage/' . $news->image) : asset('images/partials/placeholder.webp') }}"
+                                    alt="Фото новости">
                                 <span class="news__label">
                                     {{ \Illuminate\Support\Str::title($news->categories[0]) }}</span>
                             </a>
                             <div class="news__content">
                                 <h4 class="news__heading">{{ $news->title }}</h4>
-                                <p class="news__description">{!! \Illuminate\Support\Str::limit($news->content, 50) !!}</p>
+
+                                <x-partials.news-description>
+                                    {{ $news->content }}
+                                </x-partials.news-description>
+
                             </div>
                         </div>
                     @endforeach

@@ -11,15 +11,18 @@
                 <div class="edit-news__data">
                     <!-- Title Input -->
                     <label for="title" class="edit-news__label-title">Введите заголовок</label>
-                    <input type="text" name="title" id="title" value="{{ old('title') }}"
-                        class="news__input" required>
+                    <input type="text" name="title" id="title" value="{{ old('title') }}" class="news__input"
+                        required>
                     @error('title')
                         <span class="edit-news__error">{{ $message }}</span>
                     @enderror
 
                     <!-- Content Textarea -->
                     <label for="content" class="edit-news__label-edit">Введите текст</label>
-                    <textarea name="content" id="content" rows="6" class="wysiwyg-editor news__textarea">{!! old('content') !!}</textarea>
+
+                    <div id="editor" class="editor news__textarea"></div>
+                    <input type="hidden" name="content" id="content-hidden" value="{!! old('content') !!}">
+
                     @error('content')
                         <span class="edit-news__error">{{ $message }}</span>
                     @enderror
@@ -30,8 +33,7 @@
                     <div class="edit-news__snapshot">
                         <!-- Image Preview & File Upload -->
                         <label for="image">
-                            <img id="imagePreview"
-                                src="{{ asset('images/partials/placeholder.webp') }}"
+                            <img id="imagePreview" src="{{ asset('images/partials/placeholder.webp') }}"
                                 alt="News Image">
                         </label>
                         <input type="file" name="image" id="image" accept="image/*" class="news__file-input"
@@ -64,7 +66,8 @@
 
             <!-- Action Buttons -->
             <div class="edit-news__btns">
-                <button type="submit" class="edit-news__publish-btn" onclick="this.disabled = true; this.form.submit();">Опубликовать</button>
+                <button type="submit" class="edit-news__publish-btn"
+                    onclick="this.disabled = true; this.form.submit();">Опубликовать</button>
                 <!-- Delete Button -->
                 <a href="{{ route('news.index') }}" class="edit-news__delete-btn">Отмена</a>
             </div>

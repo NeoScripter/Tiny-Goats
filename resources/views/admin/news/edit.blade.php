@@ -19,9 +19,11 @@
                             <span class="edit-news__error">{{ $message }}</span>
                         @enderror
 
-                        <!-- Content Textarea -->
                         <label for="content" class="edit-news__label-edit">Введите текст</label>
-                        <textarea name="content" id="content" rows="6" class="wysiwyg-editor news__textarea">{!! old('content', $news->content) !!}</textarea>
+
+                        <div id="editor" class="editor news__textarea"></div>
+                        <input type="hidden" name="content" id="content-hidden" value="{!! old('content', $news->content) !!}">
+
                         @error('content')
                             <span class="edit-news__error">{{ $message }}</span>
                         @enderror
