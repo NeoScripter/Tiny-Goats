@@ -14,7 +14,7 @@
                     <a href="{{ route('partner.create') }}" class="news__add">Добавить</a>
                 </div>
 
-                <div class="news__grid">
+                <div class="news__grid" style="{{ $partners->isEmpty() ? 'display:block' : '' }}">
                     @forelse ($partners as $partner)
                         <div class="news__item">
                             <form method="POST" action="{{ route('partner.destroy', $partner->id) }}"

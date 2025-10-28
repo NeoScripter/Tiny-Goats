@@ -9,7 +9,7 @@
             <h2 class="news__title">Наши партнеры</h2>
 
             @isset($partners)
-                <div class="news__grid">
+                <div class="news__grid" style="{{ $partners->isEmpty() ? 'display:block' : '' }}">
                     @forelse ($partners as $index => $partner)
                         <div class="news__item">
                             <a href="{{ route('user.partner.show', $partner->id) }}" class="news__image">

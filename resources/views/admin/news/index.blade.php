@@ -13,7 +13,7 @@
             </div>
 
             @isset($newsItems)
-                <div class="news__grid">
+                <div class="news__grid" style="{{ $newsItems->isEmpty() ? 'display:block' : '' }}">
                     @forelse ($newsItems as $news)
                         <div class="news__item">
                             <form method="POST" action="{{ route('news.destroy', $news->id) }}"
